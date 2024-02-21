@@ -1,0 +1,7 @@
+---
+
+- name: Add go and ansible system-wide $PATH.
+  copy:
+    dest: /etc/profile.d/custom-path.sh
+    content: 'PATH=$PATH:/home/debix/.local/bin:/usr/local/go/bin'
+
