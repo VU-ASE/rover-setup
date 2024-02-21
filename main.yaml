@@ -1,8 +1,9 @@
 ---
 
-# - hosts: all
-#   tasks:
-#     - import_tasks: tasks/todo.yaml
+- hosts: all
+  become: true
+  tasks:
+    - import_tasks: tasks/setup.yaml
 
 
 
