@@ -1,0 +1,15 @@
+---
+
+# - hosts: all
+#   tasks:
+#     - import_tasks: tasks/todo.yaml
+
+
+
+- hosts: all
+  become: true
+  roles:
+    - role: fubarhouse.golang
+      vars:
+        go_version: 1.22.0
+
