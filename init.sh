@@ -24,7 +24,7 @@ else
 fi
 
 
-export $PATH=$PATH:/home/debix/.local/bin
+export PATH=$PATH:/home/debix/.local/bin
 
 debug "Updating..."
 sudo $PACKAGE_MANAGER update -y
