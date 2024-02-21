@@ -98,7 +98,7 @@ sudo_install:
 
 # Build a minimal Go app to confirm gocv works.
 verify:
-	go run $(TMP_DIR)/cmd/version/main.go
+	go run $(TMP_DIR)cmd/version/main.go
 
 
 
@@ -129,7 +129,7 @@ verify:
 
 # gocv-build-only: deps download sudo_pre_install_clean build
 
-install: deps sudo_pre_install_clean sudo_install verify
+install-only: deps sudo_pre_install_clean sudo_install verify
 
 
 

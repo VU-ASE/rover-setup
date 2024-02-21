@@ -24,6 +24,8 @@ else
 fi
 
 
+export $PATH=$PATH:/home/debix/.local/bin
+
 debug "Updating..."
 sudo $PACKAGE_MANAGER update -y
 
@@ -54,7 +56,7 @@ ansible-galaxy install fubarhouse.golang --ignore-errors
 debug "Starting Playbook..."
 ansible-playbook main.yaml -K
 
-make install
+make install-only
 
 success "Done"
 
