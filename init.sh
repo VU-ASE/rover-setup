@@ -35,7 +35,7 @@ sudo $PACKAGE_MANAGER upgrade -y
 
 
 debug "Installing common packages..."
-sudo $PACKAGE_MANAGER install python3-pip vim cmake -y
+sudo $PACKAGE_MANAGER install python3-pip vim cmake curl -y
 
 
 debug "Install ansible via pip..."
