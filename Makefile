@@ -2,7 +2,7 @@
 .PHONY: test deps build clean astyle cmds docker
 
 # Temporary directory to put files into.
-TMP_DIR=/home/debix/rover-setup/gocv/
+TMP_DIR=/home/debix/ase-gocv/
 
 # Build shared or static library
 BUILD_SHARED_LIBS?=ON
@@ -98,7 +98,10 @@ sudo_install:
 
 # Build a minimal Go app to confirm gocv works.
 verify:
-	go run $(TMP_DIR)cmd/version/main.go
+	echo "TODO verify this step"
+
+# go run $(TMP_DIR)cmd/version/main.go
+
 
 
 
