@@ -50,6 +50,10 @@ ansible-galaxy collection install -f community.general
 debug "Installing custom roles"
 ansible-galaxy install fubarhouse.golang --ignore-errors
 
+
+debug "Starting Playbook..."
+ansible-playbook main.yaml -K
+
 make install
 
 success "Done"
