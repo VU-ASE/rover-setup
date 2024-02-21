@@ -1,0 +1,3513 @@
+#use_cache "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache"
+#do_unpack "v0.1.2a.zip" "fa4b3e25167319cb0fa9432ef8281945" "https://github.com/opencv/ade/archive/v0.1.2a.zip" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/3rdparty/ade"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/ade/fa4b3e25167319cb0fa9432ef8281945-v0.1.2a.zip" "https://github.com/opencv/ade/archive/v0.1.2a.zip"
+#try 1
+#   Trying 140.82.121.3:443...
+# Connected to github.com (140.82.121.3) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [2459 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [79 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=github.com
+#  start date: Feb 14 00:00:00 2023 GMT
+#  expire date: Mar 14 23:59:59 2024 GMT
+#  subjectAltName: host "github.com" matched cert's "github.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS Hybrid ECC SHA384 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/ade/archive/v0.1.2a.zip HTTP/1.1
+# Host: github.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [57 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [57 bytes data]
+# old SSL session ID is stale, removing
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 302 Found
+# Server: GitHub.com
+# Date: Tue, 20 Feb 2024 21:36:50 GMT
+# Content-Type: text/html; charset=utf-8
+# Vary: X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, Accept-Encoding, Accept, X-Requested-With
+# Location: https://codeload.github.com/opencv/ade/zip/refs/tags/v0.1.2a
+# Cache-Control: max-age=0, private
+# Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
+# X-Frame-Options: deny
+# X-Content-Type-Options: nosniff
+# X-XSS-Protection: 0
+# Referrer-Policy: no-referrer-when-downgrade
+# [5 bytes data]
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# Content-Security-Policy: default-src 'none'; base-uri 'self'; child-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/; connect-src 'self' uploads.github.com www.githubstatus.com collector.github.com raw.githubusercontent.com api.github.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com api.githubcopilot.com objects-origin.githubusercontent.com *.actions.githubusercontent.com wss://*.actions.githubusercontent.com productionresultssa0.blob.core.windows.net/ productionresultssa1.blob.core.windows.net/ productionresultssa2.blob.core.windows.net/ productionresultssa3.blob.core.windows.net/ productionresultssa4.blob.core.windows.net/ productionresultssa5.blob.core.windows.net/ productionresultssa6.blob.core.windows.net/ productionresultssa7.blob.core.windows.net/ productionresultssa8.blob.core.windows.net/ productionresultssa9.blob.core.windows.net/ productionresultssa10.blob.core.windows.net/ productionresultssa11.blob.core.windows.net/ productionresultssa12.blob.core.windows.net/ productionresultssa13.blob.core.windows.net/ productionresultssa14.blob.core.windows.net/ productionresultssa15.blob.core.windows.net/ productionresultssa16.blob.core.windows.net/ productionresultssa17.blob.core.windows.net/ productionresultssa18.blob.core.windows.net/ productionresultssa19.blob.core.windows.net/ github-production-repository-image-32fea6.s3.amazonaws.com github-production-release-asset-2e65be.s3.amazonaws.com insights.github.com wss://alive.github.com; font-src github.githubassets.com; form-action 'self' github.com gist.github.com objects-origin.githubusercontent.com; frame-ancestors 'none'; frame-src viewscreen.githubusercontent.com notebooks.githubusercontent.com; img-src 'self' data: github.githubassets.com media.githubusercontent.com camo.githubusercontent.com identicons.github.com avatars.githubusercontent.com github-cloud.s3.amazonaws.com objects.githubusercontent.com secured-user-images.githubusercontent.com/ user-images.githubusercontent.com/ private-user-images.githubusercontent.com opengraph.githubassets.com github-production-user-asset-6210df.s3.amazonaws.com customer-stories-feed.github.com spotlights-feed.github.com objects-origin.githubusercontent.com *.githubusercontent.com; manifest-src 'self'; media-src github.com user-images.githubusercontent.com/ secured-user-images.githubusercontent.com/ private-user-images.githubusercontent.com github-production-user-asset-6210df.s3.amazonaws.com gist.github.com; script-src github.githubassets.com; style-src 'unsafe-inline' github.githubassets.com; upgrade-insecure-requests; worker-src github.com/assets-cdn/worker/ gist.github.com/assets-cdn/worker/
+# Content-Length: 0
+# X-GitHub-Request-Id: 9304:345198:168AF76:16DC82C:65D51BCF
+# 
+# Connection #0 to host github.com left intact
+# Issue another request to this URL: 'https://codeload.github.com/opencv/ade/zip/refs/tags/v0.1.2a'
+#   Trying 140.82.121.10:443...
+# Connected to codeload.github.com (140.82.121.10) port 443 (#1)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [2458 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [79 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.com
+#  start date: Feb 16 00:00:00 2023 GMT
+#  expire date: Mar 15 23:59:59 2024 GMT
+#  subjectAltName: host "codeload.github.com" matched cert's "*.github.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS Hybrid ECC SHA384 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/ade/zip/refs/tags/v0.1.2a HTTP/1.1
+# Host: codeload.github.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [57 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [57 bytes data]
+# old SSL session ID is stale, removing
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Access-Control-Allow-Origin: https://render.githubusercontent.com
+# content-disposition: attachment; filename=ade-0.1.2a.zip
+# Content-Length: 167786
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: application/zip
+# cross-origin-resource-policy: cross-origin
+# ETag: "d21a41598f8ea46e358787d91467632c1a903d606a5ba9feb1fca92e2183a1b6"
+# Strict-Transport-Security: max-age=31536000
+# Vary: Authorization,Accept-Encoding,Origin
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# Date: Tue, 20 Feb 2024 21:38:23 GMT
+# X-GitHub-Request-Id: B26C:2DD680:1E9554:2258D9:65D51BCF
+# 
+# [700 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1182 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [172 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [44 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1370 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1288 bytes data]
+# Connection #1 to host codeload.github.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/ade/fa4b3e25167319cb0fa9432ef8281945-v0.1.2a.zip"
+#mkdir "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/3rdparty/ade"
+#unpack "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/3rdparty/ade" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/ade/fa4b3e25167319cb0fa9432ef8281945-v0.1.2a.zip"
+#do_copy "detect.caffemodel" "238e2b2d6f3c18d6c3a30de0c31e23cf" "https://raw.githubusercontent.com/WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/detect.caffemodel" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/wechat_qrcode"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/wechat_qrcode/detect.caffemodel"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/wechat_qrcode/238e2b2d6f3c18d6c3a30de0c31e23cf-detect.caffemodel" "https://raw.githubusercontent.com/WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/detect.caffemodel"
+#try 1
+#   Trying 185.199.109.133:443...
+# Connected to raw.githubusercontent.com (185.199.109.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/detect.caffemodel HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 965430
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: application/octet-stream
+# ETag: "f0806e172250a9d17d06b605e17faf6897ec23c3e8c61d7db10dbfef137c435c"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: BE8A:2A69B5:720A54:75C78C:65D51B7A
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:32 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21049-AMS
+# X-Cache: HIT
+# X-Cache-Hits: 1
+# X-Timer: S1708465113.834861,VS0,VE1
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: 9bc9d507dc830723a9545e95cb72fa0961485f89
+# Expires: Tue, 20 Feb 2024 21:43:32 GMT
+# Source-Age: 94
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [4928 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [10230 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/wechat_qrcode/238e2b2d6f3c18d6c3a30de0c31e23cf-detect.caffemodel"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/wechat_qrcode/detect.caffemodel" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/wechat_qrcode/238e2b2d6f3c18d6c3a30de0c31e23cf-detect.caffemodel"
+#do_copy "detect.prototxt" "6fb4976b32695f9f5c6305c19f12537d" "https://raw.githubusercontent.com/WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/detect.prototxt" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/wechat_qrcode"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/wechat_qrcode/detect.prototxt"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/wechat_qrcode/6fb4976b32695f9f5c6305c19f12537d-detect.prototxt" "https://raw.githubusercontent.com/WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/detect.prototxt"
+#try 1
+#   Trying 185.199.109.133:443...
+# Connected to raw.githubusercontent.com (185.199.109.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/detect.prototxt HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 42656
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "786db7f27d00b1b38f03aad9fb6889870aed59bed48093133b19f639931444ad"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: D1AE:2197E2:7026BE:73E415:65D51B79
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:32 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21028-AMS
+# X-Cache: HIT
+# X-Cache-Hits: 1
+# X-Timer: S1708465113.982863,VS0,VE1
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: 28c011ff0209bf469c70e6426c23a0dcead721e6
+# Expires: Tue, 20 Feb 2024 21:43:32 GMT
+# Source-Age: 93
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [328 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [988 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/wechat_qrcode/6fb4976b32695f9f5c6305c19f12537d-detect.prototxt"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/wechat_qrcode/detect.prototxt" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/wechat_qrcode/6fb4976b32695f9f5c6305c19f12537d-detect.prototxt"
+#do_copy "sr.caffemodel" "cbfcd60361a73beb8c583eea7e8e6664" "https://raw.githubusercontent.com/WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/sr.caffemodel" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/wechat_qrcode"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/wechat_qrcode/sr.caffemodel"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/wechat_qrcode/cbfcd60361a73beb8c583eea7e8e6664-sr.caffemodel" "https://raw.githubusercontent.com/WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/sr.caffemodel"
+#try 1
+#   Trying 185.199.108.133:443...
+# Connected to raw.githubusercontent.com (185.199.108.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/sr.caffemodel HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 23929
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: application/octet-stream
+# ETag: "c85ba72b31f07ae61f1a207fd2ea347063ded4b717ff6dc3cb47b17dc23b2966"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: D1AE:2197E2:7026DB:73E432:65D51B7B
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:33 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21076-AMS
+# X-Cache: HIT
+# X-Cache-Hits: 1
+# X-Timer: S1708465113.041375,VS0,VE2
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: 80e807441876127b5f131d03677020ce03510092
+# Expires: Tue, 20 Feb 2024 21:43:33 GMT
+# Source-Age: 93
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [503 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/wechat_qrcode/cbfcd60361a73beb8c583eea7e8e6664-sr.caffemodel"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/wechat_qrcode/sr.caffemodel" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/wechat_qrcode/cbfcd60361a73beb8c583eea7e8e6664-sr.caffemodel"
+#do_copy "sr.prototxt" "69db99927a70df953b471daaba03fbef" "https://raw.githubusercontent.com/WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/sr.prototxt" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/wechat_qrcode"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/wechat_qrcode/sr.prototxt"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/wechat_qrcode/69db99927a70df953b471daaba03fbef-sr.prototxt" "https://raw.githubusercontent.com/WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/sr.prototxt"
+#try 1
+#   Trying 185.199.111.133:443...
+# Connected to raw.githubusercontent.com (185.199.111.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /WeChatCV/opencv_3rdparty/a8b69ccc738421293254aec5ddb38bd523503252/sr.prototxt HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 5984
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "c9e68fb6f26d02ce6efd596b98bd56a3fdb21bf0b0b57b25e4ad522dac2e2528"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: 57BA:2197E2:702705:73E455:65D51B76
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:33 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21070-AMS
+# X-Cache: HIT
+# X-Cache-Hits: 1
+# X-Timer: S1708465113.100548,VS0,VE1
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: 4a47b16e3e2d522c27a9131b189c96b04b6eea1c
+# Expires: Tue, 20 Feb 2024 21:43:33 GMT
+# Source-Age: 93
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [472 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/wechat_qrcode/69db99927a70df953b471daaba03fbef-sr.prototxt"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/wechat_qrcode/sr.prototxt" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/wechat_qrcode/69db99927a70df953b471daaba03fbef-sr.prototxt"
+#do_copy "boostdesc_bgm.i" "0ea90e7a8f3f7876d450e4149c97c74f" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_bgm.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_bgm.i"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/0ea90e7a8f3f7876d450e4149c97c74f-boostdesc_bgm.i" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_bgm.i"
+#try 1
+#   Trying 185.199.109.133:443...
+# Connected to raw.githubusercontent.com (185.199.109.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_bgm.i HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 14852
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "f4d39876234931f4cd9f46e84414d4b9c69717d391e989a93bb66948fb6c2512"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: 88C8:22C3C8:6DC765:7336AB:65D44DC9
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:33 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21081-AMS
+# X-Cache: HIT
+# X-Cache-Hits: 1
+# X-Timer: S1708465113.254158,VS0,VE1
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: fae93ca121f668d6489a1047695c64006c427dd5
+# Expires: Tue, 20 Feb 2024 21:43:33 GMT
+# Source-Age: 93
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1072 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/0ea90e7a8f3f7876d450e4149c97c74f-boostdesc_bgm.i"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_bgm.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/0ea90e7a8f3f7876d450e4149c97c74f-boostdesc_bgm.i"
+#do_copy "boostdesc_bgm_bi.i" "232c966b13651bd0e46a1497b0852191" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_bgm_bi.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_bgm_bi.i"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/232c966b13651bd0e46a1497b0852191-boostdesc_bgm_bi.i" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_bgm_bi.i"
+#try 1
+#   Trying 185.199.111.133:443...
+# Connected to raw.githubusercontent.com (185.199.111.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_bgm_bi.i HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 14864
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "63c9f081e31c588e64e041aa89dc8f400709d026f201608ac8e7266545cc7baa"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: DEBC:3410A9:6E726A:73DD1B:65D44DD0
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:33 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21033-AMS
+# X-Cache: HIT
+# X-Cache-Hits: 1
+# X-Timer: S1708465113.311064,VS0,VE1
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: de3034ca769200e56bb8ed800128181b0416ea0e
+# Expires: Tue, 20 Feb 2024 21:43:33 GMT
+# Source-Age: 93
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1084 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/232c966b13651bd0e46a1497b0852191-boostdesc_bgm_bi.i"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_bgm_bi.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/232c966b13651bd0e46a1497b0852191-boostdesc_bgm_bi.i"
+#do_copy "boostdesc_bgm_hd.i" "324426a24fa56ad9c5b8e3e0b3e5303e" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_bgm_hd.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_bgm_hd.i"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/324426a24fa56ad9c5b8e3e0b3e5303e-boostdesc_bgm_hd.i" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_bgm_hd.i"
+#try 1
+#   Trying 185.199.110.133:443...
+# Connected to raw.githubusercontent.com (185.199.110.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_bgm_hd.i HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 7832
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "3f65138873460a77b397eba6720e2a19ac426dd8bc715e1eb0b718904ee672cd"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: 7264:19F9F1:6C41EC:71B14E:65D44DD1
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:33 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21075-AMS
+# X-Cache: HIT
+# X-Cache-Hits: 1
+# X-Timer: S1708465113.372096,VS0,VE1
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: 78384cd33ba9d546942c445ca37cf4985046cb82
+# Expires: Tue, 20 Feb 2024 21:43:33 GMT
+# Source-Age: 93
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [942 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/324426a24fa56ad9c5b8e3e0b3e5303e-boostdesc_bgm_hd.i"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_bgm_hd.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/324426a24fa56ad9c5b8e3e0b3e5303e-boostdesc_bgm_hd.i"
+#do_copy "boostdesc_binboost_064.i" "202e1b3e9fec871b04da31f7f016679f" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_binboost_064.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_binboost_064.i"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/202e1b3e9fec871b04da31f7f016679f-boostdesc_binboost_064.i" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_binboost_064.i"
+#try 1
+#   Trying 185.199.108.133:443...
+# Connected to raw.githubusercontent.com (185.199.108.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_binboost_064.i HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 138093
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "bae205040ca21f82923433b5f0f55997208065bde7c22407eaad6b80d7c54a63"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: 8D32:2A036E:682662:6B7E43:65D50C01
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:33 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21024-AMS
+# X-Cache: HIT
+# X-Cache-Hits: 1
+# X-Timer: S1708465113.450859,VS0,VE1
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: 1a85bd4ee1b63649abc2acd4331d3c00cda013b0
+# Expires: Tue, 20 Feb 2024 21:43:33 GMT
+# Source-Age: 93
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [303 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [7944 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/202e1b3e9fec871b04da31f7f016679f-boostdesc_binboost_064.i"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_binboost_064.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/202e1b3e9fec871b04da31f7f016679f-boostdesc_binboost_064.i"
+#do_copy "boostdesc_binboost_128.i" "98ea99d399965c03d555cef3ea502a0b" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_binboost_128.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_binboost_128.i"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/98ea99d399965c03d555cef3ea502a0b-boostdesc_binboost_128.i" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_binboost_128.i"
+#try 1
+#   Trying 185.199.111.133:443...
+# Connected to raw.githubusercontent.com (185.199.111.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_binboost_128.i HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 275322
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "54f58724d17670b7702ef9695e137286b17516af293a9761ea422d0d63ef750c"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: 5B60:24F12C:68B973:6C114A:65D50C01
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:33 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21076-AMS
+# X-Cache: HIT
+# X-Cache-Hits: 1
+# X-Timer: S1708465114.521075,VS0,VE2
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: 10cd5ea02c7c14b813a49277d8895463822a5879
+# Expires: Tue, 20 Feb 2024 21:43:33 GMT
+# Source-Age: 92
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [13178 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/98ea99d399965c03d555cef3ea502a0b-boostdesc_binboost_128.i"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_binboost_128.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/98ea99d399965c03d555cef3ea502a0b-boostdesc_binboost_128.i"
+#do_copy "boostdesc_binboost_256.i" "e6dcfa9f647779eb1ce446a8d759b6ea" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_binboost_256.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_binboost_256.i"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/e6dcfa9f647779eb1ce446a8d759b6ea-boostdesc_binboost_256.i" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_binboost_256.i"
+#try 1
+#   Trying 185.199.111.133:443...
+# Connected to raw.githubusercontent.com (185.199.111.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_binboost_256.i HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 549754
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "5170441d0b803cfdb9971e7164637d566ed19f3e692c9d40ecc41bfad6b9cc56"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: 6FD0:2A0B49:71C97A:75867F:65D51B7C
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:33 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21078-AMS
+# X-Cache: HIT
+# X-Cache-Hits: 1
+# X-Timer: S1708465114.607581,VS0,VE1
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: 90fd4f9fe7322f11aa988fece9aa7f98d06adb51
+# Expires: Tue, 20 Feb 2024 21:43:33 GMT
+# Source-Age: 92
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [303 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [9691 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [314 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/e6dcfa9f647779eb1ce446a8d759b6ea-boostdesc_binboost_256.i"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_binboost_256.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/e6dcfa9f647779eb1ce446a8d759b6ea-boostdesc_binboost_256.i"
+#do_copy "boostdesc_lbgm.i" "0ae0675534aa318d9668f2a179c2a052" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_lbgm.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_lbgm.i"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/0ae0675534aa318d9668f2a179c2a052-boostdesc_lbgm.i" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_lbgm.i"
+#try 1
+#   Trying 185.199.111.133:443...
+# Connected to raw.githubusercontent.com (185.199.111.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/opencv_3rdparty/34e4206aef44d50e6bbcd0ab06354b52e7466d26/boostdesc_lbgm.i HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 426280
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "f3d4a74705b7df4677383f120dc191d41412bcc2a9d68182483d1fcaa8c6f3ee"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: D4E6:2C668D:724188:76012A:65D51BD9
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:33 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21031-AMS
+# X-Cache: MISS
+# X-Cache-Hits: 0
+# X-Timer: S1708465114.723754,VS0,VE162
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: 447e94be8e4f7b4ef6ac15f4f8644da16174c98e
+# Expires: Tue, 20 Feb 2024 21:43:33 GMT
+# Source-Age: 0
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [296 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/0ae0675534aa318d9668f2a179c2a052-boostdesc_lbgm.i"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/boostdesc_lbgm.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/boostdesc/0ae0675534aa318d9668f2a179c2a052-boostdesc_lbgm.i"
+#do_copy "vgg_generated_48.i" "e8d0dcd54d1bcfdc29203d011a797179" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_48.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/vgg_generated_48.i"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/vgg/e8d0dcd54d1bcfdc29203d011a797179-vgg_generated_48.i" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_48.i"
+#try 1
+#   Trying 185.199.108.133:443...
+# Connected to raw.githubusercontent.com (185.199.108.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_48.i HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 773330
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "9712a2b00f558a6635e1c65f92e7b796fa4ac9e7824a0e4e38081647489047d8"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: EF6C:2C668D:7241A7:76014D:65D51BD7
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:34 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21033-AMS
+# X-Cache: MISS
+# X-Cache-Hits: 0
+# X-Timer: S1708465114.994846,VS0,VE200
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: 32f1490bc3f1a55dc499fbf954d15f84a12e46d5
+# Expires: Tue, 20 Feb 2024 21:43:34 GMT
+# Source-Age: 0
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [301 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [9693 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [10898 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/vgg/e8d0dcd54d1bcfdc29203d011a797179-vgg_generated_48.i"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/vgg_generated_48.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/vgg/e8d0dcd54d1bcfdc29203d011a797179-vgg_generated_48.i"
+#do_copy "vgg_generated_64.i" "7126a5d9a8884ebca5aea5d63d677225" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_64.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/vgg_generated_64.i"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/vgg/7126a5d9a8884ebca5aea5d63d677225-vgg_generated_64.i" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_64.i"
+#try 1
+#   Trying 185.199.110.133:443...
+# Connected to raw.githubusercontent.com (185.199.110.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_64.i HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 915012
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "6080244e3d6fdff679f450da04af4a0d32d5bdaf3bc30d3ca432ed7e99d0caf5"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: 9D9C:2F45B3:75C09F:797B42:65D51BD9
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:34 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21066-AMS
+# X-Cache: MISS
+# X-Cache-Hits: 0
+# X-Timer: S1708465114.371151,VS0,VE213
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: df5e1f2fc4847b37e90b051527ad217d7c72d8f1
+# Expires: Tue, 20 Feb 2024 21:43:34 GMT
+# Source-Age: 0
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [301 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [9693 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [5124 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/vgg/7126a5d9a8884ebca5aea5d63d677225-vgg_generated_64.i"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/vgg_generated_64.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/vgg/7126a5d9a8884ebca5aea5d63d677225-vgg_generated_64.i"
+#do_copy "vgg_generated_80.i" "7cd47228edec52b6d82f46511af325c5" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_80.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/vgg_generated_80.i"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/vgg/7cd47228edec52b6d82f46511af325c5-vgg_generated_80.i" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_80.i"
+#try 1
+#   Trying 185.199.110.133:443...
+# Connected to raw.githubusercontent.com (185.199.110.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_80.i HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 1012932
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "41b934aa1655bb7609e81243de0568fac0682d633a52dd881ef7ccd5a80fc425"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: D6EC:2C668D:720E49:75CBBE:65D51B7D
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:34 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21060-AMS
+# X-Cache: HIT
+# X-Cache-Hits: 1
+# X-Timer: S1708465115.722876,VS0,VE1
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: a246784b2cdaa26ba9eac331deb0a2e458b1ada2
+# Expires: Tue, 20 Feb 2024 21:43:34 GMT
+# Source-Age: 92
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1378 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [302 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [9692 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [10048 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [10048 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [1028 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/vgg/7cd47228edec52b6d82f46511af325c5-vgg_generated_80.i"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/vgg_generated_80.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/vgg/7cd47228edec52b6d82f46511af325c5-vgg_generated_80.i"
+#do_copy "vgg_generated_120.i" "151805e03568c9f490a5e3a872777b75" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_120.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/vgg_generated_120.i"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/vgg/151805e03568c9f490a5e3a872777b75-vgg_generated_120.i" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_120.i"
+#try 1
+#   Trying 185.199.110.133:443...
+# Connected to raw.githubusercontent.com (185.199.110.133) port 443 (#0)
+# ALPN: offers http/1.1
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Client hello (1):
+# [512 bytes data]
+# [5 bytes data]
+# TLSv1.3 (IN), TLS handshake, Server hello (2):
+# [122 bytes data]
+# [5 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+# [25 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Certificate (11):
+# [3050 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, CERT verify (15):
+# [264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Finished (20):
+# [36 bytes data]
+# [5 bytes data]
+# TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+# [1 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (OUT), TLS handshake, Finished (20):
+# [36 bytes data]
+# SSL connection using TLSv1.3 / TLS_AES_128_GCM_SHA256
+# ALPN: server accepted http/1.1
+# Server certificate:
+#  subject: C=US; ST=California; L=San Francisco; O=GitHub, Inc.; CN=*.github.io
+#  start date: Feb 21 00:00:00 2023 GMT
+#  expire date: Mar 20 23:59:59 2024 GMT
+#  subjectAltName: host "raw.githubusercontent.com" matched cert's "*.githubusercontent.com"
+#  issuer: C=US; O=DigiCert Inc; CN=DigiCert TLS RSA SHA256 2020 CA1
+#  SSL certificate verify result: unable to get local issuer certificate (20), continuing anyway.
+# using HTTP/1.1
+# [5 bytes data]
+# [1 bytes data]
+# GET /opencv/opencv_3rdparty/fccf7cd6a4b12079f73bbfb21745f9babcd4eb1d/vgg_generated_120.i HTTP/1.1
+# Host: raw.githubusercontent.com
+# User-Agent: curl/7.81.0
+# Accept: */*
+# 
+# [5 bytes data]
+# [1 bytes data]
+# TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+# [193 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# HTTP/1.1 200 OK
+# Connection: keep-alive
+# Content-Length: 1257733
+# Cache-Control: max-age=300
+# Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; sandbox
+# Content-Type: text/plain; charset=utf-8
+# ETag: "0497dfb95e9b1f2612c03e3862e51b0b10de8cd899a78d2dc72d6103dae12799"
+# Strict-Transport-Security: max-age=31536000
+# X-Content-Type-Options: nosniff
+# X-Frame-Options: deny
+# X-XSS-Protection: 1; mode=block
+# X-GitHub-Request-Id: 4904:2865C6:690E7B:6C668C:65D50C04
+# Accept-Ranges: bytes
+# Date: Tue, 20 Feb 2024 21:38:34 GMT
+# Via: 1.1 varnish
+# X-Served-By: cache-ams21075-AMS
+# X-Cache: HIT
+# X-Cache-Hits: 1
+# X-Timer: S1708465115.872772,VS0,VE2
+# Vary: Authorization,Accept-Encoding,Origin
+# Access-Control-Allow-Origin: *
+# Cross-Origin-Resource-Policy: cross-origin
+# X-Fastly-Request-ID: 4dc26fe32a403168ac87bd11b61a104ffc86d197
+# Expires: Tue, 20 Feb 2024 21:43:34 GMT
+# Source-Age: 92
+# 
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [11264 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [3712 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [16384 bytes data]
+# [5 bytes data]
+# [1 bytes data]
+# [13957 bytes data]
+# Connection #0 to host raw.githubusercontent.com left intact
+# 
+
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/vgg/151805e03568c9f490a5e3a872777b75-vgg_generated_120.i"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/downloads/xfeatures2d/vgg_generated_120.i" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/xfeatures2d/vgg/151805e03568c9f490a5e3a872777b75-vgg_generated_120.i"
+#do_copy "face_landmark_model.dat" "7505c44ca4eb54b4ab1e4777cb96ac05" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/8afa57abc8229d611c4937165d20e2a2d9fc5a12/face_landmark_model.dat" "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/share/opencv4/testdata/cv/face/"
+#missing "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/share/opencv4/testdata/cv/face//face_landmark_model.dat"
+#cmake_download "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/data/7505c44ca4eb54b4ab1e4777cb96ac05-face_landmark_model.dat" "https://raw.githubusercontent.com/opencv/opencv_3rdparty/8afa57abc8229d611c4937165d20e2a2d9fc5a12/face_landmark_model.dat"
+#try 1
+#check_md5 "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/data/7505c44ca4eb54b4ab1e4777cb96ac05-face_landmark_model.dat"
+#copy "/home/debix/ase-gocv/opencv/opencv-4.8.1/build/share/opencv4/testdata/cv/face//face_landmark_model.dat" "/home/debix/ase-gocv/opencv/opencv-4.8.1/.cache/data/7505c44ca4eb54b4ab1e4777cb96ac05-face_landmark_model.dat"
