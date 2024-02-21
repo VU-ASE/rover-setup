@@ -7,10 +7,10 @@
 
 
 
-- hosts: all
-  become: true
-  roles:
-    - role: fubarhouse.golang
-      vars:
-        go_version: 1.22.0
+# - hosts: all
+#   become: true
+#   roles:
+#     - role: fubarhouse.golang
+#       vars:
+#         go_version: 1.22.0
 
