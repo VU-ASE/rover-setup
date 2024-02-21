@@ -2,7 +2,7 @@
 .PHONY: test deps build clean astyle cmds docker
 
 # Temporary directory to put files into.
-TMP_DIR=/home/debix/rover-steup/gocv/
+TMP_DIR=/home/debix/rover-setup/gocv/
 
 # Build shared or static library
 BUILD_SHARED_LIBS?=ON
