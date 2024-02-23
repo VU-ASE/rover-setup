@@ -20,15 +20,15 @@ run() {
 check_hostname() {
 	HOSTNAME=$(hostname)
 	debug "Current hostname '$HOSTNAME', would you like to change it? (y/n)"
-	read -p "" hostname_choice
+	IFS="" read -p "" hostname_choice </dev/tty
 
 	if [ -z $hostname_choice ] || [ $hostname_choice != "y" ]; then
 		debug "Continuing with hostname: $HOSTNAME"
 	else
-		read -p "    Enter new hostname: " new_hostname
+		IFS="" read -p "    Enter a new hostname: " new_hostname </dev/tty
 		debug "Confirm new $new_hostname? (y/n)"
-		read -p "" confirmation
-		
+		IFS="" read -p "" confirmation </dev/tty
+
 		if [ -z $confirmation ] || [ $confirmation != "y" ]; then
 			debug "Keeping $HOSTNAME"
 		else

@@ -8,8 +8,6 @@
     create: yes
 
 
-
-
 - name: Install dependencies
   become: true
   package:
@@ -19,8 +17,6 @@
       - cmake
       - make
       - curl
-
-
 
 
 # Make dir /home/debix/ase-gocv
@@ -42,9 +38,6 @@
 #   copy:
 #     dest: /etc/profile.d/custom-path.sh
 #     content: 'PATH=$PATH:/home/debix/.local/bin:/usr/local/go/bin'
-
-
-
 
 
 
