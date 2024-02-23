@@ -35,14 +35,14 @@ fi
 
 export PATH=$PATH:/home/debix/.local/bin
 
-debug "Installing common packages..."
-run "sudo $PACKAGE_MANAGER install python3-pip git -y"
-
 debug "Updating..."
 run "sudo $PACKAGE_MANAGER update -y"
 
 debug "Upgrading..."
 run "sudo $PACKAGE_MANAGER upgrade -y"
+
+debug "Installing common packages..."
+run "sudo $PACKAGE_MANAGER install python3-pip git -y"
 
 debug "Install ansible via pip..."
 run "python3 -m pip install --user ansible psutil"
