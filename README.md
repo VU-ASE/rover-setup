@@ -6,7 +6,7 @@ This repo will install all necessary dependencies and configurations using Ansib
 After booting a new Debix, make sure you are logged in as the default "debix" user, the **installation might not work otherwise**. Simply clone the repository inside the home directory (/home/debix) and run the idempotent the init script.
 ``` bash
 # todo change this to main branch!
-wget -q -O - https://raw.githubusercontent.com/VU-ASE/rover-setup/testing/install.sh | sh
+wget --no-cache -q -O - https://raw.githubusercontent.com/VU-ASE/rover-setup/testing/install.sh | sh
 ```
 
 # Overview
