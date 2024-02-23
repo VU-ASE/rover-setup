@@ -44,9 +44,14 @@ run "sudo $PACKAGE_MANAGER upgrade -y"
 debug "Installing common packages..."
 run "sudo $PACKAGE_MANAGER install python3-pip git -y"
 
-debug "Clone VU-ASE/rover-setup"
-run "git clone https://github.com/VU-ASE/rover-setup.git"
-
+if [ -d "/home/debix/rover-setup/" ]; then
+	run "cd /home/debix/rover-setup"
+	run "git pull ; git switch main"
+else
+	debug "Clone VU-ASE/rover-setup"
+	run "git clone https://github.com/VU-ASE/rover-setup.git"
+	run "cd /home/debix/rover-setup"
+fi
 
 debug "Install ansible via pip..."
 run "python3 -m pip install --user ansible psutil"
@@ -59,9 +64,6 @@ run "ansible-galaxy collection install -f community.general"
 
 debug "Installing custom roles"
 run "ansible-galaxy install fubarhouse.golang --ignore-errors"
-
-debug "Moving into setup repo to start full installation process"
-run "cd /home/debix/rover-setup"
 
 debug "Starting Playbook... password needed!"
 run "ansible-playbook main.yaml -K"
