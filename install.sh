@@ -60,8 +60,10 @@ run "ansible-galaxy collection install -f community.general"
 debug "Installing custom roles"
 run "ansible-galaxy install fubarhouse.golang --ignore-errors"
 
+debug "Moving into setup repo to start full installation process"
+run "cd /home/debix/rover-setup"
 
-debug "Starting Playbook..."
+debug "Starting Playbook... password needed!"
 run "ansible-playbook main.yaml -K"
 
 # run "cd gocv-prebuilt && make install"
