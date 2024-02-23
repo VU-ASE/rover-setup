@@ -44,6 +44,10 @@ run "sudo $PACKAGE_MANAGER upgrade -y"
 debug "Installing common packages..."
 run "sudo $PACKAGE_MANAGER install python3-pip git -y"
 
+debug "Clone VU-ASE/rover-setup"
+run "git clone https://github.com/VU-ASE/rover-setup.git"
+
+
 debug "Install ansible via pip..."
 run "python3 -m pip install --user ansible psutil"
 
@@ -55,6 +59,7 @@ run "ansible-galaxy collection install -f community.general"
 
 debug "Installing custom roles"
 run "ansible-galaxy install fubarhouse.golang --ignore-errors"
+
 
 debug "Starting Playbook..."
 run "ansible-playbook main.yaml -K"

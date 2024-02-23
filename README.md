@@ -1,30 +1,14 @@
 # Overview
-This repo will install all necessary dependencies and configurations using Ansible and some bash scripts. The flexibility of scripting allows the project to stay consistent with the original [Debix base image](https://debix.io/Software/download.html). For a full tutorial on how to get started with the Debix visit todo-docs-page.
+This repo will install all necessary dependencies and configurations using Ansible and some bash scripts. The flexibility of scripting allows the project to stay consistent with the original [Debix base image](https://debix.io/Software/download.html). For a full tutorial on how to get started with the Debix visit todo-docs-page. The build philosophy behind using scripts is to ensure that we are always compatible with the Debix base image that we don't have control over. This is why we opt to make this installation process compatible as possible such that it will work with any future changes made to the Debix image.
 
-
-# Zero to Hero
-After booting a new Debix, make sure you are logged in as the default "debix" user, the **installation might not work otherwise**. Simply clone the repository inside the home directory (/home/debix) and run the idempotent the init script.
+### Getting Started
+After booting a new Debix, make sure you are logged in as the default "debix" user, the **installation might not work otherwise**. Simply run the following command in the shell and attend the installation process, it may take some minutes.
 ``` bash
-# todo change this to main branch!
-wget --no-cache -q -O - https://raw.githubusercontent.com/VU-ASE/rover-setup/testing/install.sh | sh
+wget --no-cache -q -O - https://raw.githubusercontent.com/VU-ASE/rover-setup/main/install.sh | sh
 ```
 
-# Overview
 
-### Software Dependencies
-* python3
-* python3-pip
-* Ansible
-* Go version 1.22.0
-* libzmp3-dev
-* vim
-* cmake
-* curl
-
-### Manual Builds
-* GOCV has been prebuilt and only needs to be make-installed.
-
-## todo:
+## TODO
 - Connect to WiFi (static IP, configure router)
 - Install v4l2-ctl
 - Install binaries from downloads.ase.vu.nl
