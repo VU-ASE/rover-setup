@@ -46,7 +46,8 @@ run "sudo $PACKAGE_MANAGER install python3-pip git -y"
 
 if [ -d "/home/debix/rover-setup/" ]; then
 	run "cd /home/debix/rover-setup"
-	run "git pull ; git switch main"
+	run "git switch main"
+	run "git pull"
 else
 	debug "Clone VU-ASE/rover-setup"
 	run "git clone https://github.com/VU-ASE/rover-setup.git"
