@@ -17,6 +17,29 @@ run() {
 }
 
 
+check_hostname() {
+	HOSTNAME=$(hostname)
+	debug "Current hostname '$HOSTNAME', would you like to change it? (y/n)"
+	read -p "" hostname_choice
+
+	if [ -z $hostname_choice ] || [ $hostname_choice != "y" ]; then
+		debug "Continuing with hostname: $HOSTNAME"
+	else
+		read -p "    Enter new hostname: " new_hostname
+		debug "Confirm new $new_hostname? (y/n)"
+		read -p "" confirmation
+		
+		if [ -z $confirmation ] || [ $confirmation != "y" ]; then
+			debug "Keeping $HOSTNAME"
+		else
+			run "sudo hostnamectl set-hostname $new_hostname"
+		fi
+	fi
+}
+
+
+check_hostname
+
 debug "Password will be prompted later, so don't go away!"
 sleep 1
 

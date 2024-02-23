@@ -17,6 +17,7 @@
       - libzmq3-dev
       - vim
       - cmake
+      - make
       - curl
 
 
@@ -30,11 +31,11 @@
     state: directory
 
 
-# # Copy opencv dir to ~/ase-gocv/
-# - name: Copy opencv dir
-#   copy:
-#     src: "gocv-prebuilt/opencv"
-#     dest: "/home/debix/ase-gocv/"
+# Copy opencv dir to ~/ase-gocv/
+- name: Copy opencv dir
+  copy:
+    src: "gocv-prebuilt/opencv"
+    dest: "/home/debix/ase-gocv/"
 
 
 # - name: Add go and ansible system-wide $PATH.
