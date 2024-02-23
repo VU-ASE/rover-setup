@@ -13,6 +13,11 @@ error() {
 }
 
 
+
+debug Password will be prompted later for Ansible.
+sleep 1
+
+
 if [ -n "$(command -v dnf)" ] ; then
 	debug "Detected a Redhat based system"
 	PACKAGE_MANAGER="dnf"
@@ -52,11 +57,10 @@ ansible-galaxy collection install -f community.general
 debug "Installing custom roles"
 ansible-galaxy install fubarhouse.golang --ignore-errors
 
-
 debug "Starting Playbook..."
 ansible-playbook main.yaml -K
 
-make install-only
+cd gocv-prebuil && make install
 
 success "Done"
 

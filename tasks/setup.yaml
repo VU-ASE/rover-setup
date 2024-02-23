@@ -1,27 +1,5 @@
 ---
 
-
-# Make dir /home/debix/ase-gocv
-- name: Make sure /home/debix/ase-gocv directory exists
-  tags: directories
-  file:
-    path: "/home/debix/ase-gocv"
-    state: directory
-
-
-# Copy opencv dir to ~/ase-gocv/
-- name: Copy opencv dir
-  copy:
-    src: "gocv-prebuilt/opencv"
-    dest: "/home/debix/ase-gocv/"
-
-
-- name: Add go and ansible system-wide $PATH.
-  copy:
-    dest: /etc/profile.d/custom-path.sh
-    content: 'PATH=$PATH:/home/debix/.local/bin:/usr/local/go/bin'
-
-
 - name: Install dependencies
   become: true
   package:
@@ -30,6 +8,32 @@
       - vim
       - cmake
       - curl
+
+
+
+
+# Make dir /home/debix/ase-gocv
+- name: Make sure /home/debix/ase-gocv directory exists
+  tags: copy
+  file:
+    path: "/home/debix/ase-gocv"
+    state: directory
+
+
+# # Copy opencv dir to ~/ase-gocv/
+# - name: Copy opencv dir
+#   copy:
+#     src: "gocv-prebuilt/opencv"
+#     dest: "/home/debix/ase-gocv/"
+
+
+# - name: Add go and ansible system-wide $PATH.
+#   copy:
+#     dest: /etc/profile.d/custom-path.sh
+#     content: 'PATH=$PATH:/home/debix/.local/bin:/usr/local/go/bin'
+
+
+
 
 
 
