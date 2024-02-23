@@ -12,9 +12,9 @@ error() {
 	echo ; echo "❌ $1" ; echo ; exit 1
 }
 
+cd /home/debix || error "unable to enter /home/debix directory"
 
-
-debug Password will be prompted later for Ansible.
+debug "Password will be prompted later for Ansible."
 sleep 1
 
 
