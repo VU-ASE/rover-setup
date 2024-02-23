@@ -60,7 +60,7 @@ ansible-galaxy install fubarhouse.golang --ignore-errors
 debug "Starting Playbook..."
 ansible-playbook main.yaml -K
 
-cd gocv-prebuil && make install
+# cd gocv-prebuilt && make install
 
 success "Done"
 
