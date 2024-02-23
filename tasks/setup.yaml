@@ -29,7 +29,8 @@
       - libzmp3-dev
       - vim
       - cmake
-      - curl 
+      - curl
+
 
 
 
