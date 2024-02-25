@@ -26,10 +26,8 @@ set_hostname() {
 	run "sudo hostnamectl set-hostname $1"
 }
 
-
 WIFI_MAC=$(cat /sys/class/net/wlan0/address)
 ETHR_MAC=$(cat /sys/class/net/ens33/address)
-
 
 if [ -z "$WIFI_MAC" ] && [ -z "$ETHER_MAC" ]; then
 	error "Could not find mac address of devices: wlan0 and ens33"
@@ -53,7 +51,14 @@ else
 	set_hostname $CUSTOM_HOSTNAME
 fi
 
+DB_STRING="$WIFI_MAC, $ETHR_MAC, $CUSTOM_HOSTNAME"
 
+if [ -z "$(cat /home/debix/rover-setup/netowrk/mac_db | grep $DB_STRING)" ]; then
+	debug "adding '$DB_STRING' to network/mac_db"
+	echo $DB_STRING >> /home/debix/rover-setup/network/mac_db
+else
+	debug "$DB_STRING already in network/mac_db"
+fi
 
-success "$WIFI_MAC, $ETHR_MAC, $CUSTOM_HOSTNAME"
+success "Done"
 
