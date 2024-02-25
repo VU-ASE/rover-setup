@@ -53,7 +53,7 @@ fi
 
 DB_STRING="$WIFI_MAC, $ETHR_MAC, $CUSTOM_HOSTNAME"
 
-if [ -z "$(cat /home/debix/rover-setup/netowrk/mac_db | grep $DB_STRING)" ]; then
+if [ -z "$(cat /home/debix/rover-setup/netowrk/mac_db | grep "$DB_STRING")" ]; then
 	debug "adding '$DB_STRING' to network/mac_db"
 	echo $DB_STRING >> /home/debix/rover-setup/network/mac_db
 else
