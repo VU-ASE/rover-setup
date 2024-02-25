@@ -1,6 +1,7 @@
 ---
 
 
+
 - name: Make sure GO path is in /etc/profile
   lineinfile:
     path: /etc/profile

@@ -17,28 +17,27 @@ run() {
 }
 
 
-check_hostname() {
-	HOSTNAME=$(hostname)
-	debug "Current hostname '$HOSTNAME', would you like to change it? (y/n)"
-	IFS="" read -p "" hostname_choice </dev/tty
+# check_hostname() {
+# 	HOSTNAME=$(hostname)
+# 	debug "Current hostname '$HOSTNAME', would you like to change it? (y/n)"
+# 	IFS="" read -p "" hostname_choice </dev/tty
 
-	if [ -z $hostname_choice ] || [ $hostname_choice != "y" ]; then
-		debug "Continuing with hostname: $HOSTNAME"
-	else
-		IFS="" read -p "    Enter a new hostname: " new_hostname </dev/tty
-		debug "Confirm new $new_hostname? (y/n)"
-		IFS="" read -p "" confirmation </dev/tty
+# 	if [ -z $hostname_choice ] || [ $hostname_choice != "y" ]; then
+# 		debug "Continuing with hostname: $HOSTNAME"
+# 	else
+# 		IFS="" read -p "    Enter a new hostname: " new_hostname </dev/tty
+# 		debug "Confirm new $new_hostname? (y/n)"
+# 		IFS="" read -p "" confirmation </dev/tty
 
-		if [ -z $confirmation ] || [ $confirmation != "y" ]; then
-			debug "Keeping $HOSTNAME"
-		else
-			run "sudo hostnamectl set-hostname $new_hostname"
-		fi
-	fi
-}
+# 		if [ -z $confirmation ] || [ $confirmation != "y" ]; then
+# 			debug "Keeping $HOSTNAME"
+# 		else
+# 			run "sudo hostnamectl set-hostname $new_hostname"
+# 		fi
+# 	fi
+# }
 
-
-check_hostname
+# check_hostname
 
 debug "Password will be prompted later, so don't go away!"
 sleep 1
