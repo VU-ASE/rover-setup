@@ -36,11 +36,11 @@ if [ -z "$WIFI_MAC" ] && [ -z "$ETHER_MAC" ]; then
 fi
 
 CUSTOM_NAME_PATH="/home/debix/rover-setup/network/custom_hostname"
-CURRENT_HOST_NAME=$(cat $CUSTOM_NAME_PATH | xargs)
+CUSTOM_HOSTNAME=$(cat $CUSTOM_NAME_PATH | xargs)
 
 RANDOM_NAME=$(wget -q -O - https://random-word-api.herokuapp.com/word?length=5 | cut -c 3-7)
 
-if [ -z "$CURRENT_HOST_NAME" ]; then
+if [ -z "$CUSTOM_HOSTNAME" ]; then
 	if [ -n "$RANDOM_NAME" ]; then
 		set_hostname $RANDOM_NAME
 	else
@@ -50,7 +50,7 @@ if [ -z "$CURRENT_HOST_NAME" ]; then
 	echo "$CUSTOM_HOSTNAME" > $CUSTOM_NAME_PATH
 
 else
-	set_hostname $CURRENT_HOSTNAME
+	set_hostname $CUSTOM_HOSTNAME
 fi
 
 
