@@ -23,7 +23,7 @@ CUSTOM_HOSTNAME=""
 set_hostname() {
 	debug "setting hostname to $1"
 	CUSTOM_HOSTNAME="$1"
-	# run "sudo hostnamectl set-hostname $1"
+	run "sudo hostnamectl set-hostname $1"
 }
 
 
