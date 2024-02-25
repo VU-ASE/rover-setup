@@ -1,6 +1,12 @@
 ---
 
 
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+
 
 - name: Make sure GO path is in /etc/profile
   lineinfile:
@@ -12,6 +18,7 @@
 - name: Install dependencies
   become: true
   package:
+    update_cache: yes
     name:
       - libzmq3-dev
       - vim
@@ -28,19 +35,12 @@
     state: directory
 
 
+# TODO
 # Copy opencv dir to ~/ase-gocv/
-- name: Copy opencv dir
-  copy:
-    src: "gocv-prebuilt/opencv"
-    dest: "/home/debix/ase-gocv/"
-
-
-# - name: Add go and ansible system-wide $PATH.
+# - name: Copy opencv dir
 #   copy:
-#     dest: /etc/profile.d/custom-path.sh
-#     content: 'PATH=$PATH:/home/debix/.local/bin:/usr/local/go/bin'
-
-
+#     src: "gocv-prebuilt/opencv"
+#     dest: "/home/debix/ase-gocv/"
 
 
 
