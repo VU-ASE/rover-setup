@@ -13,8 +13,46 @@
         go_version: 1.22.0
         GOOS: linux
         GOARCH: arm64
- 
+
+
 - hosts: all
   become: true
   tasks:
-    - import_tasks: tasks/finish.yaml
+    - import_tasks: tasks/network.yaml
+
+
+
+# ------------------------------------------------------------------
+# ./run.sh --tags local
+# will run the same as above, but locally instead of on the cluster
+# ------------------------------------------------------------------
+
+
+- hosts: local
+  become: true
+  tags:
+    - local
+    - never
+  tasks:
+    - import_tasks: tasks/setup.yaml
+
+- hosts: local
+  become: true
+  tags:
+    - local
+    - never
+  roles:
+    - role: fubarhouse.golang
+      vars:
+        go_version: 1.22.0
+        GOOS: linux
+        GOARCH: arm64
+
+- hosts: local
+  become: true
+  tags:
+    - local
+    - never
+  tasks:
+    - import_tasks: tasks/network.yaml
+

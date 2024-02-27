@@ -1,5 +1,5 @@
 #!/bin/bash
 
 
-ansible-playbook main.yaml --ask-pass -K
+ansible-playbook main.yaml --ask-pass -K $@
 

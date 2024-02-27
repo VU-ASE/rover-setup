@@ -1,6 +1,11 @@
 ---
 
 
+- name: Change hostname
+  debug:
+    msg: "Will change the hostname to {{ inventory_hostname }}"
+
+
 - name: Update and upgrade apt packages
   become: true
   apt:
