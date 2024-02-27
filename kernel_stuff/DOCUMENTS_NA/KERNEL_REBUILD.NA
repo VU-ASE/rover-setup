@@ -1,0 +1,113 @@
+NA - Debix kernel cross-compile - based on step by step instructions -> https://debix.io/Document/manual_info/id/8.html
+
+1.
+sudo apt install git bc bison flex libssl-dev make libc6-dev libncurses5-dev
+sudo apt-get install qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools		# For kernel's make xconfig 
+2.
+sudo mkdir /opt/toolchain-debix
+sudo chown nelis:nelis /opt/toolchain-debix
+cd /opt/toolchain-debix
+wget "https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu.tar.xz?rev=1cb9c51b94f54940bdcccd791451cec3&hash=A56CA491FA630C98F7162BC1A302F869"
+mv "https://developer.arm.com/-/media/Files/downloads/gnu-a/10.3-2021.07/binrel/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu.tar.xz?rev=1cb9c51b94f54940bdcccd791451cec3&hash=A56CA491FA630C98F7162BC1A302F869" gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu.tar.xz
+tar xpf gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu.tar.xz
+
+3.
+export CROSS_COMPILE=/opt/toolchain-debix/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
+export ARCH=arm64
+
+4.
+cd /opt/toolchain-debix
+git clone --depth=1 --branch debix https://github.com/debix-tech/linux
+mv linux linux-debix
+
+5.
+cd /opt/toolchain-debix/linux-debix
+make imx_v8_defconfig
+make -j8
+make modules
+
+6.
+make INSTALL_MOD_STRIP=1 modules_install  INSTALL_MOD_PATH=out
+cd out/lib/modules/5.10.72
+
+7. (adjust paths and drives to taste, check with 'fdisk -l')
+sudo mkdir -p /mnt/fat32
+sudo mkdir -p /mnt/ext4
+sudo mount /dev/sde1 /mnt/fat32
+sudo mount /dev/sde2 /mnt/ext4
+
+8.
+cd /opt/toolchain-debix/linux-debix
+export PATH=$PATH:/opt/toolchain-debix/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin
+sudo env PATH=$PATH make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- INSTALL_MOD_PATH=/mnt/ext4 INSTALL_MOD_STRIP=1 modules_install
+sudo umount /mnt/ext4
+
+9.
+sudo cp /mnt/fat32/Image /mnt/fat32/Image-backup-`date "+%s"`.img
+sudo cp arch/arm64/boot/Image /mnt/fat32/Image
+sudo cp arch/arm64/boot/dts/freescale/*.dtb /mnt/fat32
+sudo umount /mnt/fat32
+
+10. If all the steps were succesfull, you can configuring the kernel to your taste (make sure the path is still set to the one in step 8)
+make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- menuconfig	# Text config
+make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- xconfig		# GUI config
+
+11. Repeat steps 5 (except make imx_v8_defconfig), 6, 7, 8 and 9 to install an updated kernel
+
+
+
+TODO:
+Devicetree for ase2024_debixboard: 
+- OK - Located in ./arch/arm64/boot/dts/freescale
+
+- OK - imx8mp.dtsi is included in the .dts files, generally SoC-level definitions  
+
+- (no longer true in the 6.x kernel)
+  imx8mp-debix-core-board.dts is a symlink to imx8mp-evk.dts (the NXP reference design board on which the Debix is based)
+
+- OK - Makefile in that directory specifies which dtb's to include
+
+- OK - Don't change the original imx8mp-evk.dtb / imx8mp-debix-core-board.dtb files
+
+- OK - Create a new dts and add it to the Makefile (like the IO and 4G board, these seems to be changed versions of the mx8mp-evk.dts? At least they're similar in size).
+	Name suggestion: imx8mp-debix-ase2024-debixboard.dts
+
+- OK - Disable CAN:
+	&flexcan1 and &flexcan2 entries: status = "disabled"
+
+- OK - Enable GPIO on those pins:
+	Nothing to be done, default is GPIO and can be used with sysfs (/sys/class/gpio)
+	echo <gpioname> > /sys/class/gpio/export
+	
+- OK - GPIO pin names for sysfs: (missing some GPIO's in this list)
+	- see Debix schematics for 40-pin connector to CPU pin numbers, then IMX8MPCEC-1.pdf for pin functions
+	HC12_SET        -> GPIO1_IO21 = AC25  = gpio3.IO[21] = (3 - 1)*32 + 21 = 85 	(Debix name GPIO1_IO21 seems to be wrong since it's gpio3.IO[21])
+	EXT_GPIO0       -> CAN1_TXD   = AD16  = gpio3.IO[22] = (3 - 1)*32 + 22 = 86
+	EXT_GPIO1       -> CAN1_RXD   = AF16  = gpio3.IO[23] = (3 - 1)*32 + 23 = 87
+	EXT_GPIO2       -> CAN2_TXD   = AE14  = gpio3.IO[24] = (3 - 1)*32 + 24 = 88
+	EXT_GPIO3       -> CAN2_RXD   = AF14  = gpio3.IO[25] = (3 - 1)*32 + 25 = 89
+	LED1_GPIO       -> GPIO1_IO03 = D6    = gpio1.IO[3]  = (1 - 1)*32 + 13 = 3
+	LED2_GPIO       -> GPIO1_IO04 = E6    = gpio1.IO[4]  =                 = 4
+	SW1_GPIO_TOGGLE -> GPIO1_IO12 = A5    = gpio1.IO[12] =                 = 12
+	SW2_GPIO_PUSH   -> GPIO1_IO13 = A6    = gpio1.IO[13] =                 = 13
+	
+	If more GPIO is needed, either SPI block can be disabled in the devicetree.
+	SPI1_SS0_DBX    -> ECSPI1_SS0  = AE20 = gpio5.IO[9]  = (5 - 1)*32 + 9  = 137
+	SPI1_MOSI_DBX   -> ECSPI1_MOSI = AC20 = gpio5.IO[7]  =                 = 135
+	SPI1_MISO_DBX   -> ECSPI1_MISO = AD20 = gpio5.IO[8]  =                 = 136
+	SPI1_SCLK_DBX   -> ECSPI1_SCLK = AF20 = gpio5.IO[6]  =                 = 134
+	SPI1_SS0_DBX    -> ECSPI2_SS0  = AJ22 = gpio5.IO[13] =                 = 141
+	SPI1_MOSI_DBX   -> ECSPI2_MOSI = AJ21 = gpio5.IO[11] =                 = 139
+	SPI1_MISO_DBX   -> ECSPI2_MISO = AH20 = gpio5.IO[12] =                 = 140
+	SPI1_SCLK_DBX   -> ECSPI2_SCLK = AH21 = gpio5.IO[10] =                 = 138
+	
+
+- XX - How to select which dtb u-boot should load? 
+	-> https://unix.stackexchange.com/questions/448993/how-does-kernel-know-which-device-tree-to-load
+
+- OK - Copy /boot/imx8mp-debix-ase2024-debixboard.dtb to /bootimx8mp-evk.dtb (this is the DTB U-boot will load). Debix add-on board tools do the same.
+
+
+
+
+

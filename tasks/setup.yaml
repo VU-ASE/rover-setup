@@ -31,6 +31,13 @@
       - make
       - curl
       - i2c-tools2
+      - command-not-found
+      - apt-file i2c-tools
+      - libi2c-dev
+      - less
+      - picocom
+      - build-essential
+      - mpg123
 
 
 # Make dir /home/debix/ase-gocv

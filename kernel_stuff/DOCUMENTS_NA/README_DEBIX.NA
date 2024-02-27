@@ -1,0 +1,77 @@
+Some tips for and changes to the stock Debix image (current is Ubuntu 22.04)
+'$' means execute command in the shell. 
+
+* OLED display example is in ~/src/oled-logo-set. Symlink to ~/bin so it's in the PATH after a new login
+  $ ln -s ~/src/oled-logo-set/oled-logo-set ~/bin
+
+* Copy or symlink the scripts from src/scripts to ~/bin
+  $ ln -s ~/ase2024-bootlogo.sh ~/bin
+  $ ln -s ~/ase_shutdown.sh 	~/bin
+  $ ln -s ~/ase_startup.sh 	~/bin
+  $ ln -s ~/hc12-setup.sh 	~/bin
+  $ ln -s ~/show-devicetree.sh 	~/bin
+
+* Allow any user in the sudo group to execute sudo without the password prompt.
+- $ sudo visudo                 # Don't edit the /etc/sudoers file directly!
+- Comment out the line with the sudo group: "# %sudo  ALL=(ALL:ALL) ALL"
+- Add "%sudo   ALL=(ALL) NOPASSWD: ALL"
+
+* Update packages
+  $ sudo apt-update && sudo apt upgrade
+
+* Run unminimize, it will restore the 'normal' linux environment (manpages etc)
+  $ sudo unminimize
+
+* Install extra packages
+  $ sudo apt install vim command-not-found apt-file i2c-tools libi2c-dev less picocom vim build-essential mpg123
+
+* Change hostname in /etc/hostname
+- /etc/hostname -> debix-nelis
+
+* For a prettier serial console, add the following to ~/.bashrc, right before the if[$color_prompt] block (about line 59)
+  # NA - set term type if we're on the serial console 
+  if [ "$(tty)" == "/dev/ttymxc1" ]; then
+      export TERM=xterm
+      color_prompt=yes
+      stty rows 40 columns 132
+  fi
+  ...if [ "$color_prompt" = yes ]; then
+
+* You can also set the preferred editor in .bashrc. 
+ export EDITOR=nano"
+  If you change your mind, use "$ export EDITOR=vim"
+
+* Add the following to /etc/rc.local, above the "exit 0". This will run that script at boot
+  if [ -e /home/debix/bin/ase_startup.sh ]
+  then
+          /home/debix/bin/ase_startup.sh
+  fi
+
+* Copy the ase2024-bootlogo service script to the systemd location and enable it at boot
+  $ sudo cp /home/debix/src/systemd-scripts/ase2024-bootlogo.service /etc/systemd/system
+  $ sudo systemctl enable ase2024-bootlogo
+
+* Copy the ase_shutdown.sh script to /lib/systemd/system-shutdown/ 
+  $ sudo cp /home/debix/bin /lib/systemd/system-shutdown/ 
+
+* Save a lot of CPU cycles by disabling the graphical login:
+- Disable graphical boot: 
+  $ sudo systemctl set-default multi-user.target
+- To re-enable graphical boot: 
+  $ sudo systemctl set-default graphical.target
+
+* Disable some services 
+  $ sudo systemctl disable ModemManager		(may interfere with serial ports)
+  $ sudo systemctl status imx8-isp.service	(floods log with errors about IMX219 xclk and we don't use that camera anyway)
+
+* BNO055 sysfs config (also see https://lwn.net/ml/linux-kernel/20220613120534.36991-9-andrea.merello@iit.it/)
+  - Module is in /lib/modules/6.1.22-ase2024/kernel/drivers/iio/imu
+  $ sudo modprobe bno055_i2c
+  $ echo bno055_i2c 0x28 | sudo tee /sys/bus/i2c/devices/i2c-5/new_device	# register
+  $ echo 0x28 | sudo tee /sys/bus/i2c/devices/i2c-5/delete_device		# unregister
+  - TODO: Where is the sysfs interface?
+  - Also not detected by lsiio (from kernelsource/tools/iio)
+
+modprobe mt7921u
+echo 0846 9060 > /sys/bus/usb/drivers/mt7921u/new_id
+/lib/firmware/mediatek

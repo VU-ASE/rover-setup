@@ -1,0 +1,5 @@
+Typical debix u-boot install command: 
+dd if=imx-boot-imx8mpevk-sd.bin-flash_evk of=/dev/mmcblk1 bs=1k seek=32 conv=fsync
+
+
+
