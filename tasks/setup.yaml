@@ -30,6 +30,7 @@
       - cmake
       - make
       - curl
+      - i2c-tools2
 
 
 # Make dir /home/debix/ase-gocv
