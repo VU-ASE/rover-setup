@@ -1,11 +1,13 @@
 ---
 
-- hosts: all
+
+
+- hosts: cluster
   become: true
   tasks:
     - import_tasks: tasks/setup.yaml
 
-- hosts: all
+- hosts: cluster
   become: true
   roles:
     - role: fubarhouse.golang
@@ -15,7 +17,7 @@
         GOARCH: arm64
 
 
-- hosts: all
+- hosts: cluster
   become: true
   tasks:
     - import_tasks: tasks/network.yaml
@@ -29,6 +31,7 @@
 
 
 - hosts: local
+  when: ansible_env['HOME'] == /home/debix
   become: true
   tags:
     - local
@@ -37,6 +40,7 @@
     - import_tasks: tasks/setup.yaml
 
 - hosts: local
+  when: ansible_env['HOME'] == /home/debix
   become: true
   tags:
     - local
@@ -49,6 +53,7 @@
         GOARCH: arm64
 
 - hosts: local
+  when: ansible_env['HOME'] == /home/debix
   become: true
   tags:
     - local

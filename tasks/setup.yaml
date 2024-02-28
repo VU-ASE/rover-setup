@@ -1,9 +1,15 @@
 ---
 
 
-- name: Change hostname
-  debug:
-    msg: "Will change the hostname to {{ inventory_hostname }}"
+- name: "Change hostname to inventory group name"
+  hostname:
+    name: "{{ group_names[0] }}"
+
+
+- name: Stop gdm3 systemd service
+  systemd_service:
+    name: gdm3
+    state: stopped
 
 
 - name: Update and upgrade apt packages
@@ -16,7 +22,7 @@
 - name: Make sure GO path is in /etc/profile
   lineinfile:
     path: /etc/profile
-    line: export PATH=$PATH:/usr/local/go/bin
+    line: export PATH=$PATH:/usr/local/go/bin:/home/debix/ase-bin
     create: yes
 
 
@@ -30,22 +36,61 @@
       - cmake
       - make
       - curl
-      - i2c-tools2
+      - i2c-tools
       - command-not-found
-      - apt-file i2c-tools
+      - apt-file
       - libi2c-dev
       - less
       - picocom
       - build-essential
       - mpg123
 
+- name: Remove annoying tracker
+  become: true
+  apt:
+    name:
+      - tracker
+      - tracker-extract
+      - tracker-miner-fs
+    state: absent
 
-# Make dir /home/debix/ase-gocv
-- name: Make sure /home/debix/ase-gocv directory exists
+
+- name: Remove superfluous directories
+  file:
+    name: "/home/debix/{{ item }}"
+    state: absent
+  loop:
+    - Desktop
+    - Downloads
+    - Documents
+    - Pictures
+    - Music
+    - Templates
+    - Videos
+    - Public
+
+
+- name: Make sure directories exists
   tags: copy
   file:
-    path: "/home/debix/ase-gocv"
+    path: "{{ item }}"
+    owner: debix
+    group: debix
+    mode: '0755'
     state: directory
+  loop:
+    - /home/debix/ase-gocv
+    - /home/debix/ase-bin
+
+
+- name: Copy runner program 
+  tags: copy
+  copy:
+    src: scripts/runner
+    dest: /home/debix/ase-bin/
+    owner: debix
+    group: debix
+    mode: '777'
 
 
 # TODO

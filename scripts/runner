@@ -1,0 +1,68 @@
+#!/bin/bash
+
+FILE="$1"
+
+function start_program() {
+    echo "🟡 Starting \"$1\"";
+    $1 & pid=$!
+    PID_LIST+=" $pid";
+}
+
+function print_usage() {
+cat << EOF
+    usage: runner <runner_filename>
+
+    This program will start all programs and their arguments as defined in the
+    <runner_filename> file (example below) in parallel. If no file is specified,
+    it will use 'runner.sh' in the current directory. Stopping this program will
+    stop all started programs. All stdouts from the programs will be passed 
+    to the runner's stdout.
+
+    IMPORTANT: Bash builtin commands (like > or |) won't work since the program
+    won't be executed in the context of a bash shell. Only provide the arguments
+    to your program and nothing else.
+
+    EXAMPLE:
+
+    --- runner.sh ---
+    program1 arg1 arg2
+    sleep 1
+    echo Hello World
+
+EOF
+
+    
+    exit 1
+}
+
+
+
+if [ -z "$FILE" ]; then
+    FILE="runner.sh"
+fi
+
+
+if [ ! -r "$FILE" ] || [ ! -s "$FILE" ]; then
+    echo "No such file: '$FILE'"
+    echo ""
+    print_usage
+fi
+
+
+while IFS='' read -r LINE || [ -n "${LINE}" ]; do
+    CMD=$(echo $LINE)
+    if [ -n "$CMD" ]; then start_program "$CMD"; fi
+done < $FILE
+
+trap "kill $PID_LIST" SIGINT SIGHUP SIGTERM SIGQUIT SIGABRT
+
+echo "🟡 All processes have started";
+
+wait $PID_LIST
+
+echo
+echo "🟢 All processes have completed";
+echo
+
+
+
