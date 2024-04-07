@@ -1,0 +1,301 @@
+#!/usr/bin/python3
+
+import os
+import sys
+import yaml
+import hashlib
+import argparse
+import subprocess
+
+config_file = '/home/debix/rover.yaml'
+
+SYS_CTL = '/usr/bin/systemctl'
+ENV_FILE = '/opt/ase.env'
+ENV_FILE_DEFINITION = """
+ASE_SYSMAN_SERVER_ADDRESS=tcp://localhost:1337
+ASE_SYSMAN_BROADCAST_ADDRESS=tcp://localhost:1338
+ASE_LOG_FILE=/home/debix/logs/logs
+"""
+
+
+SERVICE_DIR = '/etc/systemd/system/'
+SERVICE_TEMPLATE = """
+[Unit]
+Description=%s
+PartOf=rover.target
+
+[Service]
+Type=simple
+User=debix
+Group=debix
+EnvironmentFile=/opt/ase.env
+WorkingDirectory=/home/debix/
+ExecStart=%s
+Restart=always
+RestartSec=3
+StartLimitInterval=0
+StartLimitBurst=5
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+"""
+
+ROVER_TARGET = 'rover.target'
+ROVER_TARGET_PATH = SERVICE_DIR + ROVER_TARGET
+ROVER_TARGET_TEMPLATE = """
+[Unit]
+Description=ASE rover utility group
+Documentation=https://docs.ase.vu.nl
+Wants=%s
+
+
+[Install]
+WantedBy=multi-user.target
+"""
+
+
+
+
+def string_hash(some_string):
+    return hashlib.sha256(some_string.encode()).hexdigest()
+
+
+def file_hash(file_name):
+    with open(file_name, 'r') as file:
+        file_as_string = file.read()
+    return string_hash(file_as_string)
+
+
+def update_target(wants):
+    target_definition = ROVER_TARGET_TEMPLATE % wants
+    if os.path.exists(ROVER_TARGET_PATH):
+        if file_hash(ROVER_TARGET_PATH) != string_hash(target_definition):
+            with open(ROVER_TARGET_PATH, 'w') as file:
+                file.write(target_definition)
+    else:
+        with open(ROVER_TARGET_PATH, 'w') as file:
+            file.write(target_definition)
+
+
+
+def check_env_file():
+    with open(ENV_FILE, 'w') as file:
+        file.write(ENV_FILE_DEFINITION)
+
+
+
+def get_existing_services():
+    existing_services = set()
+    # read files in service dir and put contents into a set
+    directory = os.fsencode(SERVICE_DIR)
+    for file in os.listdir(directory):
+        filename = os.fsdecode(file)
+        if filename.startswith("ase-") and filename.endswith(".service"):
+            with open(SERVICE_DIR + filename, 'r') as file:
+                existing_services.add(file.read())
+    return existing_services
+
+
+def cmd_start():
+    global loaded_config
+
+    existing_services = get_existing_services()
+    loaded_services = set()
+
+    loaded_wants = ""
+
+    # put data from rover.yaml into a service file and store as string into set
+    for module in loaded_config:
+        filename = 'ase-' + module['name'].replace(' ', '-').lower() + '.service'
+        loaded_wants += filename + " "
+        service = SERVICE_TEMPLATE % (module['name'], module['cmd'])
+        loaded_services.add(service)
+
+
+    if existing_services != loaded_services:
+        print("🟡 updating services")
+
+        # stop existing services
+        subprocess.run([SYS_CTL, 'stop', ROVER_TARGET, '-q'])
+
+        # remove existing service files and symlinks
+        directory = os.fsencode(SERVICE_DIR)
+        for file in os.listdir(directory):
+            filename = os.fsdecode(file)
+            if filename.startswith("ase-") and filename.endswith(".service"):
+                print(f"removing: {filename}")
+                try:
+                    os.remove(f"{SERVICE_DIR}{filename}")
+                except Exception as e:
+                    print(e)
+
+        # create new service files and symlinks
+        for module in loaded_config:
+            filename = 'ase-' + module['name'].replace(' ', '-').lower() + '.service'
+            service = SERVICE_TEMPLATE % (module['name'], module['cmd'])
+            with open(f"{SERVICE_DIR}{filename}", 'w') as file:
+                print(f"adding: {filename}")
+                file.write(service)
+
+        update_target(loaded_wants)
+        subprocess.run([SYS_CTL, 'daemon-reload', '-q'])
+        subprocess.run([SYS_CTL, 'start', ROVER_TARGET, '-q'])
+
+    else:
+        
+        update_target(loaded_wants)
+        subprocess.run([SYS_CTL, 'daemon-reload', '-q'])
+        subprocess.run([SYS_CTL, 'start', ROVER_TARGET, '-q'])
+
+    print(f"🟢 applied configuration from {config_file}")
+
+
+
+def cmd_stop():
+    subprocess.run([SYS_CTL, 'stop', ROVER_TARGET, '-q'])
+    print("🔴 stopped rover")
+
+
+def cmd_enable():
+    cmd_start()
+    subprocess.run([SYS_CTL, 'enable', ROVER_TARGET, '-q'])
+    print("🟢 enabled rover")
+
+
+def cmd_disable():
+    subprocess.run([SYS_CTL, 'stop', ROVER_TARGET, '-q'])
+    print("🔴 disabled rover")
+
+
+def cmd_restart():
+    cmd_start()
+    subprocess.run([SYS_CTL, 'restart', ROVER_TARGET, '-q'])
+    print(f"🟢 restarted rover")
+
+
+def cmd_status():
+    print(f"🟡 existing services:")
+    for service in get_existing_services():
+        service = service.split("\n")
+        service_string = ""
+        for line in service:
+            if "Description" in line:
+                service_string += line
+            if "Exec" in line:
+                service_string += f"\n{line}\n"
+        print(service_string)
+
+    result = subprocess.run([SYS_CTL, 'status', ROVER_TARGET, '-q'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+    print(f"\n🟡 status: \n{result}\n")
+
+
+def cmd_watch():
+    global watch_service
+    available_services = []
+    directory = os.fsencode(SERVICE_DIR)
+    for file in os.listdir(directory):
+        filename = os.fsdecode(file)
+        if filename.startswith("ase-") and filename.endswith(".service"):
+            available_services.append(filename[:-8])
+
+    if watch_service not in available_services:
+        print(f"🔴 no such service '{watch_service}'")
+        print("   available services:\n")
+        for service in available_services:
+            print(f"      {service}")
+        print("")
+        exit(1)
+
+    command = ["journalctl", "-u", watch_service, "-f"]
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+    for line in iter(process.stdout.readline, b''):
+        print(line.decode('utf-8'), end='', flush=True)
+
+    process.wait()
+
+
+def setup_args():
+    global parser
+    parser = argparse.ArgumentParser(description="""
+    Manage the rover with one idempotent command. Reads a "rover.yaml" file in the home directory where you specify which programs to run. Simply use the "rover [start/stop]" commands to start or stop all commands. Using "rover [enable/disable]" is the same as start/stop, however it will make sure all of the programs stay running even if they crash and start on boot.
+    """)
+
+    parser.add_argument('-f', help='Optionally specify custom file path, default is /home/debix/rover.yaml', default=config_file, dest='file')
+
+    subparsers = parser.add_subparsers(dest='command')
+
+    parser_start = subparsers.add_parser('start', help='Start all services. If there is a different previous configuration, it will be stopped and the new one will be started.')
+    parser_start.set_defaults(func=cmd_start)
+
+    parser_stop = subparsers.add_parser('stop', help='Stop all services.')
+    parser_stop.set_defaults(func=cmd_stop)
+
+    parser_watch = subparsers.add_parser('watch', help='Watch the live stdout of a service, especially useful for debugging!')
+    parser_watch.set_defaults(func=cmd_watch)
+    parser_watch.add_argument('service', help='Name of the service to watch.')
+
+    parser_restart = subparsers.add_parser('restart', help='Restart all currently loaded services.')
+    parser_restart.set_defaults(func=cmd_restart)
+
+    parser_enable = subparsers.add_parser('enable', help='Start all services as daemons, will persist upon restart. If there is a previous configuration it will be disabled and the new one will be enabled.')
+    parser_enable.set_defaults(func=cmd_enable)
+
+    parser_disable = subparsers.add_parser('disable', help='Disable all service daemons.')
+    parser_disable.set_defaults(func=cmd_disable)
+
+    parser_status = subparsers.add_parser('status', help='View the status of the currently loaded services.')
+    parser_status.set_defaults(func=cmd_status)
+
+    return parser.parse_args()
+
+
+
+def check_user():
+    if not os.geteuid() == 0:
+        sys.exit("\nUtility must be run as root, with sudo\n")
+
+ACCEPTABLE_KEYS = ['name', 'cmd']
+
+def validate_config(loaded_config):
+    for module in loaded_config:
+        for key in module.keys():
+            if key not in ACCEPTABLE_KEYS:
+                raise ValueError(f"YAML error: unrecognized key '{key}'")
+            if not key:
+                raise ValueError(f"YAML error: found an empty key")
+
+
+def setup_config_file(args):
+    global parser, config_file
+    if not args.command:
+        parser.print_help()
+        exit(1)
+
+    if args.file:
+        config_file = args.file
+
+    try:
+        with open(config_file, 'r') as file:
+            loaded_config = yaml.safe_load(file)
+
+            validate_config(loaded_config)
+            return loaded_config
+    except Exception as e:
+        print(f"Error: '{e}'")
+        exit(1)
+
+check_user()
+check_env_file()
+
+args = setup_args()
+loaded_config = setup_config_file(args)
+
+
+if args.command == 'watch':
+    watch_service = args.service
+
+args.func()
+
+

@@ -1,0 +1,10 @@
+
+
+
+* fetch-modules needs sudo 
+* test more and make fixes
+
+
+todo for the sudoless stuff:
+sudo gpasswd -a debix i2c
+and add exec on binaries for group

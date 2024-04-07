@@ -1,0 +1,238 @@
+---
+
+- name: "Change hostname to inventory group name"
+  tags: setup
+  hostname:
+    name: "{{ group_names | select('match', 'rover') | first }}"
+
+
+
+- name: Stop gnome systemd service
+  tags:
+    - setup 
+  systemd_service:
+    name: "{{ item }}"
+    state: stopped
+  loop:
+    - gdm
+    - gdm3
+  ignore_errors: true
+
+- name: Disable gnome systemd service
+  tags:
+    - setup
+  systemd_service:
+    name: "{{ item }}"
+    enabled: false
+  loop:
+    - gdm
+    - gdm3
+  ignore_errors: true
+
+
+- name: Rename gdm* service files for good
+  tags:
+    - setup
+  become: true
+  command: "{{ item }}"
+  loop:
+    - "mv /usr/lib/systemd/system/gdm.service /usr/lib/systemd/system/gdm.service.bak"
+    - "mv /usr/lib/systemd/system/gdm3.service /usr/lib/systemd/system/gdm3.service.bak"
+  ignore_errors: true
+
+
+
+- name: Disable gdm-session-workers
+  become: true
+  tags:
+    - setup
+  lineinfile:
+    path: /etc/gdm3/custom.conf
+    regexp: '^{{ item }}'
+    line: '# {{ item }}'
+  loop:
+    - "  AutomaticLoginEnable = true"
+    - "  AutomaticLogin = debix"
+
+
+- name: Update and upgrade apt packages
+  tags: setup
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: Make sure GO path is in /etc/profile
+  tags: setup
+  lineinfile:
+    path: /etc/profile.d/ase-env.sh
+    line: export PATH=$PATH:/usr/local/go/bin:/home/debix/ase/bin:/home/debix/bin
+    create: true
+    mode: '0755'
+
+
+- name: Remove annoying tracker
+  tags: setup
+  become: true
+  apt:
+    name:
+      - tracker
+      - tracker-extract
+      - tracker-miner-fs
+    state: absent
+
+
+- name: Remove superfluous directories
+  tags:
+    - setup
+    - files
+  file:
+    name: "/home/debix/{{ item }}"
+    state: absent
+  loop:
+    - Desktop
+    - Downloads
+    - Documents
+    - Pictures
+    - Music
+    - Templates
+    - Videos
+    - Public
+
+
+- name: Make sure directories exists
+  tags:
+    - setup
+    - files
+  file:
+    path: "{{ item }}"
+    owner: debix
+    group: debix
+    mode: '0755'
+    state: directory
+  loop:
+    - /home/debix/ase
+    - /home/debix/ase/linux
+    - /home/debix/ase/linux/kernel
+    - /home/debix/ase/linux/dtbs
+    - /home/debix/ase/bin
+    - /home/debix/ase/build
+    # - /home/debix/ase/user
+    # - /home/debix/ase/config
+
+
+- name: Add user debix to group i2c
+  tags:
+    - setup
+  become: yes
+  user:
+    name: debix
+    groups: i2c
+    append: yes
+
+
+- name: Copy contents of home_debix
+  tags:
+    - setup
+    - files
+  copy:
+    src: home_debix/
+    dest: /home/debix/
+    owner: debix
+    group: debix
+    mode: '755'
+
+- name: Create symbolic links
+  tags:
+    - setup
+    - files
+  file:
+    src: "/home/debix/ase/bin/{{ item }}"
+    dest: "/usr/local/bin/{{ item }}"
+    state: link
+  loop:
+    - "fetch-modules"
+    - "rover"
+
+- name: Run fetch-modules script
+  tags:
+    - setup
+  become: true
+  shell: /home/debix/ase/bin/fetch-modules
+
+
+- name: Copy additional sudoers file
+  tags:
+    - setup
+    - files
+  copy:
+    src: misc-files/path_update
+    dest: /etc/sudoers.d/
+    owner: root
+    group: root
+    mode: '440'
+
+- name: Copy ase.env file
+  tags:
+    - setup
+    - files
+  become: true
+  copy:
+    src: misc-files/ase.env
+    dest: /opt/
+    owner: root
+    group: root
+    mode: '666'
+
+
+
+# This task MUST run after service files have been copied
+- name: Change default value for servo-trim
+  tags:
+    - setup
+    - files
+  lineinfile:
+    path: /home/debix/services/mod-Actuator.yaml
+    regexp: '^    default:'
+    line: '    default: {{ servo_trim }}'
+    backrefs: yes
+
+
+
+
+# GOCV STUFF
+
+- name: Extract include archive
+  tags:
+    - setup
+    - files
+  become: true
+  unarchive:
+    src: /home/debix/ase/archives/{{ item }}.tar.xz
+    dest: /home/debix/ase/archives/
+    remote_src: yes
+  loop:
+    - include
+    - lib
+
+- name: Copy gocv files into place
+  tags:
+    - setup
+    - files
+  become: true
+  copy:
+    remote_src: true
+    src: /home/debix/ase/archives/{{ item }}/
+    dest: /usr/local/{{ item }}/
+  loop:
+    - include
+    - lib
+
+- name: Move lib's symlinks 
+  tags:
+    - setup
+    - files
+  become: true
+  shell: "mv /home/debix/ase/archives/lib/libopencv_* /usr/local/lib/"
+
+

@@ -1,0 +1,38 @@
+---
+
+- name: Set netplan configuration file
+  tags: network
+  become: true
+  copy:
+    dest: /etc/netplan/01-netcfg.yaml
+    content: |
+      network:
+        version: 2
+        renderer: networkd
+        ethernets:
+          ens33:
+            dhcp4: no
+            addresses:
+              - {{ custom_address }}/24
+            nameservers:
+              addresses: [192.168.0.1, 1.1.1.1]
+        wifis:
+          wlan0:
+            dhcp4: no
+            dhcp6: no
+            access-points:
+              "aselabs":
+                password: "{{ wifi_password }}"
+            addresses:
+              - {{ custom_address }}/24
+            routes:
+              - to: default
+                via: 192.168.0.1
+            nameservers:
+              addresses: [192.168.0.1, 1.1.1.1]
+
+- name: Apply netplan
+  tags: network
+  become: true
+  shell: netplan apply
+

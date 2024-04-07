@@ -1,0 +1,116 @@
+#!/usr/local/bin/python
+
+import os
+import sys
+import stat
+import requests
+import subprocess
+from html.parser import HTMLParser
+from urllib.request import urlretrieve
+
+
+if not os.geteuid() == 0:
+    sys.exit("\nUtility must be run as root, with sudo\n")
+
+
+SYS_CTL = '/usr/bin/systemctl'
+SERVICE_NAME = 'battery-monitor-ase.service'
+SERVICE_FILENAME = '/etc/systemd/system/' + SERVICE_NAME
+SERVICE_DEFINITION = """
+[Unit]
+Description=Mandated battery monitor for ASE rovers to prevent battery damage
+
+[Service]
+Type=simple
+User=root
+Group=root
+EnvironmentFile=/opt/ase.env
+WorkingDirectory=/home/debix/
+ExecStart=/home/debix/ase/bin/mod-BatterySensor -service-yaml /home/debix/ase/services/mod-BatterySensor.yaml -debug
+Restart=always
+RestartSec=3
+StartLimitInterval=0
+StartLimitBurst=5
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+"""
+
+# This script will fetch the latest releases for any module program from downloads.ase.vu.nl
+# Programs will be stored in /home/debix/bin and a symlink will be created in the 
+# /usr/local/bin/ directory so that they are in root's PATH variable.
+#
+# It also makes sure that the mod-BatterySensor is installed and enabled as a service. The
+# reason for installing it here (instead of directly in ansible) is since the 
+# BatterySensor can update, the service must be updated as well.
+
+module_paths = []
+
+bin_path = "/home/debix/bin/"
+
+downloads_base_url = "https://downloads.ase.vu.nl"
+response = requests.get(downloads_base_url)
+
+
+def install_battery_sensor():
+	with open(SERVICE_FILENAME, 'w') as file:
+		file.write(SERVICE_DEFINITION)
+
+	subprocess.run([SYS_CTL, 'daemon-reload', '-q'])
+	subprocess.run([SYS_CTL, 'enable', SERVICE_NAME, '-q'])
+	subprocess.run([SYS_CTL, 'start', SERVICE_NAME, '-q'])
+
+
+class MyHTMLParser(HTMLParser):
+	def handle_starttag(self, tag, attrs):
+		if tag == 'a':
+			for attr in attrs:
+				if "href" in attr[0] and "/api/mod" in attr[1]:
+					module_paths.append(attr[1])
+
+
+if response.status_code != 200:
+	print(f"Failed to fetch the downloads page. Status code: {response.status_code}")
+	exit(1)
+
+
+parser = MyHTMLParser()
+parser.feed(response.text)
+
+
+def stop_battery_sensor():
+	subprocess.run([SYS_CTL, 'stop', SERVICE_NAME, '-q'])
+
+
+for path in module_paths:
+	url = downloads_base_url + path
+	binary_name = path[5:].split("/", 1)[0]
+
+	if binary_name == "mod-BatterySensor":
+		stop_battery_sensor()
+		filename = "/home/debix/ase/bin/mod-BatterySensor"
+	else:
+		filename = f"{bin_path}{binary_name}"
+
+	print(f"Downloading {url} to {filename}")
+	urlretrieve(url, filename)
+
+	st = os.stat(filename)
+	os.chmod(filename, st.st_mode | stat.S_IRWXG | stat.S_IRWXU | stat.S_IRWXO)
+	os.chown(filename, 1000, 1000)
+
+	try:
+		os.remove(f"/usr/local/bin/{binary_name}")
+	except:
+		print("oh well")
+
+	os.symlink(filename, f"/usr/local/bin/{binary_name}")
+	print(f"    Symlinked to /usr/local/bin/{binary_name}")
+
+
+install_battery_sensor()
+
+
+print("Done")
+

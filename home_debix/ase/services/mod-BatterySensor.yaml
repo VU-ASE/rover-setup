@@ -1,0 +1,15 @@
+# This Service will always be running and should not be started as part of the
+# system.
+
+# Service definition
+name: battery
+description: Reads and reports the battery voltage
+
+# Depends on the controller output
+dependencies: []
+
+# No outputs
+outputs:
+  - name: battery-voltage
+    address: tcp://localhost:6000
+

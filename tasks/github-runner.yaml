@@ -1,0 +1,80 @@
+---
+
+# The following installs the Github actions runner as found on Github.
+# To add a self hosted runner go to Organization/Repo -> Settings -> Runner.
+
+- name: Make sure runner directory exists
+  tags: github-runner
+  file:
+    path: "/home/debix/actions-runner"
+    owner: debix
+    group: debix
+    mode: '0755'
+    state: directory
+
+
+- name: Download latest runner package
+  tags: github-runner
+  shell: "curl -o /opt/actions-runner-linux-arm64-2.314.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.314.1/actions-runner-linux-arm64-2.314.1.tar.gz"
+
+
+- name: Extract the installer
+  tags: github-runner
+  unarchive:
+    src: /opt/actions-runner-linux-arm64-2.314.1.tar.gz
+    dest: /home/debix/actions-runner/
+    remote_src: yes
+    owner: debix
+    group: debix
+
+
+- name: Make sure GO path is in runner's env - stupid
+  tags: github-runner
+  lineinfile:
+    path: /home/debix/actions-runner/.env
+    line: PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/debix/ase/bin:/home/debix/bin
+    create: true
+
+
+- name: Install dependencies
+  tags: github-runner
+  become: true
+  package:
+    update_cache: yes
+    name:
+      - docker.io
+      - libglib2.0-dev
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+
+
+- name: Add the user debix to docker group
+  tags: github-runner
+  user:
+    name: debix
+    groups: docker
+    append: yes
+
+# - name: Setup runner
+#   shell: cd /home/debix/actions-runner && ./config.sh --url https://github.com/VU-ASE --token AQ6G3ZVM7WLMOGMBOL3IV63F7LLGE
+
+
+# - name: Start runner
+#   shell: cd /home/debix/actions-runner && ./run.sh
+
+# - name: Install runner service
+#   tags: github-runner
+#   become: true
+#   copy:
+#     src: config/roverbuilder.service
+#     dest: /etc/systemd/system/
+
+# - name: Enable custom service
+#   tags: github-runner
+#   systemd_service:
+#     name: roverbuilder.service
+#     state: started
+#     enabled: true
+#     daemon_reload: true
+
+
