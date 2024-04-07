@@ -66,7 +66,7 @@
   tags: setup
   lineinfile:
     path: /etc/profile.d/ase-env.sh
-    line: export PATH=$PATH:/usr/local/go/bin:/home/debix/ase/bin:/home/debix/bin
+    line: export PATH=$PATH:/usr/local/go/bin:/home/debix/ase/bin
     create: true
     mode: '0755'
 
@@ -117,6 +117,7 @@
     - /home/debix/ase/linux/dtbs
     - /home/debix/ase/bin
     - /home/debix/ase/build
+    - /home/debix/mods
     # - /home/debix/ase/user
     # - /home/debix/ase/config
 

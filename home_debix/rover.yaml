@@ -1,20 +1,17 @@
 
 - name: System Manager
-  cmd: mod-SystemManager -service-yaml /home/debix/services/mod-SystemManager.yaml -debug
+  cmd: mod-SystemManager -service-yaml /home/debix/mods/mod-SystemManager/service.yaml -debug
 
 - name: Transceiver
-  cmd: mod-Transceiver -service-yaml /home/debix/services/mod-Transceiver.yaml -debug
+  cmd: mod-Transceiver -service-yaml /home/debix/mods/mod-Transceiver/service.yaml -debug
 
 - name: Actuator
-  cmd: mod-Actuator -service-yaml /home/debix/services/mod-Actuator.yaml -debug
-
+  cmd: mod-Actuator -service-yaml /home/debix/mods/mod-Actuator/service.yaml -debug
 
 - name: Controller
-  cmd: mod-Controller -service-yaml /home/debix/services/mod-Controller.yaml -debug
+  cmd: mod-Controller -service-yaml /home/debix/mods/mod-Controller/service.yaml -debug
 
-- name: GocvImaging
-  cmd: mod-GocvImaging -service-yaml /home/debix/services/mod-GocvImaging.yaml -debug
+- name: Imaging
+    cmd: mod-Imaging -service-yaml /home/debix/mods/mod-Imaging/service.yaml -debug
 
 
-# - name: Imaging
-#   cmd: mod-Imaging -service-yaml /home/debix/services/mod-Imaging.yaml -debug

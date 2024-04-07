@@ -32,7 +32,7 @@
   tags: github-runner
   lineinfile:
     path: /home/debix/actions-runner/.env
-    line: PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/debix/ase/bin:/home/debix/bin
+    line: PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/debix/ase/bin
     create: true
 
 
