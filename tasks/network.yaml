@@ -31,6 +31,41 @@
             nameservers:
               addresses: [192.168.0.1, 1.1.1.1]
 
+
+- name: Set netplan configuration file
+  tags: network
+  become: true
+  copy:
+    dest: /etc/netplan/02-netcfg.yaml
+    content: |
+      network:
+        version: 2
+        renderer: networkd
+        ethernets:
+          ens33:
+            dhcp4: no
+            addresses:
+              - {{ custom_address }}/24
+            nameservers:
+              addresses: [192.168.0.1, 1.1.1.1]
+        wifis:
+          wlx9418655d12d2:
+            dhcp4: no
+            dhcp6: no
+            access-points:
+              "aselabs":
+                password: "{{ wifi_password }}"
+            addresses:
+              - {{ custom_address }}/24
+            routes:
+              - to: default
+                via: 192.168.0.1
+            nameservers:
+              addresses: [192.168.0.1, 1.1.1.1]
+
+# Todo document this:
+# in order for the debix to use the netgear card we currently have to run netplan apply
+
 - name: Apply netplan
   tags: network
   become: true

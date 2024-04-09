@@ -237,3 +237,42 @@
   shell: "mv /home/debix/ase/archives/lib/libopencv_* /usr/local/lib/"
 
 
+
+# NetGear Wifi adapter stuff
+# Step 1: sudo cp -a /home/debix/ase/archives/mediatek/ /lib/firmware/
+# Step 2: sudo modprobe mt7921u
+# Step 3: echo 0846:9060 | sudo tee /sys/bus/usb/drivers/mt7921u/new_id
+
+
+- name: Copy Netgear Wifi firmware
+  tags:
+    - setup
+    - files
+    - testing
+  become: true
+  copy:
+    src: /home/debix/ase/archives/mediatek/
+    dest: /lib/firmware
+    remote_src: true
+
+- name: Load kernel module mt7921u
+  tags:
+    - setup
+    - testing
+  become: true
+  community.general.modprobe:
+    name: mt7921u
+    state: present
+
+- name: Force driver to use Netgear device ID
+  tags:
+    - setup
+    - testing
+  become: true
+  shell: echo 0846 9060 | sudo tee /sys/bus/usb/drivers/mt7921u/new_id
+
+
+
+
+
+

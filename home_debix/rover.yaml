@@ -12,6 +12,6 @@
   cmd: mod-Controller -service-yaml /home/debix/mods/mod-Controller/service.yaml -debug
 
 - name: Imaging
-    cmd: mod-Imaging -service-yaml /home/debix/mods/mod-Imaging/service.yaml -debug
+  cmd: mod-Imaging -service-yaml /home/debix/mods/mod-Imaging/service.yaml -debug
 
 
