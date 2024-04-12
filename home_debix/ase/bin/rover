@@ -329,6 +329,7 @@ def setup_args():
 
     parser_start = subparsers.add_parser('start', help='Start all services. If there is a different previous configuration, it will be stopped and the new one will be started.')
     parser_start.set_defaults(func=cmd_start)
+    parser_start.add_argument('-y', help='Disable button confirmation', default=False, dest='disableconfirm', action='store_true')
 
     parser_stop = subparsers.add_parser('stop', help='Stop all services.')
     parser_stop.set_defaults(func=cmd_stop)
@@ -339,6 +340,7 @@ def setup_args():
 
     parser_restart = subparsers.add_parser('restart', help='Restart all currently loaded services.')
     parser_restart.set_defaults(func=cmd_restart)
+    parser_restart.add_argument('-y', help='Disable button confirmation', default=False, dest='disableconfirm', action='store_true')
 
     parser_enable = subparsers.add_parser('enable', help='Start all services as daemons, will persist upon restart. If there is a previous configuration it will be disabled and the new one will be enabled.')
     parser_enable.set_defaults(func=cmd_enable)
