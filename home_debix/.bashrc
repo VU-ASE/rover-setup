@@ -123,7 +123,7 @@ if ! shopt -oq posix; then
 fi
 
 # Todo this is probably not the best idea
-alias sudo='sudo env PATH=$PATH'
+# alias sudo='sudo env PATH=$PATH'
 
 alias ..='cd ..'
 
