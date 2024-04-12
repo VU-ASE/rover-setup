@@ -4,12 +4,11 @@
 n=12
 echo $n  > /sys/class/gpio/export
 echo out > /sys/class/gpio/gpio$n/direction
-echo 0   > /sys/class/gpio/gpio$n/value
+
 
 n=13
 echo $n  > /sys/class/gpio/export
-echo out > /sys/class/gpio/gpio$n/direction
-echo 0   > /sys/class/gpio/gpio$n/value
+echo in > /sys/class/gpio/gpio$n/direction
 
 n=86
 echo $n  > /sys/class/gpio/export

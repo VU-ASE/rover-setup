@@ -135,8 +135,8 @@
 - name: Copy contents of home_debix
   tags:
     - setup
-    - testing
     - files
+    - testing
   copy:
     src: home_debix/
     dest: /home/debix/
@@ -161,6 +161,7 @@
     - setup
   become: true
   shell: /home/debix/ase/bin/fetch-modules
+  ignore_errors: true
 
 
 - name: Copy additional sudoers file
@@ -189,15 +190,16 @@
 
 
 # This task MUST run after service files have been copied
-- name: Change default value for servo-trim
-  tags:
-    - setup
-    - files
-  lineinfile:
-    path: /home/debix/services/mod-Actuator.yaml
-    regexp: '^    default:'
-    line: '    default: {{ servo_trim }}'
-    backrefs: yes
+# - name: Change default value for servo-trim
+    # ignore_errors: true
+#   tags:
+#     - setup
+#     - files
+#   lineinfile:
+#     path: /home/debix/services/mods/mod-Actuator/service.yaml
+#     regexp: '^    default:'
+#     line: '    default: {{ servo_trim }}'
+#     backrefs: yes
 
 
 
@@ -249,7 +251,6 @@
   tags:
     - setup
     - files
-    - testing
   become: true
   copy:
     src: /home/debix/ase/archives/mediatek/
@@ -259,7 +260,6 @@
 - name: Load kernel module mt7921u
   tags:
     - setup
-    - testing
   become: true
   community.general.modprobe:
     name: mt7921u
@@ -268,7 +268,6 @@
 - name: Force driver to use Netgear device ID
   tags:
     - setup
-    - testing
   become: true
   shell: echo 0846 9060 | sudo tee /sys/bus/usb/drivers/mt7921u/new_id
 
@@ -277,7 +276,6 @@
 - name: Add boot script to rc.local
   tags:
     - setup
-    - testing
   become: true
   copy:
     dest: /etc/rc.local
