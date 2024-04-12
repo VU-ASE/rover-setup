@@ -135,6 +135,7 @@
 - name: Copy contents of home_debix
   tags:
     - setup
+    - testing
     - files
   copy:
     src: home_debix/
@@ -273,6 +274,39 @@
 
 
 
+- name: Add boot script to rc.local
+  tags:
+    - setup
+    - testing
+  become: true
+  copy:
+    dest: /etc/rc.local
+    content: |
+      #!/bin/sh -e
+      #
+      # rc.local
+      #
+      # This script is executed at the end of each multiuser runlevel.
+      # Make sure that the script will "exit 0" on success or any other
+      # value on error.
+      #
+      # In order to enable or disable this script just change the execution
+      # bits.
+      #
+      # By default this script does nothing.
 
+
+      if [ -e /usr/local/polyhex/bin/polyhex_script ]
+      then
+          /usr/local/polyhex/bin/polyhex_script
+      fi
+      
+      if [ -e /home/debix/ase/bin/on-boot.sh ]
+      then
+          /home/debix/ase/bin/on-boot.sh
+      fi
+
+      exit 0
+      
 
 
