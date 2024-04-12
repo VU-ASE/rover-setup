@@ -31,6 +31,7 @@ Group=debix
 EnvironmentFile=/opt/ase.env
 WorkingDirectory=/home/debix/
 ExecStart=%s
+ExecStartPost=/home/debix/ase/bin/servicedead
 Restart=always
 RestartSec=3
 StartLimitInterval=0

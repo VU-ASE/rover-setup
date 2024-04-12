@@ -28,6 +28,7 @@ Group=root
 EnvironmentFile=/opt/ase.env
 WorkingDirectory=/home/debix/
 ExecStart=/home/debix/mods/mod-BatterySensor/mod-BatterySensor -service-yaml /home/debix/mods/mod-BatterySensor/service.yaml -debug
+ExecStartPost=/home/debix/ase/bin/servicedead
 Restart=always
 RestartSec=3
 StartLimitInterval=0
