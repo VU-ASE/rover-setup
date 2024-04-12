@@ -1,0 +1,27 @@
+#! /usr/bin/python3
+
+import time
+import os
+
+#
+# PCA5555 (GPIO extender over i2c)
+#
+def initialize_gpio():
+    for i in ["0x02 0xfe", "0x03 0x0f", "0x06 0xfe", "0x07 0x0f"]:
+        os.system("i2cset -y 5 0x21 " + i)
+        
+
+# This will run once, to let everyone know that a service exited
+os.system("i2cset -y 5 0x21 0x02 0x00")
+os.system("i2cset -y 5 0x21 0x02 0x01")
+time.sleep(0.02)
+os.system("i2cset -y 5 0x21 0x02 0x00")
+time.sleep(0.1)
+os.system("i2cset -y 5 0x21 0x02 0x01")
+time.sleep(0.02)
+os.system("i2cset -y 5 0x21 0x02 0x00")
+time.sleep(0.1)
+os.system("i2cset -y 5 0x21 0x02 0x01")
+time.sleep(0.02)
+os.system("i2cset -y 5 0x21 0x02 0x00")
+time.sleep(0.1)
