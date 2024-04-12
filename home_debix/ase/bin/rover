@@ -6,6 +6,7 @@ import yaml
 import hashlib
 import argparse
 import subprocess
+import time
 
 config_file = '/home/debix/rover.yaml'
 
@@ -56,6 +57,100 @@ WantedBy=multi-user.target
 """
 
 
+gpiopath = '/sys/class/gpio/gpio13/value'
+
+#
+# PCA5555 (GPIO extender over i2c)
+#
+def initialize_gpio():
+    for i in ["0x02 0xfe", "0x03 0x0f", "0x06 0xfe", "0x07 0x0f"]:
+        os.system("i2cset -y 5 0x21 " + i)
+        
+def wait_for_button_press():
+    odd = True
+    # count how many iterations the button is held
+    iterations_held = 0
+    
+    while True:
+        if odd and iterations_held < 2:
+            # set all LEDs to off 
+            os.system("i2cset -y 5 0x21 0x03 0x00")
+        else:
+             # turn on the red led
+            os.system("i2cset -y 5 0x21 0x03 0x80")
+            if iterations_held > 20:
+                # turn on the orange led permanently
+                os.system("i2cset -y 5 0x21 0x03 0x40")
+            if iterations_held > 30:
+                # turn on the green led permanently
+                os.system("i2cset -y 5 0x21 0x03 0x20")
+            if iterations_held > 40:
+                # turn on the blue led permanently
+                os.system("i2cset -y 5 0x21 0x03 0x10")
+                
+        with open(gpiopath) as f:
+            s = f.read()
+            
+            if "1" in s:
+                iterations_held += 1
+            elif iterations_held < 50:
+                iterations_held = 0
+            else:
+                return
+        
+        odd = not odd
+        time.sleep(0.1)
+        
+def buzzer_countdown():
+    os.system("i2cset -y 5 0x21 0x02 0x00")
+    os.system("i2cset -y 5 0x21 0x02 0x01")
+    time.sleep(0.25)
+    os.system("i2cset -y 5 0x21 0x02 0x00")
+    time.sleep(2)
+    os.system("i2cset -y 5 0x21 0x02 0x01")
+    time.sleep(0.2)
+    os.system("i2cset -y 5 0x21 0x02 0x00")
+    time.sleep(2)
+    os.system("i2cset -y 5 0x21 0x02 0x01")
+    time.sleep(0.1)
+    os.system("i2cset -y 5 0x21 0x02 0x00")
+    time.sleep(1)
+    
+def buzzer_alarm():
+    while True:
+        os.system("i2cset -y 5 0x21 0x02 0x01")
+        time.sleep(0.05)
+        os.system("i2cset -y 5 0x21 0x02 0x00")
+        time.sleep(0.1)
+        os.system("i2cset -y 5 0x21 0x02 0x01")
+        time.sleep(0.2)
+        os.system("i2cset -y 5 0x21 0x02 0x00")
+        time.sleep(0.1)
+
+def confirm_startup():
+    try:
+        initialize_gpio()
+        # Set the buzzer to off
+        os.system("i2cset -y 5 0x21 0x02 0x00")
+        wait_for_button_press()        
+        # set all LEDs to off 
+        os.system("i2cset -y 5 0x21 0x03 0x00")
+        buzzer_countdown()
+    except KeyboardInterrupt:
+        print("Exiting")
+        # set all LEDs to off 
+        os.system("i2cset -y 5 0x21 0x03 0x00")
+        # Turn off the buzzer
+        os.system("i2cset -y 5 0x21 0x02 0x00")
+    except Exception as e:
+        print("An error occured: " + str(e))
+        os.system("i2cset -y 5 0x21 0x03 0x00")
+        try:
+            buzzer_alarm()
+        except KeyboardInterrupt:
+            print("Exiting")
+            os.system("i2cset -y 5 0x21 0x02 0x00")
+            os.system("i2cset -y 5 0x21 0x02 0x00")
 
 
 def string_hash(some_string):
@@ -99,7 +194,11 @@ def get_existing_services():
 
 
 def cmd_start():
-    global loaded_config
+    global loaded_config, args
+    
+    if not args.disableconfirm:
+        print("🟡 press the button to confirm startup")
+        confirm_startup()
 
     existing_services = get_existing_services()
     loaded_services = set()
@@ -224,6 +323,7 @@ def setup_args():
     """)
 
     parser.add_argument('-f', help='Optionally specify custom file path, default is /home/debix/rover.yaml', default=config_file, dest='file')
+    parser.add_argument('-y', help='Disable button confirmation', default=False, dest='disableconfirm')
 
     subparsers = parser.add_subparsers(dest='command')
 
