@@ -266,6 +266,7 @@
   community.general.modprobe:
     name: mt7921u
     state: present
+  ignore_errors: true
 
 - name: Force driver to use Netgear device ID
   tags:
@@ -273,6 +274,7 @@
     - network
   become: true
   shell: echo 0846 9060 | sudo tee /sys/bus/usb/drivers/mt7921u/new_id
+  ignore_errors: true
 
 
 

@@ -3,8 +3,8 @@
 - hosts: fleet
   become: true
   tasks:
-    - import_tasks: tasks/setup.yaml
     - import_tasks: tasks/dependencies.yaml
+    - import_tasks: tasks/setup.yaml
     - import_tasks: tasks/kernel.yaml
 
 

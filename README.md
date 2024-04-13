@@ -15,6 +15,11 @@ wget --no-cache -q -O - https://raw.githubusercontent.com/VU-ASE/rover-setup/mai
 - Install newer kernel, Niels help?
 
 
+# Steps
+* Inside the ase-dev container run the cross-compile script `cd kernel && ./cross-compile-kernel.sh`
+
+* `cd .. && make`
+
 
 # Compiling 6.1.22 Kernel with custom configurations
 This step involves cross compiling a kernel build from a debix supplied branch https://github.com/debix-tech/linux/tree/Model_AB-L6.1.22.
