@@ -275,16 +275,13 @@ def cmd_restart():
 
 
 def cmd_status():
-    print(f"🟡 existing services:")
-    for service in get_existing_services():
-        service = service.split("\n")
-        service_string = ""
-        for line in service:
-            if "Description" in line:
-                service_string += line
-            if "Exec" in line:
-                service_string += f"\n{line}\n"
-        print(service_string)
+    global watch_service
+    directory = os.fsencode(SERVICE_DIR)
+    for file in os.listdir(directory):
+        filename = os.fsdecode(file)
+        if filename.startswith("ase-") and filename.endswith(".service"):
+            result = subprocess.run([SYS_CTL, 'status', filename[:-8], '-q'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+            print(f"\n🟡 status: \n{result}\n")
 
     result = subprocess.run([SYS_CTL, 'status', ROVER_TARGET, '-q'], stdout=subprocess.PIPE).stdout.decode('utf-8')
     print(f"\n🟡 status: \n{result}\n")

@@ -16,6 +16,7 @@ wget --no-cache -q -O - https://raw.githubusercontent.com/VU-ASE/rover-setup/mai
 
 
 # Steps
+* `ansible-galaxy install fubarhouse.golang`
 * Inside the ase-dev container run the cross-compile script `cd kernel && ./cross-compile-kernel.sh`
 
 * `cd .. && make`
