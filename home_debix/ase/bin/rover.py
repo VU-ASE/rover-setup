@@ -65,8 +65,101 @@ gpiopath = '/sys/class/gpio/gpio13/value'
 def initialize_gpio():
     for i in ["0x02 0xfe", "0x03 0x0f", "0x06 0xfe", "0x07 0x0f"]:
         os.system("i2cset -y 5 0x21 " + i)
+    
+# Index is a number between 0 and 3 (inclusive)
+def turn_on_led(index):
+    if index > 3 or index < 0:
+        return
+
+    if index == 0:
+        # turn on the red led
+        os.system("i2cset -y 5 0x21 0x03 0x80")
+    elif index == 1:
+        # turn on the orange led 
+        os.system("i2cset -y 5 0x21 0x03 0x40")
+    elif index == 2:
+        # turn on the green led
+        os.system("i2cset -y 5 0x21 0x03 0x20")
+    elif index == 3:
+        # turn on the blue led
+        os.system("i2cset -y 5 0x21 0x03 0x10")
+        
+# turns off all LEDs
+def turn_off_leds():
+    os.system("i2cset -y 5 0x21 0x03 0x00")
+    
+def buzzer_on():
+    os.system("i2cset -y 5 0x21 0x02 0x01")
+    
+def buzzer_off():
+    os.system("i2cset -y 5 0x21 0x02 0x00")
+    
+def button_pressed():    
+    with open(gpiopath) as f:
+        s = f.read()
+        
+        if "1" in s:
+            return True
+        else:
+            return False
+    
+# This function returns a 0, 1 or 2 (depending on the item cycled through)
+# this can be useful to select the program to run
+def select_program():
+    selected_program = 0
+    
+    # We want not to cycle during holding the button
+    # one press should cycle to the next program
+    button_held_iterations = 0
+    
+    odd = True
+    while True:
+        # blink the red light continuously
+        if odd:
+            turn_off_leds()
+        else:
+            turn_on_led(0)
+            
+        pressed = button_pressed()
+        if pressed and button_held_iterations < 20:
+            button_held_iterations += 1
+        elif pressed and button_held_iterations >= 20:
+            return selected_program
+        elif not pressed and button_held_iterations > 0 and button_held_iterations < 20:
+            selected_program = (selected_program + 1) % 3
+            button_held_iterations = 0
+        elif not pressed:
+            button_held_iterations = 0
+            
+        if selected_program == 0:
+            # blink the orange light
+            turn_on_led(1)
+        elif selected_program == 1:
+            # blink the green light
+            turn_on_led(2)
+        elif selected_program == 2:
+            # blink the blue light
+            turn_on_led(3)
+            
+        odd = not odd
+            
+        time.sleep(0.1)
+
+def notify_program_selected(selected_program):
+    iterations = selected_program + 1
+    for i in range(iterations):
+        buzzer_off()
+        buzzer_on()
+        time.sleep(0.5)
+        buzzer_off()
+        time.sleep(0.2)
+    
         
 def wait_for_button_press():
+    # Make sure that the button is not held when the function is called
+    while button_pressed():
+        time.sleep(0.1)
+    
     odd = True
     # count how many iterations the button is held
     iterations_held = 0
@@ -74,19 +167,19 @@ def wait_for_button_press():
     while True:
         if odd and iterations_held < 2:
             # set all LEDs to off 
-            os.system("i2cset -y 5 0x21 0x03 0x00")
+            turn_off_leds()
         else:
              # turn on the red led
-            os.system("i2cset -y 5 0x21 0x03 0x80")
+            turn_on_led(0)
             if iterations_held > 20:
                 # turn on the orange led permanently
-                os.system("i2cset -y 5 0x21 0x03 0x40")
+                turn_on_led(1)
             if iterations_held > 30:
                 # turn on the green led permanently
-                os.system("i2cset -y 5 0x21 0x03 0x20")
+                turn_on_led(2)
             if iterations_held > 40:
                 # turn on the blue led permanently
-                os.system("i2cset -y 5 0x21 0x03 0x10")
+                turn_on_led(3)
                 
         with open(gpiopath) as f:
             s = f.read()
@@ -99,58 +192,61 @@ def wait_for_button_press():
                 return
         
         odd = not odd
-        time.sleep(0.1)
+        time.sleep(0.05)
         
 def buzzer_countdown():
-    os.system("i2cset -y 5 0x21 0x02 0x00")
-    os.system("i2cset -y 5 0x21 0x02 0x01")
+    buzzer_off()
+    buzzer_on()
     time.sleep(0.25)
-    os.system("i2cset -y 5 0x21 0x02 0x00")
+    buzzer_off()
     time.sleep(2)
-    os.system("i2cset -y 5 0x21 0x02 0x01")
+    buzzer_on()
     time.sleep(0.2)
-    os.system("i2cset -y 5 0x21 0x02 0x00")
+    buzzer_off()
     time.sleep(2)
-    os.system("i2cset -y 5 0x21 0x02 0x01")
+    buzzer_on()
     time.sleep(0.1)
-    os.system("i2cset -y 5 0x21 0x02 0x00")
+    buzzer_off()
     time.sleep(1)
     
 def buzzer_alarm():
     while True:
-        os.system("i2cset -y 5 0x21 0x02 0x01")
+        buzzer_on()
         time.sleep(0.05)
-        os.system("i2cset -y 5 0x21 0x02 0x00")
+        buzzer_off()
         time.sleep(0.1)
-        os.system("i2cset -y 5 0x21 0x02 0x01")
+        buzzer_on()
         time.sleep(0.2)
-        os.system("i2cset -y 5 0x21 0x02 0x00")
+        buzzer_off()
         time.sleep(0.1)
 
 def confirm_startup():
     try:
         initialize_gpio()
         # Set the buzzer to off
-        os.system("i2cset -y 5 0x21 0x02 0x00")
+        buzzer_off()
+        selected = select_program()
+        notify_program_selected(selected)
         wait_for_button_press()        
         # set all LEDs to off 
-        os.system("i2cset -y 5 0x21 0x03 0x00")
+        turn_off_leds()
         buzzer_countdown()
+        return selected
     except KeyboardInterrupt:
         print("Exiting")
         # set all LEDs to off 
-        os.system("i2cset -y 5 0x21 0x03 0x00")
+        turn_off_leds()
         # Turn off the buzzer
-        os.system("i2cset -y 5 0x21 0x02 0x00")
+        buzzer_off()
     except Exception as e:
         print("An error occured: " + str(e))
-        os.system("i2cset -y 5 0x21 0x03 0x00")
+        turn_off_leds()
         try:
             buzzer_alarm()
         except KeyboardInterrupt:
             print("Exiting")
-            os.system("i2cset -y 5 0x21 0x02 0x00")
-            os.system("i2cset -y 5 0x21 0x02 0x00")
+            buzzer_off()
+            buzzer_off()
 
 
 def string_hash(some_string):
@@ -195,10 +291,6 @@ def get_existing_services():
 
 def cmd_start():
     global loaded_config, args
-    
-    if not args.disableconfirm:
-        print("🟡 press the button to confirm startup")
-        confirm_startup()
 
     existing_services = get_existing_services()
     loaded_services = set()
@@ -375,6 +467,20 @@ def setup_config_file(args):
 
     if args.file:
         config_file = args.file
+        
+    if not args.disableconfirm:
+        print("🟡 press the button to confirm startup")
+        selected_config = confirm_startup()
+        if selected_config == 0:
+            print("Selected program: 0")
+        elif selected_config == 1:
+            print("Selected program: 1")
+            config_file = '/home/debix/rover1.yaml'
+        elif selected_config == 2:
+            print("Selected program: 2")
+            config_file = '/home/debix/rover2.yaml'
+    else:
+        print("Selected program: 0")
 
     try:
         with open(config_file, 'r') as file:
