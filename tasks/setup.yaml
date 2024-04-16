@@ -33,6 +33,7 @@
 - name: Rename gdm* service files for good
   tags:
     - setup
+    - testing
   become: true
   command: "{{ item }}"
   loop:
@@ -136,7 +137,6 @@
   tags:
     - setup
     - files
-    - testing
   copy:
     src: home_debix/
     dest: /home/debix/
