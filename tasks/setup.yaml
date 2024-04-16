@@ -137,6 +137,7 @@
   tags:
     - setup
     - files
+    - home
   copy:
     src: home_debix/
     dest: /home/debix/

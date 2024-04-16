@@ -15,9 +15,9 @@ if not os.geteuid() == 0:
 
 
 SYS_CTL = '/usr/bin/systemctl'
-SERVICE_NAME = 'battery-monitor-ase.service'
-SERVICE_FILENAME = '/etc/systemd/system/' + SERVICE_NAME
-SERVICE_DEFINITION = """
+BATTERY_SERVICE_NAME = 'battery-monitor-ase.service'
+BATTERY_SERVICE_FILENAME = '/etc/systemd/system/' + BATTERY_SERVICE_NAME
+BATTERY_SERVICE_DEFINITION = """
 [Unit]
 Description=Mandated battery monitor for ASE rovers to prevent battery damage
 
@@ -28,6 +28,31 @@ Group=root
 EnvironmentFile=/opt/ase.env
 WorkingDirectory=/home/debix/
 ExecStart=/home/debix/mods/mod-BatterySensor/mod-BatterySensor -service-yaml /home/debix/mods/mod-BatterySensor/service.yaml -debug
+ExecStartPost=/home/debix/ase/bin/servicedead
+Restart=always
+RestartSec=3
+StartLimitInterval=0
+StartLimitBurst=5
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+"""
+
+
+DISPLAY_SERVICE_NAME = 'display-ase.service'
+DISPLAY_SERVICE_FILENAME = '/etc/systemd/system/' + DISPLAY_SERVICE_NAME
+DISPLAY_SERVICE_DEFINITION = """
+[Unit]
+Description=Fancy stats display for ASE
+
+[Service]
+Type=simple
+User=root
+Group=root
+EnvironmentFile=/opt/ase.env
+WorkingDirectory=/home/debix/
+ExecStart=/home/debix/mods/mod-Display/mod-Display
 ExecStartPost=/home/debix/ase/bin/servicedead
 Restart=always
 RestartSec=3
@@ -53,13 +78,13 @@ downloads_base_url = "https://downloads.ase.vu.nl"
 response = requests.get(downloads_base_url)
 
 
-def install_battery_sensor():
-	with open(SERVICE_FILENAME, 'w') as file:
-		file.write(SERVICE_DEFINITION)
+def install_service(service_definition, service_filename, service_name):
+	with open(service_filename, 'w') as file:
+		file.write(service_definition)
 
 	subprocess.run([SYS_CTL, 'daemon-reload', '-q'])
-	subprocess.run([SYS_CTL, 'enable', SERVICE_NAME, '-q'])
-	subprocess.run([SYS_CTL, 'start', SERVICE_NAME, '-q'])
+	subprocess.run([SYS_CTL, 'enable', service_name, '-q'])
+	subprocess.run([SYS_CTL, 'start', service_name, '-q'])
 
 
 class MyHTMLParser(HTMLParser):
@@ -79,8 +104,8 @@ parser = MyHTMLParser()
 parser.feed(response.text)
 
 
-def stop_battery_sensor():
-	subprocess.run([SYS_CTL, 'stop', SERVICE_NAME, '-q'])
+def stop_service(service_name):
+	subprocess.run([SYS_CTL, 'stop', service_name, '-q'])
 
 
 for path in module_paths:
@@ -101,8 +126,9 @@ for path in module_paths:
 	subprocess.run(['cp', '-rf', tmp_path, mods_dir])
 	subprocess.run(['chown', '-R', 'debix:debix', f"{mods_dir}{binary_name}"])
 
-	if binary_name == "mod-BatterySensor":
-		stop_battery_sensor()
+	if binary_name == "mod-BatterySensor" or binary_name == "mod-Display":
+		stop_service(BATTERY_SERVICE_NAME)
+		stop_service(DISPLAY_SERVICE_NAME)
 
 	bin_file_name = f"{mods_dir}{binary_name}/{binary_name}"
 
@@ -119,7 +145,8 @@ for path in module_paths:
 	print(f"    Symlinked to /usr/local/bin/{binary_name}")
 
 
-install_battery_sensor()
+install_service(BATTERY_SERVICE_DEFINITION, BATTERY_SERVICE_FILENAME, BATTERY_SERVICE_NAME)
+install_service(DISPLAY_SERVICE_DEFINITION, DISPLAY_SERVICE_FILENAME, DISPLAY_SERVICE_NAME)
 
 
 print("Done")
