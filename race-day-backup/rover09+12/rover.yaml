@@ -1,0 +1,13 @@
+
+- name: System Manager
+  cmd: mod-SystemManager -service-yaml /home/debix/mods/mod-SystemManager/service.yaml
+
+- name: Actuator
+  cmd: mod-Actuator -service-yaml /home/debix/mods/mod-Actuator/service.yaml
+
+- name: Imaging
+  cmd: /home/debix/race/mod-Imaging -service-yaml /home/debix/race/mod-Imaging/service.yaml
+
+- name: Controller
+  cmd: /home/debix/race/mod-Controller -service-yaml /home/debix/race/mod-Controller/service.yaml
+
