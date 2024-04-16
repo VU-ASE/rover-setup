@@ -14,4 +14,5 @@
 - name: Imaging
   cmd: mod-Imaging -service-yaml /home/debix/mods/mod-Imaging/service.yaml -debug
 
-
+- name: Display
+  cmd: mod-Display
