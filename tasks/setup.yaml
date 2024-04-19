@@ -101,28 +101,6 @@
     - Public
 
 
-- name: Make sure directories exists
-  tags:
-    - setup
-    - files
-  file:
-    path: "{{ item }}"
-    owner: debix
-    group: debix
-    mode: '0755'
-    state: directory
-  loop:
-    - /home/debix/ase
-    - /home/debix/ase/linux
-    - /home/debix/ase/linux/kernel
-    - /home/debix/ase/linux/dtbs
-    - /home/debix/ase/bin
-    - /home/debix/ase/build
-    - /home/debix/mods
-    # - /home/debix/ase/user
-    # - /home/debix/ase/config
-
-
 - name: Add user debix to group i2c
   tags:
     - setup

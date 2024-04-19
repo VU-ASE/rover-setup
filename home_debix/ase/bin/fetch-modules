@@ -139,7 +139,7 @@ for path in module_paths:
 	try:
 		os.remove(f"/usr/local/bin/{binary_name}")
 	except:
-		print("oh well")
+		print(f"symlink for {binary_name} didn't exist, skipping")
 
 	os.symlink(bin_file_name, f"/usr/local/bin/{binary_name}")
 	print(f"    Symlinked to /usr/local/bin/{binary_name}")

@@ -8,6 +8,15 @@ import argparse
 import subprocess
 import time
 
+
+
+import stat
+import requests
+import zipfile
+from html.parser import HTMLParser
+from urllib.request import urlretrieve
+
+
 config_file = '/home/debix/rover.yaml'
 
 SYS_CTL = '/usr/bin/systemctl'
@@ -55,6 +64,87 @@ Wants=%s
 [Install]
 WantedBy=multi-user.target
 """
+
+
+
+
+
+BATTERY_SERVICE_NAME = 'battery-monitor-ase.service'
+BATTERY_SERVICE_FILENAME = '/etc/systemd/system/' + BATTERY_SERVICE_NAME
+BATTERY_SERVICE_DEFINITION = """
+[Unit]
+Description=Mandated battery monitor for ASE rovers to prevent battery damage
+
+[Service]
+Type=simple
+User=root
+Group=root
+EnvironmentFile=/opt/ase.env
+WorkingDirectory=/home/debix/
+ExecStart=/home/debix/mods/mod-BatterySensor/mod-BatterySensor -service-yaml /home/debix/mods/mod-BatterySensor/service.yaml -debug
+ExecStartPost=/home/debix/ase/bin/servicedead
+Restart=always
+RestartSec=3
+StartLimitInterval=0
+StartLimitBurst=5
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+"""
+
+
+DISPLAY_SERVICE_NAME = 'display-ase.service'
+DISPLAY_SERVICE_FILENAME = '/etc/systemd/system/' + DISPLAY_SERVICE_NAME
+DISPLAY_SERVICE_DEFINITION = """
+[Unit]
+Description=Fancy stats display for ASE
+
+[Service]
+Type=simple
+User=root
+Group=root
+EnvironmentFile=/opt/ase.env
+WorkingDirectory=/home/debix/
+ExecStart=/home/debix/mods/mod-Display/mod-Display
+ExecStartPost=/home/debix/ase/bin/servicedead
+Restart=always
+RestartSec=3
+StartLimitInterval=0
+StartLimitBurst=5
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+"""
+
+module_paths = []
+
+class MyHTMLParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        if tag == 'a':
+            for attr in attrs:
+                if "href" in attr[0] and "/api/mod" in attr[1]:
+                    module_paths.append(attr[1])
+
+
+def install_service(service_definition, service_filename, service_name):
+    with open(service_filename, 'w') as file:
+        file.write(service_definition)
+
+    subprocess.run([SYS_CTL, 'daemon-reload', '-q'])
+    subprocess.run([SYS_CTL, 'enable', service_name, '-q'])
+    subprocess.run([SYS_CTL, 'start', service_name, '-q'])
+
+def stop_service(service_name):
+    subprocess.run([SYS_CTL, 'stop', service_name, '-q'])
+
+class MyHTMLParser(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        if tag == 'a':
+            for attr in attrs:
+                if "href" in attr[0] and "/api/mod" in attr[1]:
+                    module_paths.append(attr[1])
 
 
 gpiopath = '/sys/class/gpio/gpio13/value'
@@ -405,20 +495,78 @@ def cmd_watch():
     process.wait()
 
 
+def cmd_update():
+    global modules_paths
+    print("Downloading and Installing latest modules")
+    downloads_base_url = "https://downloads.ase.vu.nl"
+    response = requests.get(downloads_base_url)
+
+    parser = MyHTMLParser()
+    parser.feed(response.text)
+
+    if response.status_code != 200:
+        print(f"Failed to fetch the downloads page. Status code: {response.status_code}")
+        exit(1)
+
+    for path in module_paths:
+        url = downloads_base_url + path
+        binary_name = path[5:].split("/", 1)[0]
+
+        zip_path = f"/tmp/{binary_name}.zip"
+        tmp_path = f"/tmp/{binary_name}"
+        mods_dir = f"/home/debix/mods/"
+
+        print(f"Downloading {url} to {zip_path}")
+
+        urlretrieve(url, zip_path)
+
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(tmp_path)
+    
+        subprocess.run(['cp', '-rf', tmp_path, mods_dir])
+        subprocess.run(['chown', '-R', 'debix:debix', f"{mods_dir}{binary_name}"])
+
+        if binary_name == "mod-BatterySensor" or binary_name == "mod-Display":
+            stop_service(BATTERY_SERVICE_NAME)
+            stop_service(DISPLAY_SERVICE_NAME)
+
+        bin_file_name = f"{mods_dir}{binary_name}/{binary_name}"
+
+        st = os.stat(bin_file_name)
+        os.chmod(bin_file_name, st.st_mode | stat.S_IRWXG | stat.S_IRWXU | stat.S_IRWXO)
+        os.chown(bin_file_name, 1000, 1000)
+
+        try:
+            os.remove(f"/usr/local/bin/{binary_name}")
+        except:
+            print(f"symlink for {binary_name} didn't exist, skipping")
+
+        os.symlink(bin_file_name, f"/usr/local/bin/{binary_name}")
+        print(f"    Symlinked to /usr/local/bin/{binary_name}")
+
+
+    install_service(BATTERY_SERVICE_DEFINITION, BATTERY_SERVICE_FILENAME, BATTERY_SERVICE_NAME)
+    install_service(DISPLAY_SERVICE_DEFINITION, DISPLAY_SERVICE_FILENAME, DISPLAY_SERVICE_NAME)
+
+
+    print("Done")
+
+
+
 def setup_args():
     global parser
     parser = argparse.ArgumentParser(description="""
-    Manage the rover with one idempotent command. Reads a "rover.yaml" file in the home directory where you specify which programs to run. Simply use the "rover [start/stop]" commands to start or stop all commands. Using "rover [enable/disable]" is the same as start/stop, however it will make sure all of the programs stay running even if they crash and start on boot.
+    Manage the rover with one idempotent command. Reads a "rover.yaml" file in the home directory where you specify which programs to run. Simply use the "rover [start/stop]" commands to start or stop all commands.
     """)
 
     parser.add_argument('-f', help='Optionally specify custom file path, default is /home/debix/rover.yaml', default=config_file, dest='file')
-    parser.add_argument('-y', help='Disable button confirmation', default=False, dest='disableconfirm')
+    parser.add_argument('-y', help='Enable button confirmation', default=False, dest='enable_confirm')
 
     subparsers = parser.add_subparsers(dest='command')
 
     parser_start = subparsers.add_parser('start', help='Start all services. If there is a different previous configuration, it will be stopped and the new one will be started.')
     parser_start.set_defaults(func=cmd_start)
-    parser_start.add_argument('-y', help='Disable button confirmation', default=False, dest='disableconfirm', action='store_true')
+    parser_start.add_argument('-y', help='Enable button confirmation', default=False, dest='enable_confirm', action='store_true')
 
     parser_stop = subparsers.add_parser('stop', help='Stop all services.')
     parser_stop.set_defaults(func=cmd_stop)
@@ -429,7 +577,7 @@ def setup_args():
 
     parser_restart = subparsers.add_parser('restart', help='Restart all currently loaded services.')
     parser_restart.set_defaults(func=cmd_restart)
-    parser_restart.add_argument('-y', help='Disable button confirmation', default=False, dest='disableconfirm', action='store_true')
+    parser_restart.add_argument('-y', help='Enable button confirmation', default=False, dest='enable_confirm', action='store_true')
 
     parser_enable = subparsers.add_parser('enable', help='Start all services as daemons, will persist upon restart. If there is a previous configuration it will be disabled and the new one will be enabled.')
     parser_enable.set_defaults(func=cmd_enable)
@@ -439,6 +587,9 @@ def setup_args():
 
     parser_status = subparsers.add_parser('status', help='View the status of the currently loaded services.')
     parser_status.set_defaults(func=cmd_status)
+    
+    parser_update = subparsers.add_parser('update', help='Download and install the latest modules.')
+    parser_update.set_defaults(func=cmd_update)
 
     return parser.parse_args()
 
@@ -468,7 +619,7 @@ def setup_config_file(args):
     if args.file:
         config_file = args.file
         
-    if not args.disableconfirm:
+    if args.enable_confirm:
         print("🟡 press the button to confirm startup")
         selected_config = confirm_startup()
         if selected_config == 0:
@@ -480,7 +631,7 @@ def setup_config_file(args):
             print("Selected program: 2")
             config_file = '/home/debix/rover2.yaml'
     else:
-        print("Selected program: 0")
+        print(f"Selected config: {config_file}")
 
     try:
         with open(config_file, 'r') as file:
