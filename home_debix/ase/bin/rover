@@ -545,7 +545,10 @@ def cmd_update():
         print(f"    Symlinked to /usr/local/bin/{binary_name}")
 
 
+    print("Installing Battery service...")
     install_service(BATTERY_SERVICE_DEFINITION, BATTERY_SERVICE_FILENAME, BATTERY_SERVICE_NAME)
+
+    print("Installing Display service...")
     install_service(DISPLAY_SERVICE_DEFINITION, DISPLAY_SERVICE_FILENAME, DISPLAY_SERVICE_NAME)
 
 
@@ -623,12 +626,10 @@ def setup_config_file(args):
         print("🟡 press the button to confirm startup")
         selected_config = confirm_startup()
         if selected_config == 0:
-            print("Selected program: 0")
+            config_file = '/home/debix/rover.yaml'
         elif selected_config == 1:
-            print("Selected program: 1")
             config_file = '/home/debix/rover1.yaml'
         elif selected_config == 2:
-            print("Selected program: 2")
             config_file = '/home/debix/rover2.yaml'
     else:
         print(f"Selected config: {config_file}")

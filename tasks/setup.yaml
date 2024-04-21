@@ -33,6 +33,7 @@
 - name: Rename gdm* service files for good
   tags:
     - setup
+    - home
     - testing
   become: true
   command: "{{ item }}"
@@ -57,7 +58,9 @@
 
 
 - name: Update and upgrade apt packages
-  tags: setup
+  tags:
+    - setup
+    - update
   become: true
   apt:
     upgrade: yes
@@ -116,6 +119,7 @@
     - setup
     - files
     - home
+    - testing
   copy:
     src: home_debix/
     dest: /home/debix/
@@ -135,11 +139,12 @@
     - "fetch-modules"
     - "rover"
 
-- name: Run fetch-modules script
+- name: Run Rover update
   tags:
     - setup
+    - testing
   become: true
-  shell: /home/debix/ase/bin/fetch-modules
+  shell: /home/debix/ase/bin/rover update
   ignore_errors: true
 
 
@@ -169,16 +174,17 @@
 
 
 # This task MUST run after service files have been copied
-# - name: Change default value for servo-trim
-    # ignore_errors: true
-#   tags:
-#     - setup
-#     - files
-#   lineinfile:
-#     path: /home/debix/services/mods/mod-Actuator/service.yaml
-#     regexp: '^    default:'
-#     line: '    default: {{ servo_trim }}'
-#     backrefs: yes
+- name: Change default value for servo-trim
+  ignore_errors: true
+  tags:
+    - setup
+    - files
+    - trim
+  lineinfile:
+    path: /home/debix/mods/mod-Actuator/service.yaml
+    regexp: '^    default:'
+    line: '    default: {{ servo_trim }}'
+    backrefs: yes
 
 
 

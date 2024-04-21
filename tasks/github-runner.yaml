@@ -46,6 +46,9 @@
       - libglib2.0-dev
       - libgstreamer1.0-dev
       - libgstreamer-plugins-base1.0-dev
+      - dnsmasq
+      - dnsutils
+      - ldnsutils
 
 
 - name: Add the user debix to docker group
@@ -54,6 +57,11 @@
     name: debix
     groups: docker
     append: yes
+
+
+
+
+
 
 # - name: Setup runner
 #   shell: cd /home/debix/actions-runner && ./config.sh --url https://github.com/VU-ASE --token AQ6G3ZVM7WLMOGMBOL3IV63F7LLGE
