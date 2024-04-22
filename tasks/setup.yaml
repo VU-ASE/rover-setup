@@ -142,7 +142,7 @@
 - name: Run Rover update
   tags:
     - setup
-    - testing
+    - update
   become: true
   shell: /home/debix/ase/bin/rover update
   ignore_errors: true

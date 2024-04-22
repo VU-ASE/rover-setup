@@ -497,6 +497,8 @@ def cmd_watch():
 
 def cmd_update():
     global modules_paths
+    print("Warning: all files in ~/mods/ will be overwritten")
+    time.sleep(2)
     print("Downloading and Installing latest modules")
     downloads_base_url = "https://downloads.ase.vu.nl"
     response = requests.get(downloads_base_url)
