@@ -180,6 +180,8 @@
     - setup
     - files
     - trim
+    - home
+    - update
   lineinfile:
     path: /home/debix/mods/mod-Actuator/service.yaml
     regexp: '^    default:'
