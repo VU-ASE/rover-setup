@@ -495,11 +495,9 @@ def cmd_watch():
     process.wait()
 
 
-def cmd_update():
-    global modules_paths
-    print("Warning: all files in ~/mods/ will be overwritten")
-    time.sleep(2)
-    print("Downloading and Installing latest modules")
+
+def update_modules_legacy():
+    global modules_paths    
     downloads_base_url = "https://downloads.ase.vu.nl"
     response = requests.get(downloads_base_url)
 
@@ -546,6 +544,96 @@ def cmd_update():
         os.symlink(bin_file_name, f"/usr/local/bin/{binary_name}")
         print(f"    Symlinked to /usr/local/bin/{binary_name}")
 
+def update_modules():
+    downloads_base_url = "https://downloads.ase.labs.vu.nl"
+    
+    # Get all repositories
+    response = requests.get(downloads_base_url + "/api/repositories")
+    if response.status_code != 200:
+        print(f"Failed to fetch the software center API. Status code: {response.status_code}")
+        exit(1)
+    
+    repositories = response.json()
+    for repo in repositories:
+        if 'mod-' not in repo['name']:
+            continue
+        
+        # Fetch all releases from this module
+        repodetails_response = requests.get(downloads_base_url + "/api/" + repo['name'])
+        if repodetails_response.status_code != 200:
+            print(f"Failed to fetch the releases for {repo['name']}. Status code: {repodetails_response.status_code}")
+            continue
+        
+        repodetails = repodetails_response.json()
+        
+        # Find the release with one asset
+        release = None
+        for r in repodetails['releases']:
+            if len(r['assets']) == 1:
+                release = r
+                break
+        
+        if release is None:
+            print(f"Tried to download {repo['name']} but no precompiled binaries were uploaded.")
+            continue
+        
+        url = downloads_base_url + "/api/" + repo['name'] + "/" + release['name'] + "/" + str(release['assets'][0]['id'])
+        binary_name = repo['name']
+
+        zip_path = f"/tmp/{binary_name}.zip"
+        tmp_path = f"/tmp/{binary_name}"
+        mods_dir = f"/home/debix/mods/"
+
+        print(f"Downloading {repo['name']}@{release['name']} from {url} to {zip_path}")
+
+        urlretrieve(url, zip_path)
+
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall(tmp_path)
+    
+        subprocess.run(['cp', '-rf', tmp_path, mods_dir])
+        subprocess.run(['chown', '-R', 'debix:debix', f"{mods_dir}{binary_name}"])
+
+        if binary_name == "mod-BatterySensor" or binary_name == "mod-Display":
+            stop_service(BATTERY_SERVICE_NAME)
+            stop_service(DISPLAY_SERVICE_NAME)
+
+        bin_file_name = f"{mods_dir}{binary_name}/{binary_name}"
+
+        st = os.stat(bin_file_name)
+        os.chmod(bin_file_name, st.st_mode | stat.S_IRWXG | stat.S_IRWXU | stat.S_IRWXO)
+        os.chown(bin_file_name, 1000, 1000)
+
+        try:
+            os.remove(f"/usr/local/bin/{binary_name}")
+        except:
+            print(f"symlink for {binary_name} didn't exist, skipping")
+
+        os.symlink(bin_file_name, f"/usr/local/bin/{binary_name}")
+        print(f"    Symlinked to /usr/local/bin/{binary_name}")
+
+    
+
+def cmd_update():
+    global modules_paths
+    print("Warning: all files in ~/mods/ will be overwritten")
+    time.sleep(2)
+    print("Downloading and Installing latest modules")
+    
+    try:
+        print("Attempting to use the new ASE Software Center to download modules.")
+
+        downloads_base_url = "https://downloads.ase.labs.vu.nl"
+        response = requests.get(downloads_base_url)
+        
+        if response.status_code != 200:
+            raise Exception("Failed to fetch the downloads page. Status code: {response.status_code}")
+        else:
+            update_modules()
+    except Exception as e:
+        print(f"Failed to use the new ASE Software Center: {e}")
+        print("Attempting to use the legacy software center to download modules.")
+        update_modules_legacy()
 
     print("Installing Battery service...")
     install_service(BATTERY_SERVICE_DEFINITION, BATTERY_SERVICE_FILENAME, BATTERY_SERVICE_NAME)
