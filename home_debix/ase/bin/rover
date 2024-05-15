@@ -8,8 +8,6 @@ import argparse
 import subprocess
 import time
 
-
-
 import stat
 import requests
 import zipfile
@@ -64,9 +62,6 @@ Wants=%s
 [Install]
 WantedBy=multi-user.target
 """
-
-
-
 
 
 BATTERY_SERVICE_NAME = 'battery-monitor-ase.service'
@@ -379,6 +374,52 @@ def get_existing_services():
     return existing_services
 
 
+
+# Checks if the current script is the same as the latest from downloads manager
+# If the hashes are the same, if they are different the remote is installed
+# and it is requested for the user to re-run the command
+def check_self():
+    downloads_base_url = "https://downloads.ase.vu.nl"
+    rover_path = "/home/debix/ase/bin/rover"
+    rover_url = downloads_base_url + "/api/util-Rover"
+    response = requests.get(rover_url)
+
+    if response.status_code != 200:
+        print(f"[self-check-procedure]: Failed to fetch latest rover from software center. Status Code: {response.status_code}")
+        return
+
+    repo = response.json()
+
+    release = None
+    for r in repo['releases']:
+        if len(r['assets']) == 1:
+            release = r
+            break
+
+        if release is None:
+            print(f"Tried to download {repo['name']} but no precompiled binaries were uploaded.")
+            continue
+
+    url = downloads_base_url + "/api/" + repo['name'] + "/" + release['name'] + "/" + str(release['assets'][0]['id'])
+
+    destination_path = "/tmp/rover.downloaded"
+
+    urlretrieve(url, destination_path)
+
+    new = file_hash(destination_path)
+    current = file_hash(rover_path)
+
+    if new != current:
+        print("installed new rover utility")
+        subprocess.run(['cp', '-f', destination_path, rover_path])
+        subprocess.run(['chown', '-R', 'debix:debix', rover_path])
+    else:
+        print("rover utility is up-to-date")
+
+
+
+
+
 def cmd_start():
     global loaded_config, args
 
@@ -497,7 +538,7 @@ def cmd_watch():
 
 
 def update_modules_legacy():
-    global modules_paths    
+    global modules_paths
     downloads_base_url = "https://downloads.ase.vu.nl"
     response = requests.get(downloads_base_url)
 
@@ -612,9 +653,11 @@ def update_modules():
         os.symlink(bin_file_name, f"/usr/local/bin/{binary_name}")
         print(f"    Symlinked to /usr/local/bin/{binary_name}")
 
-    
+
 
 def cmd_update():
+    check_self()
+
     global modules_paths
     print("Warning: all files in ~/mods/ will be overwritten")
     time.sleep(2)
@@ -640,7 +683,6 @@ def cmd_update():
 
     print("Installing Display service...")
     install_service(DISPLAY_SERVICE_DEFINITION, DISPLAY_SERVICE_FILENAME, DISPLAY_SERVICE_NAME)
-
 
     print("Done")
 
@@ -734,16 +776,25 @@ def setup_config_file(args):
         print(f"Error: '{e}'")
         exit(1)
 
-check_user()
-check_env_file()
-
-args = setup_args()
-loaded_config = setup_config_file(args)
 
 
-if args.command == 'watch':
-    watch_service = args.service
 
-args.func()
+
+
+
+
+if __name__ == "__main__":
+    check_user()
+    check_env_file()
+
+    args = setup_args()
+    loaded_config = setup_config_file(args)
+
+
+    if args.command == 'watch':
+        watch_service = args.service
+
+    args.func()
+
 
 
