@@ -25,10 +25,10 @@
     - import_tasks: tasks/network.yaml
 
 
-- hosts: roverbuilder
-  become: true
-  tasks:
-    - import_tasks: tasks/github-runner.yaml
+# - hosts: roverbuilder
+#   become: true
+#   tasks:
+#     - import_tasks: tasks/github-runner.yaml
 
 
 # ------------------------------------------------------------------
