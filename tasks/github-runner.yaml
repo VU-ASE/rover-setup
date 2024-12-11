@@ -15,13 +15,15 @@
 
 - name: Download latest runner package
   tags: github-runner
-  shell: "curl -o /opt/actions-runner-linux-arm64-2.314.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.314.1/actions-runner-linux-arm64-2.314.1.tar.gz"
+  shell: "curl -o /opt/actions-runner-linux-arm64-2.321.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.321.0/actions-runner-linux-arm64-2.321.0.tar.gz"
+
+
 
 
 - name: Extract the installer
   tags: github-runner
   unarchive:
-    src: /opt/actions-runner-linux-arm64-2.314.1.tar.gz
+    src: /opt/actions-runner-linux-arm64-2.321.0.tar.gz
     dest: /home/debix/actions-runner/
     remote_src: yes
     owner: debix
@@ -61,28 +63,34 @@
 
 
 
-
+# --- ONE TIME SETUP ---
+# Run the following steps on the roverbulider itself instead of
+# through ansible since the ./config requires input
 
 # - name: Setup runner
-#   shell: cd /home/debix/actions-runner && ./config.sh --url https://github.com/VU-ASE --token AQ6G3ZVM7WLMOGMBOL3IV63F7LLGE
+#   tags: one-time-run
+#   shell: cd /home/debix/actions-runner && ./config.sh --url https://github.com/VU-ASE --token AQ6G3ZVI3N3H6OMMFE5RSPLHLH4KU
 
 
 # - name: Start runner
+#   tags: one-time-run
+#   become: true
 #   shell: cd /home/debix/actions-runner && ./run.sh
 
 # - name: Install runner service
-#   tags: github-runner
+#   tags: one-time-run
 #   become: true
 #   copy:
 #     src: config/roverbuilder.service
 #     dest: /etc/systemd/system/
 
 # - name: Enable custom service
-#   tags: github-runner
+#   tags: one-time-run
 #   systemd_service:
 #     name: roverbuilder.service
 #     state: started
 #     enabled: true
 #     daemon_reload: true
+
 
 

@@ -1,5 +1,5 @@
 
-# Custom definitions
+# Custom definitions TODO check these tasks
 - hosts: fleet
   become: true
   tasks:
@@ -25,10 +25,9 @@
     - import_tasks: tasks/network.yaml
 
 
-# - hosts: roverbuilder
-#   become: true
-#   tasks:
-#     - import_tasks: tasks/github-runner.yaml
+- hosts: roverbuilder
+  tasks:
+    - import_tasks: tasks/github-runner.yaml
 
 
 # ------------------------------------------------------------------

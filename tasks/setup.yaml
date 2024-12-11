@@ -107,7 +107,7 @@
 - name: Add user debix to group i2c
   tags:
     - setup
-  become: yes
+  become: true
   user:
     name: debix
     groups: i2c
@@ -127,17 +127,17 @@
     group: debix
     mode: '755'
 
-- name: Create symbolic links
-  tags:
-    - setup
-    - files
-  file:
-    src: "/home/debix/ase/bin/{{ item }}"
-    dest: "/usr/local/bin/{{ item }}"
-    state: link
-  loop:
-    - "fetch-modules"
-    - "rover"
+# - name: Create symbolic links
+#   tags:
+#     - setup
+#     - files
+#   file:
+#     src: "/home/debix/ase/bin/{{ item }}"
+#     dest: "/usr/local/bin/{{ item }}"
+#     state: link
+#   loop:
+#     - "fetch-modules"
+#     - "rover"
 
 - name: Run Rover update
   tags:
@@ -174,19 +174,19 @@
 
 
 # This task MUST run after service files have been copied
-- name: Change default value for servo-trim
-  ignore_errors: true
-  tags:
-    - setup
-    - files
-    - trim
-    - home
-    - update
-  lineinfile:
-    path: /home/debix/mods/mod-Actuator/service.yaml
-    regexp: '^    default:'
-    line: '    default: {{ servo_trim }}'
-    backrefs: yes
+# - name: Change default value for servo-trim
+#   ignore_errors: true
+#   tags:
+#     - setup
+#     - files
+#     - trim
+#     - home
+#     - update
+#   lineinfile:
+#     path: /home/debix/mods/mod-Actuator/service.yaml
+#     regexp: '^    default:'
+#     line: '    default: {{ servo_trim }}'
+#     backrefs: yes
 
 
 

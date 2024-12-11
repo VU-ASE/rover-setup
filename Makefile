@@ -2,15 +2,15 @@
 .PHONY: build start clean test
 
 
-deps:
-	@ansible-galaxy install fubarhouse.golang
+# deps:
+# 	@ansible-galaxy install fubarhouse.golang
 
 
 #
 # You can specify run arguments with runargs, like this:
 # make runargs="--tags local"
 #
-all: deps
+all:
 	ansible-playbook main.yaml --ask-pass -K ${runargs}
 
 
