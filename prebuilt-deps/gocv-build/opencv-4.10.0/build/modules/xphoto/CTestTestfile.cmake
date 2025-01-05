@@ -1,0 +1,10 @@
+# CMake generated Testfile for 
+# Source directory: /home/debix/gocv-buildopencv/opencv_contrib-4.10.0/modules/xphoto
+# Build directory: /home/debix/gocv-buildopencv/opencv-4.10.0/build/modules/xphoto
+# 
+# This file includes the relevant testing commands required for 
+# testing this directory and lists subdirectories to be tested as well.
+add_test(opencv_perf_xphoto "/home/debix/gocv-buildopencv/opencv-4.10.0/build/bin/opencv_perf_xphoto" "--gtest_output=xml:opencv_perf_xphoto.xml")
+set_tests_properties(opencv_perf_xphoto PROPERTIES  LABELS "Extra;opencv_xphoto;Performance" WORKING_DIRECTORY "/home/debix/gocv-buildopencv/opencv-4.10.0/build/test-reports/performance" _BACKTRACE_TRIPLES "/home/debix/gocv-buildopencv/opencv-4.10.0/cmake/OpenCVUtils.cmake;1795;add_test;/home/debix/gocv-buildopencv/opencv-4.10.0/cmake/OpenCVModule.cmake;1274;ocv_add_test_from_target;/home/debix/gocv-buildopencv/opencv-4.10.0/cmake/OpenCVModule.cmake;1134;ocv_add_perf_tests;/home/debix/gocv-buildopencv/opencv_contrib-4.10.0/modules/xphoto/CMakeLists.txt;2;ocv_define_module;/home/debix/gocv-buildopencv/opencv_contrib-4.10.0/modules/xphoto/CMakeLists.txt;0;")
+add_test(opencv_sanity_xphoto "/home/debix/gocv-buildopencv/opencv-4.10.0/build/bin/opencv_perf_xphoto" "--gtest_output=xml:opencv_perf_xphoto.xml" "--perf_min_samples=1" "--perf_force_samples=1" "--perf_verify_sanity")
+set_tests_properties(opencv_sanity_xphoto PROPERTIES  LABELS "Extra;opencv_xphoto;Sanity" WORKING_DIRECTORY "/home/debix/gocv-buildopencv/opencv-4.10.0/build/test-reports/sanity" _BACKTRACE_TRIPLES "/home/debix/gocv-buildopencv/opencv-4.10.0/cmake/OpenCVUtils.cmake;1795;add_test;/home/debix/gocv-buildopencv/opencv-4.10.0/cmake/OpenCVModule.cmake;1275;ocv_add_test_from_target;/home/debix/gocv-buildopencv/opencv-4.10.0/cmake/OpenCVModule.cmake;1134;ocv_add_perf_tests;/home/debix/gocv-buildopencv/opencv_contrib-4.10.0/modules/xphoto/CMakeLists.txt;2;ocv_define_module;/home/debix/gocv-buildopencv/opencv_contrib-4.10.0/modules/xphoto/CMakeLists.txt;0;")

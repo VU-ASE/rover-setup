@@ -1,0 +1,17 @@
+# Target labels
+ Extra
+ opencv_mcc
+ PerfTest
+# Source files and their labels
+/home/debix/gocv-buildopencv/opencv_contrib-4.10.0/modules/mcc/perf/perf_main.cpp
+ Extra
+ opencv_mcc
+ PerfTest
+/home/debix/gocv-buildopencv/opencv_contrib-4.10.0/modules/mcc/perf/perf_mcc.cpp
+ Extra
+ opencv_mcc
+ PerfTest
+/home/debix/gocv-buildopencv/opencv_contrib-4.10.0/modules/mcc/perf/perf_precomp.hpp
+ Extra
+ opencv_mcc
+ PerfTest
