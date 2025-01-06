@@ -17,7 +17,7 @@
       - less
       - picocom
       - build-essential
-      - mpg123
+      - mpg123 
       - tmux
       - python3-pip
       - libglib2.0-dev
