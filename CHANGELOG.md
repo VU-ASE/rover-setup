@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.0.0 (2025-01-06)
+
+
+### Features
+
+* added GoCV debix prebuilt binaries ([2e92b2e](https://github.com/VU-ASE/rover-setup/commit/2e92b2eb54f3beb3d96e5b7d9ac86c8df4eea488))
+* added one time setup ([e3b9d3c](https://github.com/VU-ASE/rover-setup/commit/e3b9d3c09f32fa7f9e6524c0b9c7aa45e0687a9e))
+* added roveryaml selection ([651131f](https://github.com/VU-ASE/rover-setup/commit/651131f4c567b2e83e0f437a2a316e788c237a57))
+* backwards-compatible bridge for `sudo rover update` ([61871a4](https://github.com/VU-ASE/rover-setup/commit/61871a4180d29e048cbed2157c37aa0f6ca3dfab))
+* incorporated button press requirement for rover utility ([f425c3a](https://github.com/VU-ASE/rover-setup/commit/f425c3ab919fd35b42ae33c1c261dfa053615765))
+* latest GoCV build files ([24f7b3c](https://github.com/VU-ASE/rover-setup/commit/24f7b3c6d2615009fceaa992c44f22de100e30ee))
+* notification beep on service quit using `servicedead` ([0e17416](https://github.com/VU-ASE/rover-setup/commit/0e174161b088ae936b6a77e78bca78c7b1eea005))
+
+
+### Bug Fixes
+
+* argparse with -y flag ([7e7bbc6](https://github.com/VU-ASE/rover-setup/commit/7e7bbc6950d9bee0c0357f5cd318c788ec3d1afb))
+* new action system ([d17cb21](https://github.com/VU-ASE/rover-setup/commit/d17cb21dd7520b04ca4d259acab0579eab4f30ec))
+* renamed rover.py to rover ([9f342e4](https://github.com/VU-ASE/rover-setup/commit/9f342e40de65b9c9602266eb390ad110b9758487))
+* updated trim and scaler values for servos ([0234eda](https://github.com/VU-ASE/rover-setup/commit/0234eda94fb75217999179c170cfd6dfa4382142))
+* use corect directory name ([ffd29f7](https://github.com/VU-ASE/rover-setup/commit/ffd29f7dec3d587b290baab8270308e1474b6837))
+* use openCV .so files instead of build files ([d38b1f3](https://github.com/VU-ASE/rover-setup/commit/d38b1f30a2a84edf109f95a823ece2f9081debbf))
+
 ## 1.0.0 (2024-02-28)
 
 
