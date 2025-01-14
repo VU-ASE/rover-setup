@@ -22,7 +22,7 @@ if [ -f "$TEMP_FILE" ]; then
     sudo chown root:root $ROVERD_PATH
     sudo chmod +x $ROVERD_PATH
 
-    >&2 echo "Stopping roverd"
+    >&2 echo "Restarting roverd"
     sudo systemctl restart roverd
     sleep 1
 
