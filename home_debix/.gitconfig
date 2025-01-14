@@ -1,0 +1,6 @@
+[user]
+	name = rover
+	email = ase@vu.nl
+
+[pull]
+	rebase = false

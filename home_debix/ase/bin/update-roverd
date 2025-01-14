@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# This script will download the latest version of roverd and install it.
+# It pauses the roverd service in the process. Make sure not to quite 
+# the script at any time while it is running.
+
+TEMP_FILE=/tmp/roverd
+ROVERD_PATH=/usr/local/bin/roverd
+
+sudo rm $TEMP_FILE 2>/dev/null
+
+>&2 echo "Downloading latest roverd"
+sudo curl -Lo "$TEMP_FILE" https://github.com/VU-ASE/roverd/releases/latest/download/roverd >/dev/null 2>&1
+
+if [ -f "$TEMP_FILE" ]; then
+
+    >&2 echo "Replacing old roverd"
+    sudo rm $ROVERD_PATH
+    sudo mv $TEMP_FILE $ROVERD_PATH
+
+    >&2 echo "Updating permissions"
+    sudo chown root:root $ROVERD_PATH
+    sudo chmod +x $ROVERD_PATH
+
+    >&2 echo "Stopping roverd"
+    sudo systemctl restart roverd
+    sleep 1
+
+else
+    >&2 echo "Could not find temporary file: $TEMP_FILE"
+fi

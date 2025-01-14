@@ -1,0 +1,67 @@
+---
+- name: Install dependencies
+  tags: dependencies
+  become: true
+  package:
+    update_cache: yes
+    name:
+      - libzmq3-dev
+      - zip
+      - make
+      - i2c-tools
+      - command-not-found
+      - apt-file
+      - libi2c-dev
+      - less
+      - vim
+      - picocom
+      - build-essential
+      - mpg123
+      - tmux
+      - python3-pip
+      - libglib2.0-dev
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+      - v4l-utils
+      - unzip
+      - wget
+      - cmake
+      - curl
+      - git
+      - libgtk2.0-dev
+      - pkg-config
+      - libavcodec-dev
+      - libavformat-dev
+      - libswscale-dev
+      - libtbb2
+      - libtbb-dev
+      - libjpeg-dev
+      - libpng-dev
+      - libtiff-dev
+      - libdc1394-dev
+      - ninja-build
+      - alien
+      - rsync
+      - jq
+      # roverlib-c dependencies
+      - libprotobuf-c-dev
+      - libzmq3-dev
+      - libcjson-dev
+
+
+- name: Install Pip dependencies
+  tags: dependencies
+  pip:
+    name:
+      - pyyaml
+
+# Not needed for performance reasons
+- name: Remove Unattended Upgrades
+  tags: dependencies
+  become: true
+  package:
+    update_cache: yes
+    name: unattended-upgrades
+    state: absent
+  ignore_errors: true
+

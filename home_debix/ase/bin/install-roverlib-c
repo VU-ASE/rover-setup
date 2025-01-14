@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ ! -e "/home/debix/ase/roverlib-c" ]; then
+    echo "Cloning roverlib-c"
+    cd /home/debix/ase
+    git clone https://github.com/VU-ASE/roverlib-c.git
+fi
+
+cd /home/debix/ase/roverlib-c
+
+mkdir build
+cd build
+cmake ..
+make
+sudo make install

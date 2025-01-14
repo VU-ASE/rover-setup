@@ -1,0 +1,97 @@
+---
+
+
+# ------------------------------------------
+# Copying custom built kernel files to debix
+# ------------------------------------------
+
+- name: Copy over and install kernel modules
+  tags: kernel
+  unarchive:
+    src: "{{ kernel_dir }}/out/lib/modules/6.1.22-ase2024.tar.gz"
+    dest: /lib/modules
+ 
+# Possibly run a depmod -a
+# or after module errors or a reboot
+
+
+- name: Copy over dtb files
+  tags: kernel
+  copy:
+    src: "{{ item }}"
+    dest: /home/debix/ase/linux/dtbs/
+    owner: debix
+    group: debix
+    mode: '644'
+  loop:
+    - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-evk.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-4g-board.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-core-ar1335.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-core-board.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-core-gc2145.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-core-HC050IG40029-D58V.C.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-core-HC080IY28026-D60V.C.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-core-HC101IK25050-D59V.C.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-core-JW050R0320I01.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-core-JW070R0520B02.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-core-JW080R1120B02.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-core-JW101HD-X00.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-core-ov5640.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-io-board.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-io-HC050IG40029-D58V.C.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-io-HC080IY28026-D60V.C.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-io-HC101IK25050-D59V.C.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-io-imx219.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-io-JW050R0320I01.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-io-JW070R0520B02.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-io-JW080R1120B02.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-io-JW101HD-X00.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-io-raspberrypi-touchscreen.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-lora-board.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-lora-HC050IG40029-D58V.C.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-lora-HC080IY28026-D60V.C.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-lora-HC101IK25050-D59V.C.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-lora-JW050R0320I01.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-lora-JW070R0520B02.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-lora-JW080R1120B02.dtb"
+    # - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-lora-JW101HD-X00.dtb"
+    - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-ase2024-debixboard.dtb"
+
+
+- name: Copy kernel Image to debix
+  tags: kernel
+  copy:
+    src: "{{ kernel_dir }}/arch/arm64/boot/Image"
+    dest: /home/debix/ase/linux/kernel/
+    owner: debix
+    group: debix
+    mode: '644'
+
+
+- name: Install image to debix
+  tags: kernel
+  become: true
+  shell: "cp --no-preserve=mode,ownership /home/debix/ase/linux/kernel/* /boot"
+
+
+- name: Install dtb files
+  tags: kernel
+  become: true
+  shell: "{{ item }}"
+  loop:
+    - "rm /boot/*.dtb"
+    - "cp --no-preserve=mode,ownership /home/debix/ase/linux/dtbs/*.dtb /boot"
+    - "mv /boot/imx8mp-evk.dtb /boot/imx8mp-evk.dtb.orig"
+    - "cp --no-preserve=mode,ownership /home/debix/ase/linux/dtbs/imx8mp-debix-ase2024-debixboard.dtb /boot/imx8mp-evk.dtb"
+
+
+
+
+
+
+
+
+
+
+
+

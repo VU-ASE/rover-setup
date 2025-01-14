@@ -1,0 +1,340 @@
+---
+- name: "Change hostname to inventory group name"
+  tags: setup
+  hostname:
+    name: "{{ group_names | select('match', 'rover') | first }}"
+
+# ------------------------------------------
+# --- Remove unnecessary gnome processes ---
+# ------------------------------------------
+
+- name: Stop gnome systemd service
+  tags:
+    - setup
+  systemd_service:
+    name: "{{ item }}"
+    state: stopped
+  loop:
+    - gdm
+    - gdm3
+  ignore_errors: true
+
+- name: Disable gnome systemd service
+  tags:
+    - setup
+  systemd_service:
+    name: "{{ item }}"
+    enabled: false
+  loop:
+    - gdm
+    - gdm3
+  ignore_errors: true
+
+- name: Rename gdm* service files for good
+  tags:
+    - setup
+    - home
+    - testing
+  become: true
+  command: "{{ item }}"
+  loop:
+    - "mv /usr/lib/systemd/system/gdm.service /usr/lib/systemd/system/gdm.service.bak"
+    - "mv /usr/lib/systemd/system/gdm3.service /usr/lib/systemd/system/gdm3.service.bak"
+  ignore_errors: true
+
+- name: Disable gdm-session-workers
+  become: true
+  tags:
+    - setup
+  lineinfile:
+    path: /etc/gdm3/custom.conf
+    regexp: "^{{ item }}"
+    line: "# {{ item }}"
+  loop:
+    - "  AutomaticLoginEnable = true"
+    - "  AutomaticLogin = debix"
+
+- name: Remove annoying tracker
+  tags: setup
+  become: true
+  apt:
+    name:
+      - tracker
+      - tracker-extract
+      - tracker-miner-fs
+    state: absent
+
+# --------------
+# --- Update ---
+# --------------
+- name: Update and upgrade apt packages
+  tags:
+    - setup
+    - update
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: Make sure GO path is in /etc/profile
+  tags:
+    - setup
+    - files
+    - path
+  lineinfile:
+    path: /etc/profile.d/ase-path.sh
+    line: export PATH=$PATH:/usr/local/go/bin:/home/debix/ase/bin
+    create: true
+    mode: "0755"
+
+# -------------------------
+# --- Edits to home dir ---
+# -------------------------
+
+- name: Remove superfluous directories
+  tags:
+    - setup
+    - files
+  file:
+    name: "/home/debix/{{ item }}"
+    state: absent
+  loop:
+    - Desktop
+    - Downloads
+    - Documents
+    - Pictures
+    - Music
+    - Templates
+    - Videos
+    - Public
+
+- name: Copy contents of home_debix
+  tags:
+    - setup
+    - files
+    - home
+    - testing
+  copy:
+    src: home_debix/
+    dest: /home/debix/
+    owner: debix
+    group: debix
+    mode: "755"
+
+- name: Install roverlib-c
+  tags:
+    - setup
+    - home
+  become: true
+  shell: /home/debix/ase/bin/install-roverlib-c
+
+- name: Add user debix to group i2c
+  tags:
+    - setup
+  become: true
+  user:
+    name: debix
+    groups: i2c
+    append: yes
+
+# - name: Update root's path with path updating script
+#   tags:
+#     - setup
+#     - files
+#     - path
+#   copy:
+#     src: misc-files/path_update.sh
+#     dest: /etc/profile.d/
+#     owner: root
+#     group: root
+#     mode: '440'
+
+# ---------------------------
+# --- The rover info file ---
+# ---------------------------
+- name: Install the /etc/roverd/info.txt
+  tags:
+    - roverd
+  become: true
+  copy:
+    dest: /etc/roverd/info.txt
+    directory_mode: "0755"
+    owner: root
+    group: root
+    content: |
+      {{ rover_id }}
+      {{ rover_name }}
+      {{ rover_password }}
+
+- name: Remove the old /etc/rover file
+  tags:
+    - roverd
+  become: true
+  file:
+    state: absent
+    path: /etc/rover
+
+# -------------------------------
+# --- Add roverd as a Service ---
+# -------------------------------
+
+- name: Download roverd from github
+  tags:
+    - roverd
+  become: true
+  shell: rm /tmp/roverd ; curl -Lo "/tmp/roverd" https://github.com/VU-ASE/roverd/releases/latest/download/roverd
+
+- name: Make it executable and install it
+  tags:
+    - roverd
+  become: true
+  shell: chmod +x /tmp/roverd ;  mv /tmp/roverd /usr/local/bin/roverd
+
+- name: Install the roverd service
+  tags:
+    - roverd
+  become: true
+  copy:
+    dest: /etc/systemd/system/roverd.service
+    content: |
+      [Unit]
+      Description=Daemon that manages rover
+      After=network.target
+
+      [Service]
+      ExecStart=/usr/local/bin/roverd
+      Restart=always
+      RestartSec=1
+      RemainAfterExit=no
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Restart the roverd service
+  tags:
+    - roverd
+  become: true
+  ansible.builtin.systemd_service:
+    name: roverd
+    state: restarted
+    enabled: true
+    daemon_reload: true
+
+# - name: TODO - Set the servo trim for all actuator versions
+#   tags:
+#     - setup
+#     - files
+#     - trim
+#     - home
+#     - update
+#   lineinfile:
+#     path: /home/debix/mods/mod-Actuator/service.yaml
+#     regexp: '^    default:'
+#     line: '    default: {{ servo_trim }}'
+#     backrefs: yes
+
+# ----------------------
+# --- OpenCV install ---
+# ----------------------
+
+# The compressed OpenCV lib files get uncompressed into the prebuilt-deps directory.
+# After that their contents can be appended to their respective directories.
+- name: Extract OpenCV archives
+  tags:
+    - setup
+    - files
+  become: true
+  unarchive:
+    src: "/home/debix/ase/prebuilt-deps/opencv/{{ item }}"
+    dest: /home/debix/ase/prebuilt-deps/
+    remote_src: yes
+  loop:
+    - usr-local-include.tar.xz
+    - usr-local-lib.tar.xz
+
+- name: Append contents of OpenCV to respective destination
+  tags:
+    - setup
+    - files
+  become: true
+  copy:
+    src: "/home/debix/ase/prebuilt-deps/{{ item }}/"
+    dest: "/usr/local/{{ item }}/"
+    remote_src: yes
+    directory_mode: "0755"
+    mode: preserve
+    owner: root
+    group: root
+  loop:
+    - lib
+    - include
+
+# NetGear Wifi adapter stuff
+# Step 1: sudo cp -a /home/debix/ase/firmware/mediatek/ /lib/firmware/
+# Step 2: sudo modprobe mt7921u
+# Step 3: echo 0846 9060 | sudo tee /sys/bus/usb/drivers/mt7921u/new_id
+
+# ----------------------------------------------------------
+# --- Netgear wifi firmware // Not working at the moment ---
+# ----------------------------------------------------------
+# - name: Copy Netgear Wifi firmware
+#   tags:
+#     - setup
+#     - files
+#     - network
+#   become: true
+#   copy:
+#     src: /home/debix/ase/firmware/mediatek/
+#     dest: /lib/firmware
+#     remote_src: true
+
+# - name: Load kernel module mt7921u
+#   tags:
+#     - setup
+#     - network
+#   become: true
+#   community.general.modprobe:
+#     name: mt7921u
+#     state: present
+#   ignore_errors: true
+
+# - name: Force driver to use Netgear device ID
+#   tags:
+#     - setup
+#     - network
+#   become: true
+#   shell: echo 0846 9060 | sudo tee /sys/bus/usb/drivers/mt7921u/new_id
+#   ignore_errors: true
+
+- name: Add boot script to rc.local
+  tags:
+    - setup
+  become: true
+  copy:
+    dest: /etc/rc.local
+    content: |
+      #!/bin/sh -e
+      #
+      # rc.local
+      #
+      # This script is executed at the end of each multiuser runlevel.
+      # Make sure that the script will "exit 0" on success or any other
+      # value on error.
+      #
+      # In order to enable or disable this script just change the execution
+      # bits.
+      #
+      # By default this script does nothing.
+
+
+      if [ -e /usr/local/polyhex/bin/polyhex_script ]
+      then
+          /usr/local/polyhex/bin/polyhex_script
+      fi
+
+      if [ -e /home/debix/ase/bin/on-boot.sh ]
+      then
+          /home/debix/ase/bin/on-boot.sh
+      fi
+
+      exit 0
