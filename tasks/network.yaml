@@ -32,7 +32,7 @@
               addresses: [192.168.0.1, 1.1.1.1]
 
 
-- name: Set netplan configuration file
+- name: Set netplan configuration file 2
   tags: network
   become: true
   copy:
