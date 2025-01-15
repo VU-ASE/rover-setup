@@ -1,0 +1,113 @@
+#!/bin/bash
+
+# Function to initialize GPIO on PCA5555 (GPIO extender over i2c)
+initialize_beeper() {
+    echo "Initializing PCA5555 GPIO extender..."
+    i2cset -y 5 0x21 0x02 0xfe || echo "Failed to set 0x02 0xfe"
+    i2cset -y 5 0x21 0x03 0x0f || echo "Failed to set 0x03 0x0f"
+    i2cset -y 5 0x21 0x06 0xfe || echo "Failed to set 0x06 0xfe"
+    i2cset -y 5 0x21 0x07 0x0f || echo "Failed to set 0x07 0x0f"
+}
+
+# Function to execute the "success" sequence
+beep_success() {
+    echo "Executing success sequence..."
+    i2cset -y 5 0x21 0x02 0x01  # Turn ON
+    sleep 0.05
+    i2cset -y 5 0x21 0x02 0x00  # Turn OFF
+    sleep 0.1
+}
+
+# Function to execute the "error" sequence
+beep_error() {
+    echo "Executing error sequence..."
+    i2cset -y 5 0x21 0x02 0x01  # Turn ON
+    sleep 0.1
+    i2cset -y 5 0x21 0x02 0x00  # Turn OFF
+    sleep 0.05
+    i2cset -y 5 0x21 0x02 0x01  # Turn ON
+    sleep 0.1
+    i2cset -y 5 0x21 0x02 0x00  # Turn OFF
+    sleep 0.05
+    i2cset -y 5 0x21 0x02 0x01  # Turn ON
+    sleep 0.1
+    i2cset -y 5 0x21 0x02 0x00  # Turn OFF
+    sleep 0.05
+    i2cset -y 5 0x21 0x02 0x01  # Turn ON
+    sleep 0.1
+    i2cset -y 5 0x21 0x02 0x00  # Turn OFF
+}
+
+# Function to execute the "warning" sequence
+beep_warning() {
+    echo "Executing warning sequence..."
+    i2cset -y 5 0x21 0x02 0x01  # Turn ON
+    sleep 0.08
+    i2cset -y 5 0x21 0x02 0x00  # Turn OFF
+    sleep 0.02
+    i2cset -y 5 0x21 0x02 0x01  # Turn ON
+    sleep 0.08
+    i2cset -y 5 0x21 0x02 0x00  # Turn OFF
+    sleep 0.02
+    i2cset -y 5 0x21 0x02 0x01  # Turn ON
+    sleep 0.08
+    i2cset -y 5 0x21 0x02 0x00  # Turn OFF
+    sleep 0.02
+    i2cset -y 5 0x21 0x02 0x01  # Turn ON
+    sleep 0.1
+    i2cset -y 5 0x21 0x02 0x00  # Turn OFF
+}
+
+# Function to execute the "startup" sequence
+beep_startup() {
+    echo "Executing startup sequence..."
+    i2cset -y 5 0x21 0x02 0x01  # Turn ON
+    sleep 0.002
+    i2cset -y 5 0x21 0x02 0x00  # Turn OFF
+    sleep 0.05
+}
+
+# Function to execute the "shutdown" sequence
+beep_shutdown() {
+    echo "Executing shutdown sequence..."
+    i2cset -y 5 0x21 0x02 0x01  # Turn ON
+    sleep 0.002
+    i2cset -y 5 0x21 0x02 0x00  # Turn OFF
+    sleep 0.05
+}
+
+# Main script logic
+if [[ $# -eq 0 ]]; then
+    echo "Usage: $0 <sequence>"
+    echo "Available sequences: success, error, warning, startup, battery-low"
+    exit 1
+fi
+
+# Initialize the beeper
+initialize_beeper
+
+# Execute the specified sequence
+case "$1" in
+    success)
+        beep_success
+        ;;
+    error)
+        beep_error
+        ;;
+    warning)
+        beep_warning
+        ;;
+    startup)
+        beep_startup
+        ;;
+    shutdown)
+        beep_shutdown
+        ;;
+    *)
+        echo "Unknown sequence: $1"
+        echo "Available sequences: success, error, warning, startup, shutdown"
+        exit 1
+        ;;
+esac
+
+echo "Beeping sequence '$1' complete."

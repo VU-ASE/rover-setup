@@ -1,0 +1,101 @@
+#!/bin/bash
+
+#
+# This script is a safety utility available to users, to quickly reset the Rover servos and motors to a safe state
+# It is also used by the system-start and system-shutdown scripts to ensure the Rover is in a safe state
+#
+
+
+#
+# PCA9685C (PWM driver over i2c) initialization and servo/motor reset functions
+#
+
+I2C_BUS=3
+PCA9685_ADDR=0x40  # Default I2C address for PCA9685
+# Function to write a value to a specific PCA9685 register
+i2c_write() {
+    local register=$1
+    local value=$2
+    i2cset -y $I2C_BUS $PCA9685_ADDR $register $value
+}
+# Function to initialize the PCA9685 board
+initialize_pca9685() {
+    echo "Initializing PCA9685 board..."
+
+    # Set MODE1 register to reset and enable auto-increment
+    i2c_write 0x00 0x00  # MODE1: Normal mode, auto-increment enabled
+
+    # Set prescaler for a 50Hz PWM frequency (20ms period)
+    # Prescaler calculation: prescale = round(osc_clock / (4096 * pwm_freq)) - 1
+    # For a 25MHz oscillator and 50Hz: prescale = round(25000000 / (4096 * 50)) - 1 = 121
+    i2c_write 0xFE 0x79  # Set prescaler to 121 for 50Hz
+
+    # Restart the PCA9685
+    i2c_write 0x00 0x80  # MODE1: Restart and enable auto-increment
+    echo "PCA9685 initialization complete."
+}
+
+# Function to calculate and set a channel's PWM duty cycle
+# Arguments: channel, value, MinPulseFrac, MaxPulseFrac, trim (optional)
+set_channel_with_trim() {
+    local channel=$1
+    local value=$2
+    local minPulse=$3
+    local maxPulse=$4
+    local trim=${5:-0}  # Default trim is 0 if not provided
+    local travelExtender=1  # Adjust as needed for trim scaling
+
+    # Adjust max and min duty cycles based on trim
+    if (( trim > 0 )); then
+        maxPulse=$(( maxPulse + (trim * travelExtender) ))
+    elif (( trim < 0 )); then
+        minPulse=$(( minPulse - (trim * travelExtender) ))
+    fi
+
+    # Calculate duty range and final duty cycle
+    local dutyRange=$(( maxPulse - minPulse ))
+    local dutyCycle=$(echo "$minPulse + ($dutyRange * $value)" | bc | awk '{printf "%.0f", $0}')
+
+    # Split dutyCycle into low and high bytes
+    local low_byte=$((dutyCycle & 0xFF))
+    local high_byte=$((dutyCycle >> 8))
+
+    # Calculate base register address for the channel
+    local base_register=$((0x06 + 4 * channel))
+
+    # Write to PCA9685 registers
+    i2c_write $base_register 0x00       # LEDn_ON_L
+    i2c_write $((base_register + 1)) 0x00 # LEDn_ON_H
+    i2c_write $((base_register + 2)) $low_byte  # LEDn_OFF_L
+    i2c_write $((base_register + 3)) $high_byte # LEDn_OFF_H
+}
+# Function to reset the servo to the straight position
+reset_servo_to_neutral() {
+    echo "Resetting servo to straight position (neutral)..."
+    local channel=0
+    local value=0.5  # Neutral position (midpoint)
+    local MinPulseFrac=225
+    local MaxPulseFrac=385
+    local trim=0
+    set_channel_with_trim $channel $value $MinPulseFrac $MaxPulseFrac $trim
+}
+
+# Function to reset the motors to neutral
+reset_motors_to_neutral() {
+    echo "Resetting motors to neutral position..."
+    local MinPulseFrac=225
+    local MaxPulseFrac=385
+    local trim=0
+    for channel in 1 2; do
+        local value=0.5  # Neutral position (midpoint)
+        set_channel_with_trim $channel $value $MinPulseFrac $MaxPulseFrac $trim
+    done
+}
+
+# Main script execution
+initialize_pca9685
+reset_servo_to_neutral
+reset_motors_to_neutral
+echo "Servo and motors reset to their neutral positions."
+
+beep success || /home/debix/ase/bin/beep success

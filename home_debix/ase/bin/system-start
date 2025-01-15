@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#
+# This script is run after systemd initialization and is run as a oneshot root service then
+# it is used for safety mechanisms, and beeping shortly to indicate that the Rover has booted
+#
+
+# Reset all motor/servo values to a safe state
+rover-reset || /home/debix/ase/bin/rover-reset
+beep startup || /home/debix/ase/bin/beep startup
