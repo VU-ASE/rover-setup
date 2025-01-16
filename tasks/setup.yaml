@@ -338,3 +338,39 @@
       fi
 
       exit 0
+
+- name: Install the system-start service
+  tags:
+    - setup
+  become: true
+  copy:
+    dest: /etc/systemd/system/ase-system-start.service
+    content: |
+      [Unit]
+      Description=Resets Rover servos and motors, early in the boot sequence
+      Before=basic.target
+      After=local-fs.target sysinit.target
+      DefaultDependencies=no
+
+      [Service]
+      Type=oneshot
+      ExecStart=/home/debix/ase/bin/system-start
+
+      [Install]
+      WantedBy=basic.target
+
+
+- name: Install system-shutdown script
+  tags:
+    - setup
+    - files
+  become: true
+  copy:
+    src: "/home/debix/ase/bin/system-shutdown"
+    dest: "/usr/lib/systemd/system-shutdown/rover-shutdown"
+    remote_src: yes
+    mode: preserve
+    owner: root
+    group: root
+
+
