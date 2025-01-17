@@ -224,6 +224,12 @@
     enabled: true
     daemon_reload: true
 
+# - name: TODO: Install roverd's daemons
+#   tags:
+#     - roverd
+#   become: true
+
+
 # - name: TODO - Set the servo trim for all actuator versions
 #   tags:
 #     - setup

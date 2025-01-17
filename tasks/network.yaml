@@ -1,67 +1,102 @@
 ---
 
+# - name: Set netplan configuration file
+#   tags: network
+#   become: true
+#   copy:
+#     dest: /etc/netplan/01-netcfg.yaml
+#     content: |
+#       network:
+#         version: 2
+#         renderer: networkd
+#         ethernets:
+#           ens33:
+#             dhcp4: no
+#             addresses:
+#               - {{ custom_address }}/24
+#             nameservers:
+#               addresses: [192.168.0.1, 1.1.1.1]
+#         wifis:
+#           wlan0:
+#             dhcp4: no
+#             dhcp6: no
+#             access-points:
+#               "aselabs":
+#                 password: "{{ wifi_password }}"
+#             addresses:
+#               - "{{ custom_address }}/24"
+#             routes:
+#               - to: default
+#                 via: 192.168.0.1
+#             nameservers:
+#               addresses: [192.168.0.1, 1.1.1.1]
+
+
 - name: Set netplan configuration file
   tags: network
   become: true
   copy:
-    dest: /etc/netplan/01-netcfg.yaml
+    dest: /etc/netplan/60-aselabs-wifi.yaml
+    directory_mode: "0600"
+    owner: root
+    group: root
     content: |
       network:
         version: 2
-        renderer: networkd
-        ethernets:
-          ens33:
-            dhcp4: no
-            addresses:
-              - {{ custom_address }}/24
-            nameservers:
-              addresses: [192.168.0.1, 1.1.1.1]
+        renderer: NetworkManager
         wifis:
           wlan0:
-            dhcp4: no
-            dhcp6: no
+            dhcp4: true
+            optional: true
             access-points:
               "aselabs":
                 password: "{{ wifi_password }}"
             addresses:
-              - {{ custom_address }}/24
+              - "{{ custom_address }}/24"
             routes:
               - to: default
                 via: 192.168.0.1
             nameservers:
               addresses: [192.168.0.1, 1.1.1.1]
-
-
-- name: Set netplan configuration file 2
-  tags: network
-  become: true
-  copy:
-    dest: /etc/netplan/02-netcfg.yaml
-    content: |
-      network:
-        version: 2
-        renderer: networkd
         ethernets:
           ens33:
-            dhcp4: no
+            dhcp4: true
+            optional: true
             addresses:
-              - {{ custom_address }}/24
+              - "{{ custom_address }}/24"
             nameservers:
               addresses: [192.168.0.1, 1.1.1.1]
-        wifis:
-          wlx9418655d12d2:
-            dhcp4: no
-            dhcp6: no
-            access-points:
-              "aselabs":
-                password: "{{ wifi_password }}"
-            addresses:
-              - {{ custom_address }}/24
-            routes:
-              - to: default
-                via: 192.168.0.1
-            nameservers:
-              addresses: [192.168.0.1, 1.1.1.1]
+
+
+
+# network:
+#   version: 2
+#   renderer: NetworkManager
+#   wifis:
+#     wlan0:
+#       dhcp4: true
+#       optional: true
+#       access-points:
+#         "aselabs":
+#           password: "tilth-noose-mediocre-cascara"
+#       addresses:
+#         - "192.168.0.102/24"
+#       routes:
+#         - to: default
+#           via: 192.168.0.1
+#       nameservers:
+#         addresses: [192.168.0.1, 1.1.1.1]
+#   ethernets:
+#     ens33:
+#       dhcp4: true
+#       optional: true
+#       addresses:
+#         - "192.168.0.102/24"
+#       nameservers:
+#         addresses: [192.168.0.1, 1.1.1.1]
+
+
+
 
 # Todo document this:
 # in order for the debix to use the netgear card we currently have to run netplan apply
