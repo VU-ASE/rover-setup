@@ -152,6 +152,14 @@
 # ---------------------------
 # --- The rover info file ---
 # ---------------------------
+- name: Make sure /etc/roverd exists
+  tags:
+    - roverd
+  become: true
+  file:
+    path: /etc/roverd
+    state: directory
+
 - name: Install the /etc/roverd/info.txt
   tags:
     - roverd
@@ -170,6 +178,7 @@
   tags:
     - roverd
   become: true
+  ignore_errors: true
   file:
     state: absent
     path: /etc/rover
@@ -354,7 +363,6 @@
       [Install]
       WantedBy=basic.target
 
-
 - name: Install system-shutdown script
   tags:
     - setup
@@ -367,5 +375,3 @@
     mode: preserve
     owner: root
     group: root
-
-
