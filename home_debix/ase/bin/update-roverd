@@ -12,6 +12,16 @@ sudo rm $TEMP_FILE 2>/dev/null
 >&2 echo "Downloading latest roverd"
 sudo curl -Lo "$TEMP_FILE" https://github.com/VU-ASE/roverd/releases/latest/download/roverd >/dev/null 2>&1
 
+file_output=$(file "$TEMP_FILE")
+echo "File command output: $file_output"
+
+# Check if the file output contains ARM64 indicators
+if ! echo "$file_output" | grep -q "ARM aarch64" && ! echo "$file_output" | grep -q "arm64"; then
+    echo "Error: File does not appear to be an ARM64 executable"
+    echo "This means that the release page is currently building. Try again in 10 minutes!"
+    exit 1
+fi
+
 if [ -f "$TEMP_FILE" ]; then
 
     >&2 echo "Replacing old roverd"

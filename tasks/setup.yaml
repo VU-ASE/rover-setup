@@ -178,17 +178,12 @@
 # --- Add roverd as a Service ---
 # -------------------------------
 
-- name: Download roverd from github
+- name: Install roverd via update script
   tags:
     - roverd
   become: true
-  shell: rm /tmp/roverd ; curl -Lo "/tmp/roverd" https://github.com/VU-ASE/roverd/releases/latest/download/roverd
-
-- name: Make it executable and install it
-  tags:
-    - roverd
-  become: true
-  shell: chmod +x /tmp/roverd ;  mv /tmp/roverd /usr/local/bin/roverd
+  ignore_errors: true
+  shell: /home/debix/ase/bin/update-roverd
 
 - name: Install the roverd service
   tags:
