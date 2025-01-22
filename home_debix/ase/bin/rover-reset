@@ -16,13 +16,10 @@ i2c_write() {
     i2cset -y $I2C_BUS $PCA9685_ADDR $register $value
 }
 
-echo "Sending sleep command"
-i2c_write 0x00 0x10
+echo "Sending software reset command"
+i2c_write 0x00 0x06
 
 sleep .3
-
-echo "Sending wake command"
-i2c_write 0x00 0x20
 
 
 beep success || /home/debix/ase/bin/beep success
