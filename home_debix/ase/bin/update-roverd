@@ -1,5 +1,22 @@
 #!/bin/bash
 
+# Check if version argument is provided
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <version>"
+    echo "Example: $0 1.0.0 or $0 v1.0.0"
+    exit 1
+fi
+
+# Get the version argument
+VERSION=$1
+
+# Remove 'v' prefix if it exists, then add it back in the proper format
+VERSION_CLEAN=${VERSION#v}
+VERSION_PROPER="v${VERSION_CLEAN}"
+
+# Construct the download URL
+DOWNLOAD_URL="https://github.com/VU-ASE/rover/releases/download/${VERSION_PROPER}/roverd"
+
 # This script will download the latest version of roverd and install it.
 # It pauses the roverd service in the process. Make sure not to quite 
 # the script at any time while it is running.
@@ -10,7 +27,7 @@ ROVERD_PATH=/usr/local/bin/roverd
 sudo rm $TEMP_FILE 2>/dev/null
 
 >&2 echo "Downloading latest roverd"
-sudo curl -Lo "$TEMP_FILE" https://github.com/VU-ASE/roverd/releases/latest/download/roverd >/dev/null 2>&1
+sudo curl -Lo "$TEMP_FILE" "$DOWNLOAD_URL" >/dev/null 2>&1
 
 file_output=$(file "$TEMP_FILE")
 echo "File command output: $file_output"
@@ -18,7 +35,8 @@ echo "File command output: $file_output"
 # Check if the file output contains ARM64 indicators
 if ! echo "$file_output" | grep -q "ARM aarch64" && ! echo "$file_output" | grep -q "arm64"; then
     echo "Error: File does not appear to be an ARM64 executable"
-    echo "This means that the release page is currently building. Try again in 10 minutes!"
+    echo "This either means that release page is currently building (try again in 10 minutes!)"
+    echo "or it means that the version supplied does not exist"
     exit 1
 fi
 
