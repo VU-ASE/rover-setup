@@ -32,6 +32,16 @@
 #               addresses: [192.168.0.1, 1.1.1.1]
 
 
+- name: Make sure old networking files don't exist
+  tags: network
+  become: true
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /etc/netplan/01-netcfg.yaml
+    - /etc/netplan/02-netcfg.yaml
+
 - name: Set netplan configuration file
   tags: network
   become: true
