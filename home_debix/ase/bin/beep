@@ -79,7 +79,7 @@ beep_shutdown() {
 # Main script logic
 if [[ $# -eq 0 ]]; then
     echo "Usage: $0 <sequence>"
-    echo "Available sequences: success, error, warning, startup, battery-low"
+    echo "Available sequences: success, error, warning, startup, shutdown"
     exit 1
 fi
 
