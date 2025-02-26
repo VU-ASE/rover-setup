@@ -7,22 +7,26 @@ if [[ $(/usr/bin/id -u) -ne 0 ]]; then
     exit
 fi
 
+
+[ "$PWD" = "/workspaces/rover-setup/kernel/" ] || cd /workspaces/rover-setup/kernel/
+
 kdir="$(pwd)/linux-kernel-6.1.22/linux-debix"
 config_path="$(pwd)/config-ase2024"
 dtb_Makefile="$(pwd)/dts_Makefile"
 dts_source="$(pwd)/imx8mp-debix-ase2024-debixboard.dts"
-
-
-# Make sure that the debix toolchain is installed in the developer's laptop
 tc_dir="/opt/debix-toolchain"
-if [ ! -d "$tc_dir" ]; then
 
-	mkdir -p $tc_dir
 
-	cd "$(pwd)/debix-toolchain"
-	tar -xJf gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz -C $tc_dir
+# now done by ansible
+# # Make sure that the debix toolchain is installed in the developer's laptop
+# if [ ! -d "$tc_dir" ]; then
 
-fi
+# 	mkdir -p $tc_dir
+
+# 	cd "$(pwd)/debix-toolchain"
+# 	tar -xJf gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz -C $tc_dir
+
+# fi
 
 
 

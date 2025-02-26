@@ -2,9 +2,6 @@
 .PHONY: build start clean test
 
 
-
-
-
 #
 # You can specify run arguments with runargs, like this:
 # make runargs="--tags local"
@@ -14,6 +11,7 @@ all: deps
 
 
 deps:
+	@if [ ! -d "./kernel/linux-kernel-6.1.22" ]; then echo "Error: please run sudo ./kernel/cross-compile-kernel.sh to build the kernel, then re-run the command"; exit 1; fi
 	@ansible-galaxy install fubarhouse.golang
 
 

@@ -51,9 +51,11 @@
 
 - name: Install Pip dependencies
   tags: dependencies
+  become: true
   pip:
     name:
-      - pyyaml
+      - zmq
+      - betterproto
 
 # Not needed for performance reasons
 - name: Remove Unattended Upgrades
