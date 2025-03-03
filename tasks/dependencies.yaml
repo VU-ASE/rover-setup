@@ -54,7 +54,8 @@
   become: true
   pip:
     name:
-      - zmq
+      - pyzmq
+      - loguru
       - betterproto
 
 # Not needed for performance reasons

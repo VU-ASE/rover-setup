@@ -24,7 +24,7 @@ RUN apt-get install -y python3 python3-pip language-pack-en sshpass
 ARG HOST_UID
 
 RUN echo 'root:dev' | chpasswd
-RUN useradd -u ${HOST_UID} -ms /bin/bash dev && echo 'dev:dev' | chpasswd && adduser dev sudo
+RUN useradd -ms /bin/bash dev && echo 'dev:dev' | chpasswd && adduser dev sudo
 RUN echo 'dev ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 RUN mkdir -p /home/dev/.ssh

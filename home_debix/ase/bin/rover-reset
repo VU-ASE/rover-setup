@@ -1,25 +1,10 @@
 #!/bin/bash
 
-#
-# This script is a safety utility available to users, to quickly reset the Rover servos and motors 
-# to a safe state. It is also used by the system-start and system-shutdown scripts to ensure the 
-# Rover is in a safe state. Resetting using the sleep command from:
-#    https://cdn-shop.adafruit.com/datasheets/PCA9685.pdf
-#
 
-I2C_BUS=3
-PCA9685_ADDR=0x40  # Default I2C address for PCA9685
-# Function to write a value to a specific PCA9685 register
-i2c_write() {
-    local register=$1
-    local value=$2
-    i2cset -y $I2C_BUS $PCA9685_ADDR $register $value
-}
+# This is just a wrapper for the rover-stop command for legacy reasons.
 
-echo "Sending software reset command"
-i2c_write 0x00 0x06
+rover-stop
 
 sleep .3
-
 
 beep success || /home/debix/ase/bin/beep success
