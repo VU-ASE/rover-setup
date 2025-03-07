@@ -50,13 +50,23 @@
 
 
 - name: Install Pip dependencies
-  tags: dependencies
+  tags:
+    - dependencies
+    - pip-deps
   become: true
   pip:
     name:
-      - pyzmq
-      - loguru
-      - betterproto
+      - betterproto==1.2.5
+      - grpclib==0.4.7
+      - h2==4.2.0
+      - hpack==4.1.0
+      - hyperframe==6.1.0
+      - loguru==0.7.3
+      - multidict==6.1.0
+      - pyzmq==26.2.1
+      - stringcase==1.2.0
+      - typing-extensions==4.12.2
+      - roverlib==0.5.3
 
 # Not needed for performance reasons
 - name: Remove Unattended Upgrades
