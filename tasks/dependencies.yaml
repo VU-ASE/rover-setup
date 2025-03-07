@@ -49,12 +49,13 @@
       - libcjson-dev
 
 
-- name: Install Pip dependencies
+- name: Install Pip Dependencies
+  become: true
   tags:
     - dependencies
     - pip-deps
-  become: true
   pip:
+    executable: pip3.10
     name:
       - betterproto==1.2.5
       - grpclib==0.4.7
