@@ -121,13 +121,6 @@
     group: debix
     mode: "755"
 
-- name: Install roverlib-c
-  tags:
-    - setup
-    - home
-  become: true
-  shell: /home/debix/ase/bin/install-roverlib-c
-
 - name: Add user debix to group i2c
   tags:
     - setup

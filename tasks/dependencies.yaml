@@ -48,6 +48,30 @@
       - libzmq3-dev
       - libcjson-dev
 
+- name: Download roverlib-c 3rd party deps
+  tags:
+    - dependencies
+    - roverlib-c-deps
+  become: true
+  git:
+    repo: "{{ item.repo }}"
+    dest: "{{ item.dest }}"
+    clone: yes
+    update: yes
+    force: yes
+  loop:
+    - { repo: "https://github.com/joelguittet/c-list.git", dest: "/opt/c-list" }
+    - { repo: "https://github.com/joelguittet/c-hashtable.git", dest: "/opt/c-hashtable" }
+
+- name: Build and Install roverlib-c 3rd party deps
+  tags:
+    - dependencies
+    - roverlib-c-deps
+  become: true
+  shell: "cd /opt/{{item}} && mkdir build && cd build && cmake .. && make install"
+  loop:
+    - "c-list"
+    - "c-hashtable"
 
 - name: Install Pip Dependencies
   become: true
