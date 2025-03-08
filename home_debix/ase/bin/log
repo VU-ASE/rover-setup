@@ -1,0 +1,68 @@
+#!/usr/local/bin/python
+
+
+import sys
+import os
+
+
+LOG_DIR = "/tmp/roverlog/"
+BUILD_LOG_DIR = "/tmp/roverbuildlog/"
+
+
+available_logs = []
+
+
+def stream_logs(entity: str):
+    pass
+
+
+
+
+def directory_contents(path: str) -> list[str]:
+    global available_logs
+    try:
+        if not os.path.isdir(path):
+            return []
+        else:
+            files =  os.listdir(path)
+            if files is None:
+                return []
+            else:
+                for f in files:
+                    available_logs.append()
+                return files
+    
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+        return []
+
+def show_help():
+    print("")
+    print("Usage:           log [log-file] | clear")
+    print("")
+    print("Options:")
+    print("    clear:       Deletes all log files present.")
+    print("    [log-file]:  Starts streaming the contents of a log file. Ctrl+C to stop.")
+    print("")
+    print("Available logs files:")
+    print("    roverd")
+    
+    for log_file in directory_contents(LOG_DIR):
+        print(f"    {log_file}")
+
+    for build_log_file in directory_contents(BUILD_LOG_DIR):
+        print(f"    {build_log_file}")
+
+
+if __name__ == '__main__':
+
+    # prepare available log files
+
+    if len(sys.argv) == 2:
+        argument = sys.argv[1]
+        if '--help' == argument or 'help' == argument:
+            show_help()
+        else:
+            stream_logs(argument)
+    else:
+        show_help()
