@@ -3,3 +3,4 @@ kernel/linux-kernel-6.1.22/linux-debix
 kernel/debix-toolchain
 
 .DS_Store
+home_debix/ase/bin/race.yaml
