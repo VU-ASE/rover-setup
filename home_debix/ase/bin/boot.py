@@ -234,7 +234,18 @@ def startup():
             auth=("debix", "debix")
         )
 
-        print(f"Status code: {response}")
+        print(f"Status code: {response.status_code}")
+
+        if response.status_code != 200:
+            print("Error while setting pipeline, is your race.yaml correct?")
+            try:
+                buzzer_alarm()
+            except KeyboardInterrupt:
+                print("Exiting")
+                buzzer_off()
+                buzzer_off()
+                return
+
         
         buzzer_countdown()
 
