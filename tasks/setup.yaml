@@ -217,6 +217,12 @@
     enabled: true
     daemon_reload: true
 
+- name: Restart the roverd service
+  tags:
+    - roverd
+  become: true
+  shell: "/home/debix/ase/bin/update-roverd latest"
+
 # - name: TODO: Install roverd's daemons
 #   tags:
 #     - roverd
@@ -271,6 +277,14 @@
   loop:
     - lib
     - include
+
+- name: Correct Symlinks
+  tags:
+    - setup
+    - files
+  become: true
+  shell: "cp -rf /home/debix/ase/prebuilt-deps/lib /usr/local/lib"
+
 
 # NetGear Wifi adapter stuff
 # Step 1: sudo cp -a /home/debix/ase/firmware/mediatek/ /lib/firmware/

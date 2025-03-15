@@ -2,8 +2,9 @@
 
 # Check if version argument is provided
 if [ $# -ne 1 ]; then
-    echo "Usage: $0 <version>"
-    echo "Example: $0 1.0.0 or $0 v1.0.0"
+    echo "Usage: update-roverd <version|latest>"
+    echo "Example: To install the latest version use 'update-roverd latest'"
+    echo "Example: To install a specific version, for example 1.0.0, use 'update-roverd 1.0.0'"
     exit 1
 fi
 
@@ -16,6 +17,12 @@ VERSION_PROPER="v${VERSION_CLEAN}"
 
 # Construct the download URL
 DOWNLOAD_URL="https://github.com/VU-ASE/rover/releases/download/${VERSION_PROPER}/roverd"
+
+
+if [ "$VERSION" == "latest" ]; then
+    DOWNLOAD_URL="https://github.com/VU-ASE/rover/releases/latest/download/roverd"
+fi
+
 
 # This script will download the latest version of roverd and install it.
 # It pauses the roverd service in the process. Make sure not to quite 

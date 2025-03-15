@@ -68,7 +68,7 @@
     - dependencies
     - roverlib-c-deps
   become: true
-  shell: "cd /opt/{{item}} && mkdir build && cd build && cmake .. && make install"
+  shell: "cd /opt/{{item}} && mkdir -p build && cd build && cmake .. && make install"
   loop:
     - "c-list"
     - "c-hashtable"
