@@ -365,16 +365,27 @@
     content: |
       [Unit]
       Description=Resets Rover servos and motors, early in the boot sequence
-      Before=basic.target
-      After=local-fs.target sysinit.target
-      DefaultDependencies=no
+      After=roverd.service
+      Requires=roverd.service
 
       [Service]
       Type=simple
+      ExecStartPre=/bin/sleep 11
       ExecStart=/home/debix/ase/bin/system-start
+      Restart=never
 
       [Install]
-      WantedBy=basic.target
+      WantedBy=multi-user.target
+
+- name: Restart the roverd service
+  tags:
+    - setup
+  become: true
+  ansible.builtin.systemd_service:
+    name: ase-system-start
+    state: stopped
+    enabled: true
+    daemon_reload: true
 
 - name: Install system-shutdown script
   tags:
