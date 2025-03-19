@@ -6,7 +6,7 @@
 #
 
 # Reset all motor/servo values to a safe state
-rover-reset || /home/debix/ase/bin/rover-reset
+/home/debix/ase/bin/rover-reset
 # Show powered off logo
-rover-logo logo_powered_off || /home/debix/ase/bin/rover-logo logo_powered_off 
+/home/debix/ase/bin/rover-logo logo_powered_off 
 # beep shutdown || /home/debix/ase/bin/beep shutdown

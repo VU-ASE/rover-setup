@@ -3,8 +3,8 @@
 
 # This is just a wrapper for the rover-stop command for legacy reasons.
 
-rover-stop
+/home/debix/ase/bin/rover-stop
 
 sleep .3
 
-beep success || /home/debix/ase/bin/beep success
+/home/debix/ase/bin/beep success || /home/debix/ase/bin/beep success
