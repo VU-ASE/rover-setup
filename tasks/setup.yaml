@@ -228,7 +228,6 @@
 #     - roverd
 #   become: true
 
-
 # - name: TODO - Set the servo trim for all actuator versions
 #   tags:
 #     - setup
@@ -284,7 +283,6 @@
     - files
   become: true
   shell: "cp -rf /home/debix/ase/prebuilt-deps/lib /usr/local/lib"
-
 
 # NetGear Wifi adapter stuff
 # Step 1: sudo cp -a /home/debix/ase/firmware/mediatek/ /lib/firmware/
@@ -370,7 +368,7 @@
 
       [Service]
       Type=simple
-      ExecStartPre=/bin/sleep 11
+      ExecStartPre=/bin/sleep 12
       ExecStart=/home/debix/ase/bin/system-start
       Restart=never
 
@@ -386,6 +384,11 @@
     state: stopped
     enabled: true
     daemon_reload: true
+
+- name: Ensure old service files don't exist
+  file:
+    path: "/etc/systemd/system/on-boot.service"
+    state: absent
 
 - name: Install system-shutdown script
   tags:

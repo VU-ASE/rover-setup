@@ -6,6 +6,12 @@
 #
 
 # Reset all motor/servo values to a safe state
-/home/debix/ase/bin/rover-reset
 /home/debix/ase/bin/beep startup
+
+sleep 0.5
+
+/home/debix/ase/bin/rover-reset
+
+
+
 

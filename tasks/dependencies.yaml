@@ -47,6 +47,7 @@
       - libprotobuf-c-dev
       - libzmq3-dev
       - libcjson-dev
+      - auditd
 
 - name: Download roverlib-c 3rd party deps
   tags:
