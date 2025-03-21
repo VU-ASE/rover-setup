@@ -11,6 +11,7 @@
 - name: Stop gnome systemd service
   tags:
     - setup
+    - systemd
   systemd_service:
     name: "{{ item }}"
     state: stopped
@@ -22,6 +23,7 @@
 - name: Disable gnome systemd service
   tags:
     - setup
+    - systemd
   systemd_service:
     name: "{{ item }}"
     enabled: false
@@ -33,6 +35,7 @@
 - name: Rename gdm* service files for good
   tags:
     - setup
+    - systemd
     - home
     - testing
   become: true
@@ -321,42 +324,11 @@
 #   shell: echo 0846 9060 | sudo tee /sys/bus/usb/drivers/mt7921u/new_id
 #   ignore_errors: true
 
-- name: Add boot script to rc.local
-  tags:
-    - setup
-  become: true
-  copy:
-    dest: /etc/rc.local
-    content: |
-      #!/bin/sh -e
-      #
-      # rc.local
-      #
-      # This script is executed at the end of each multiuser runlevel.
-      # Make sure that the script will "exit 0" on success or any other
-      # value on error.
-      #
-      # In order to enable or disable this script just change the execution
-      # bits.
-      #
-      # By default this script does nothing.
-
-
-      if [ -e /usr/local/polyhex/bin/polyhex_script ]
-      then
-          /usr/local/polyhex/bin/polyhex_script
-      fi
-
-      if [ -e /home/debix/ase/bin/on-boot.sh ]
-      then
-          /home/debix/ase/bin/on-boot.sh
-      fi
-
-      exit 0
 
 - name: Install the system-start service
   tags:
     - setup
+    - systemd
   become: true
   copy:
     dest: /etc/systemd/system/ase-system-start.service
@@ -375,9 +347,31 @@
       [Install]
       WantedBy=multi-user.target
 
-- name: Restart the roverd service
+- name: Install the system-start service
   tags:
     - setup
+    - systemd
+  become: true
+  copy:
+    dest: /etc/systemd/system/ase-system-shutdown.service
+    content: |
+      [Unit]
+      Description=Resets the servo and motors before powering down the debix
+      DefaultDependencies=no
+      Before=shutdown.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/home/debix/ase/bin/system-shutdown
+      TimeoutStartSec=0
+
+      [Install]
+      WantedBy=shutdown.target
+
+- name: Restart the system-start service
+  tags:
+    - setup
+    - systemd
   become: true
   ansible.builtin.systemd_service:
     name: ase-system-start
@@ -385,20 +379,34 @@
     enabled: true
     daemon_reload: true
 
-- name: Ensure old service files don't exist
-  file:
-    path: "/etc/systemd/system/on-boot.service"
-    state: absent
-
-- name: Install system-shutdown script
+- name: Restart the system-shutdown service
   tags:
     - setup
-    - files
+    - systemd
   become: true
-  copy:
-    src: "/home/debix/ase/bin/system-shutdown"
-    dest: "/usr/lib/systemd/system-shutdown/rover-shutdown"
-    remote_src: yes
-    mode: preserve
-    owner: root
-    group: root
+  ansible.builtin.systemd_service:
+    name: ase-system-shutdown
+    state: stopped
+    enabled: true
+    daemon_reload: true
+
+- name: Ensure old files don't exist
+  tags:
+    - setup
+    - systemd
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "/etc/systemd/system/on-boot.service"
+    - "/usr/lib/systemd/system-shutdown/rover-shutdown"
+    - "/usr/lib/systemd/system-shutdown/system-shutdown"
+
+
+
+
+
+
+
+
+

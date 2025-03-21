@@ -13,5 +13,6 @@ sleep 0.5
 /home/debix/ase/bin/rover-reset
 
 
-
+# To select between different boot profiles, uncomment the following line
+# python3 /home/debix/ase/bin/boot.py
 
