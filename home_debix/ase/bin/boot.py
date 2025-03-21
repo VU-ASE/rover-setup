@@ -15,6 +15,9 @@ def initialize_gpio():
     for i in ["0x02 0xfe", "0x03 0x0f", "0x06 0xfe", "0x07 0x0f"]:
         os.system("i2cset -y 5 0x21 " + i)
     
+def turn_on_leds():
+    os.system("i2cset -y 5 0x21 0x03 0xF0")
+
 # Index is a number between 0 and 3 (inclusive)
 def turn_on_led(index):
     if index > 3 or index < 0:
@@ -118,16 +121,21 @@ def buzzer_countdown():
     buzzer_off()
     time.sleep(1)
     
-def buzzer_alarm():
+def buzzer_leds_alarm():
+    for _ in range(4):
+        buzzer_on()
+        turn_on_leds()
+        time.sleep(0.3)
+        buzzer_off()
+        turn_off_leds()
+        time.sleep(0.3)
+
     while True:
-        buzzer_on()
-        time.sleep(0.05)
-        buzzer_off()
-        time.sleep(0.1)
-        buzzer_on()
-        time.sleep(0.2)
-        buzzer_off()
-        time.sleep(0.1)
+        turn_on_leds()
+        time.sleep(0.3)
+        turn_off_leds()
+        time.sleep(0.3)
+
 
 def startup():
     try:
@@ -141,7 +149,7 @@ def startup():
         except FileNotFoundError:
             print("race.yaml was not found. Make sure it is in the /home/debix/ repository!")
             try:
-                buzzer_alarm()
+                buzzer_leds_alarm()
             except KeyboardInterrupt:
                 print("Exiting")
                 buzzer_off()
@@ -164,7 +172,7 @@ def startup():
         if not pipeline:
             print("Error parsing race.yaml, did you add your pipeline")
             try:
-                buzzer_alarm()
+                buzzer_leds_alarm()
             except KeyboardInterrupt:
                 print("Exiting")
                 buzzer_off()
@@ -197,7 +205,7 @@ def startup():
         if profile_path == "":
             print("Did not find a service named \"controller\" to use to set profile")
             try:
-                buzzer_alarm()
+                buzzer_leds_alarm()
             except KeyboardInterrupt:
                 print("Exiting")
                 buzzer_off()
@@ -216,7 +224,7 @@ def startup():
         if not os.path.exists(profile_path):
             print("Profile path does not exist")
             try:
-                buzzer_alarm()
+                buzzer_leds_alarm()
             except KeyboardInterrupt:
                 print("Exiting")
                 buzzer_off()
@@ -239,7 +247,7 @@ def startup():
         if response.status_code != 200:
             print("Error while setting pipeline, is your race.yaml correct?")
             try:
-                buzzer_alarm()
+                buzzer_leds_alarm()
             except KeyboardInterrupt:
                 print("Exiting")
                 buzzer_off()
@@ -274,7 +282,7 @@ def startup():
         print("An error occured: " + str(e))
         turn_off_leds()
         try:
-            buzzer_alarm()
+            buzzer_leds_alarm()
         except KeyboardInterrupt:
             print("Exiting")
             buzzer_off()
