@@ -3,16 +3,63 @@
 #
 # This script is run after systemd initialization and is run as a oneshot root service then
 # it is used for safety mechanisms, and beeping shortly to indicate that the Rover has booted
-#
+
+
+
+function io_init {
+    # export gpio
+    n=12
+    echo $n  > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio$n/direction
+
+
+    n=13
+    echo $n  > /sys/class/gpio/export
+    echo in > /sys/class/gpio/gpio$n/direction
+
+    n=86
+    echo $n  > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio$n/direction
+    echo 0   > /sys/class/gpio/gpio$n/value
+
+    n=87
+    echo $n  > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio$n/direction
+    echo 0   > /sys/class/gpio/gpio$n/value
+
+    n=88
+    echo $n  > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio$n/direction
+    echo 0   > /sys/class/gpio/gpio$n/value
+
+    n=89
+    echo $n  > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio$n/direction
+    echo 0   > /sys/class/gpio/gpio$n/value
+
+    # Configure HC12 SET pin
+    #hc12-setup.sh
+    n=85
+    echo $n  > /sys/class/gpio/export
+    echo out > /sys/class/gpio/gpio$n/direction
+    echo 1   > /sys/class/gpio/gpio$n/value
+    stty -F /dev/ttymxc2 speed 115200 raw
+
+    sleep 0.1
+}
+
+
+
+io_init
+
 
 # Reset all motor/servo values to a safe state
 /home/debix/ase/bin/beep startup
-
 sleep 0.5
-
 /home/debix/ase/bin/rover-reset
 
 
 # To select between different boot profiles, uncomment the following line
+
 # python3 /home/debix/ase/bin/boot.py
 
