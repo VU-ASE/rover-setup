@@ -111,8 +111,13 @@
 # Todo document this:
 # in order for the debix to use the netgear card we currently have to run netplan apply
 
+- name: Change ownership permission of netplan files
+  become: true
+  shell: chmod 600 /etc/netplan/*
+
+
 - name: Apply netplan
   tags: network
   become: true
-  shell: netplan apply
+  shell: sudo netplan apply
 

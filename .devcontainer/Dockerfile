@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y curl \
     git \
     software-properties-common \
     build-essential \
+    kmod \
     bc \
     bison \
     pkg-config
