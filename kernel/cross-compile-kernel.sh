@@ -106,12 +106,9 @@ echo "🟡 Success, compiled kernel, modules and dtbs"
 # ssh debix@debix-nelis "sudo mv /home/debix/tmp/6.1.22-ase2024.tar.gz /lib/modules; rm -rf /lib/modules/6.1.22-ase2024; cd /lib/modules; tar -xzvf 6.1.22-ase2024.tar.gz; rm 6.1.22-ase2024.tar.gz"
 
 
-# TODO:
 # Copy the binary blobs that will get copied to the debix into the "built" directory
-# mkdir -p built
-
-
-# - "{{ kernel_dir }}/arch/arm64/boot/Image"
-# - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-evk.dtb"
-# - "{{ kernel_dir }}/arch/arm64/boot/dts/freescale/imx8mp-debix-ase2024-debixboard.dtb"
-# - "{{ kernel_dir }}/out/lib/modules/6.1.22-ase2024.tar.gz"
+mkdir -p built_blobs
+cp $kdir/arch/arm64/boot/Image ./built_blobs
+cp $kdir/arch/arm64/boot/dts/freescale/imx8mp-evk.dtb ./built_blobs
+cp $kdir/arch/arm64/boot/dts/freescale/imx8mp-debix-ase2024-debixboard.dtb ./built_blobs
+cp $kdir/out/lib/modules/6.1.22-ase2024.tar.gz ./built_blobs
