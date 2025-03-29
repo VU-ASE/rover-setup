@@ -285,7 +285,7 @@
     - setup
     - files
   become: true
-  shell: "cp -rf /home/debix/ase/prebuilt-deps/lib /usr/local/lib"
+  shell: "cp --preserve=links -rf /home/debix/ase/prebuilt-deps/lib/* /usr/local/lib"
 
 # NetGear Wifi adapter stuff
 # Step 1: sudo cp -a /home/debix/ase/firmware/mediatek/ /lib/firmware/
