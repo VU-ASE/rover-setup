@@ -26,6 +26,7 @@
     - import_tasks: tasks/network.yaml
 
 
+# Currently not used:
 # - hosts: roverbuilder
 #   tasks:
 #     - import_tasks: tasks/github-runner.yaml

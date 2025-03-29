@@ -10,10 +10,12 @@ all: deps
 	ansible-playbook main.yaml --ask-pass -K ${runargs}
 
 
-deps:
-	@if [ ! -d "./kernel/linux-kernel-6.1.22" ]; then echo "Error: please run sudo ./kernel/cross-compile-kernel.sh to build the kernel, then re-run the command"; exit 1; fi
-	@ansible-galaxy install fubarhouse.golang
+# Currently not used, because necessary binary blobs are in ./kernel/built_blobs
+# check-kernel:
+# 	@if [ ! -d "./kernel/linux-kernel-6.1.22" ]; then echo "Error: please run sudo ./kernel/cross-compile-kernel.sh to build the kernel, then re-run the command"; exit 1; fi
 
+deps:
+	@ansible-galaxy install fubarhouse.golang
 
 ping:
 	ansible fleet -m ping --ask-pass

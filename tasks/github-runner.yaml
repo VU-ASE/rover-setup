@@ -1,5 +1,7 @@
 ---
 
+# Currently not used!
+
 # The following installs the Github actions runner as found on Github.
 # To add a self hosted runner go to Organization/Repo -> Settings -> Runner.
 
