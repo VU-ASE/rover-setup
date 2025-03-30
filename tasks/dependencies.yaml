@@ -48,6 +48,7 @@
       - libzmq3-dev
       - libcjson-dev
       - auditd
+      - gdb
 
 - name: Download roverlib-c 3rd party deps
   tags:
