@@ -61,8 +61,6 @@
             access-points:
               "aselabs":
                 password: "{{ wifi_password }}"
-            addresses:
-              - "{{ custom_address }}/24"
             routes:
               - to: default
                 via: 192.168.0.1
@@ -72,8 +70,6 @@
           ens33:
             dhcp4: true
             optional: true
-            addresses:
-              - "{{ custom_address }}/24"
             nameservers:
               addresses: [192.168.0.1, 1.1.1.1]
 
