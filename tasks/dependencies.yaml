@@ -1,4 +1,8 @@
 ---
+- name: Fix dpkg state if interrupted
+  command: dpkg --configure -a
+  become: yes
+
 - name: Install dependencies
   tags: dependencies
   become: true
