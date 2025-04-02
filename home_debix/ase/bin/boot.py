@@ -242,7 +242,14 @@ def startup():
             auth=("debix", "debix")
         )
 
-        print(f"Status code: {response.status_code}")
+        text = response.text  
+        headers = response.headers  
+        status_code = response.status_code  
+
+        print(f"Status Code: {status_code}")
+        print(f"Headers: {headers}")
+        print(f"Text: {text}") 
+
 
         if response.status_code != 200:
             print("Error while setting pipeline, is your race.yaml correct?")
@@ -269,7 +276,7 @@ def startup():
 
         print(f"Status Code: {status_code}")
         print(f"Headers: {headers}")
-        print(f"Text: {text[:500]}") 
+        print(f"Text: {text}") 
 
         return
     except KeyboardInterrupt:
