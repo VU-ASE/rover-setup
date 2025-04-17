@@ -20,6 +20,18 @@ RUN apt-get update && apt-get install -y curl \
 # Python 3 install
 RUN apt-get install -y python3 python3-pip language-pack-en sshpass
 
+
+# ──────────────────────────────────────────────────────────────────
+# Timezone setup: install tzdata and configure Europe/Amsterdam
+# ──────────────────────────────────────────────────────────────────
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata && \
+    ln -fs /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime && \
+    echo "Europe/Amsterdam" > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata
+
+ENV TZ="Europe/Amsterdam"
+
 # This is to ensure that the host where the docker container is built has the same uid/gid
 # as the user used inside the container. Otherwise, permission issues.
 ARG HOST_UID
