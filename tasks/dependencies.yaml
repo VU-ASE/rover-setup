@@ -97,7 +97,7 @@
       - pyzmq==26.2.1
       - stringcase==1.2.0
       - typing-extensions==4.12.2
-      - roverlib==0.6.0
+      - roverlib==0.6.1
 
 # Not needed for performance reasons
 - name: Remove Unattended Upgrades
