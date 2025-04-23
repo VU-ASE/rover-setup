@@ -65,34 +65,3 @@
 
 
 
-# --- ONE TIME SETUP ---
-# Run the following steps on the roverbulider itself instead of
-# through ansible since the ./config requires input
-
-# - name: Setup runner
-#   tags: one-time-run
-#   shell: cd /home/debix/actions-runner && ./config.sh --url https://github.com/VU-ASE --token AQ6G3ZVI3N3H6OMMFE5RSPLHLH4KU
-
-
-# - name: Start runner
-#   tags: one-time-run
-#   become: true
-#   shell: cd /home/debix/actions-runner && ./run.sh
-
-# - name: Install runner service
-#   tags: one-time-run
-#   become: true
-#   copy:
-#     src: config/roverbuilder.service
-#     dest: /etc/systemd/system/
-
-# - name: Enable custom service
-#   tags: one-time-run
-#   systemd_service:
-#     name: roverbuilder.service
-#     state: started
-#     enabled: true
-#     daemon_reload: true
-
-
-
