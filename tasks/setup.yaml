@@ -401,17 +401,29 @@
     - "/usr/lib/systemd/system-shutdown/rover-shutdown"
     - "/usr/lib/systemd/system-shutdown/system-shutdown"
 
-- name: Append this flash event to history (with correct local time)
+# ───────────────────────────────────────────────────────
+# Write controller-time to the controller’s log
+# ───────────────────────────────────────────────────────
+- name: Append this flash event to history (controller side)
+  tags: [flash]
+  delegate_to: localhost
   lineinfile:
     path: "{{ playbook_dir }}/flash_history.log"
     create: yes
     insertafter: EOF
     line: "{{ inventory_hostname }} flashed at {{ lookup('pipe','date --iso-8601=seconds') }}"
-  delegate_to: localhost
-  tags:
-    - flash
 
-
+# ───────────────────────────────────────────────────────
+# Write controller-time to the rover’s log
+# ───────────────────────────────────────────────────────
+- name: Append this flash event to the device’s own history
+  tags: [flash]
+  become: true
+  lineinfile:
+    path: /etc/roverd/flash_history.log
+    create: yes
+    insertafter: EOF
+    line: "{{ lookup('pipe','date --iso-8601=seconds') }}"
 
 
 
