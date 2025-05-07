@@ -401,11 +401,28 @@
     - "/usr/lib/systemd/system-shutdown/rover-shutdown"
     - "/usr/lib/systemd/system-shutdown/system-shutdown"
 
+
+- name: Set timezone to Europe/Amsterdam
+  become: true
+  ansible.builtin.timezone:
+    name: Europe/Amsterdam
+  tags: 
+    - setup
+    - timezone
+
+- name: Ensure NTP sync is enabled
+  become: true
+  ansible.builtin.command: timedatectl set-ntp true
+  tags: 
+    - setup
+    - timezone
+
 # ───────────────────────────────────────────────────────
 # Write controller-time to the controller’s log
 # ───────────────────────────────────────────────────────
 - name: Append this flash event to history (controller side)
-  tags: [flash]
+  tags: 
+    - flash
   delegate_to: localhost
   lineinfile:
     path: "{{ playbook_dir }}/flash_history.log"
@@ -417,7 +434,8 @@
 # Write controller-time to the rover’s log
 # ───────────────────────────────────────────────────────
 - name: Append this flash event to the device’s own history
-  tags: [flash]
+  tags: 
+    - flash
   become: true
   lineinfile:
     path: /etc/roverd/flash_history.log
