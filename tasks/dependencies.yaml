@@ -53,6 +53,17 @@
       - libcjson-dev
       - auditd
       - gdb
+      # roverlib-c-shar dependencies
+      - gnupg
+      - libssl-dev
+      - zlib1g-dev
+      - libncurses5-dev
+      - libgdbm-dev
+      - libnss3-dev
+      - libsqlite3-dev
+      - libreadline-dev
+      - libffi-dev
+      - libbz2-dev
 
 - name: Download roverlib-c 3rd party deps
   tags:
