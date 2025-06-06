@@ -165,6 +165,7 @@
 # Write controller-time to the controller’s log
 # ───────────────────────────────────────────────────────
 - name: Append this flash event to history (controller side)
+  become: true
   tags: 
     - flash
   delegate_to: localhost
@@ -173,11 +174,12 @@
     create: yes
     insertafter: EOF
     line: "{{ inventory_hostname }} flashed at {{ lookup('pipe','date --iso-8601=seconds') }}"
+  ignore_errors: true
 
 # ───────────────────────────────────────────────────────
 # Write controller-time to the rover’s log
 # ───────────────────────────────────────────────────────
-- name: Append this flash event to the device’s own history
+- name: Append this flash event to the device's own history
   tags: 
     - flash
   become: true
