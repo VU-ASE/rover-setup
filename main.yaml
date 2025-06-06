@@ -5,6 +5,9 @@
   tasks:
     - import_tasks: tasks/dependencies.yaml
     - import_tasks: tasks/setup.yaml
+    - import_tasks: tasks/roverd.yaml
+    - import_tasks: tasks/systemd.yaml
+    - import_tasks: tasks/opencv.yaml
     - import_tasks: tasks/kernel.yaml
 
 

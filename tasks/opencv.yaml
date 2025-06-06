@@ -1,0 +1,47 @@
+---
+
+# ----------------------
+# --- OpenCV install ---
+# ----------------------
+
+# The compressed OpenCV lib files get uncompressed into the prebuilt-deps directory.
+# After that their contents can be appended to their respective directories.
+- name: Extract OpenCV archives
+  tags:
+    - setup
+    - files
+    - opencv
+  become: true
+  unarchive:
+    src: "/home/debix/ase/prebuilt-deps/opencv/{{ item }}"
+    dest: /home/debix/ase/prebuilt-deps/
+    remote_src: yes
+  loop:
+    - usr-local-include.tar.xz
+    - usr-local-lib.tar.xz
+
+- name: Append contents of OpenCV to respective destination
+  tags:
+    - setup
+    - files
+    - opencv
+  become: true
+  copy:
+    src: "/home/debix/ase/prebuilt-deps/{{ item }}/"
+    dest: "/usr/local/{{ item }}/"
+    remote_src: yes
+    directory_mode: "0755"
+    mode: preserve
+    owner: root
+    group: root
+  loop:
+    - lib
+    - include
+
+- name: Correct Symlinks
+  tags:
+    - setup
+    - files
+    - opencv
+  become: true
+  shell: "cp --preserve=links -rf /home/debix/ase/prebuilt-deps/lib/* /usr/local/lib"

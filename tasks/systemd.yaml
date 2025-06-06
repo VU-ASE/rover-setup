@@ -1,0 +1,65 @@
+---
+- name: Install the system-start service
+  tags:
+    - setup
+    - systemd
+  become: true
+  copy:
+    dest: /etc/systemd/system/ase-system-start.service
+    content: |
+      [Unit]
+      Description=Resets Rover servos and motors, early in the boot sequence
+      After=roverd.service
+      Requires=roverd.service
+
+      [Service]
+      Type=simple
+      ExecStartPre=/bin/sleep 12
+      ExecStart=/home/debix/ase/bin/system-start
+      Restart=never
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Install the system-start service
+  tags:
+    - setup
+    - systemd
+  become: true
+  copy:
+    dest: /etc/systemd/system/ase-system-shutdown.service
+    content: |
+      [Unit]
+      Description=Resets the servo and motors before powering down the debix
+      DefaultDependencies=no
+      Before=shutdown.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/home/debix/ase/bin/system-shutdown
+      TimeoutStartSec=0
+
+      [Install]
+      WantedBy=shutdown.target
+
+- name: Restart the system-start service
+  tags:
+    - setup
+    - systemd
+  become: true
+  ansible.builtin.systemd_service:
+    name: ase-system-start
+    state: stopped
+    enabled: true
+    daemon_reload: true
+
+- name: Restart the system-shutdown service
+  tags:
+    - setup
+    - systemd
+  become: true
+  ansible.builtin.systemd_service:
+    name: ase-system-shutdown
+    state: stopped
+    enabled: true
+    daemon_reload: true

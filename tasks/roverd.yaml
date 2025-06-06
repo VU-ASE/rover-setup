@@ -1,0 +1,81 @@
+---
+# ---------------------------
+# --- The rover info file ---
+# ---------------------------
+- name: Make sure /etc/roverd exists
+  tags:
+    - roverd
+  become: true
+  file:
+    path: /etc/roverd
+    state: directory
+
+- name: Install the /etc/roverd/info.txt
+  tags:
+    - roverd
+  become: true
+  copy:
+    dest: /etc/roverd/info.txt
+    directory_mode: "0755"
+    owner: root
+    group: root
+    content: |
+      {{ rover_id }}
+      {{ rover_name }}
+      {{ rover_password }}
+
+- name: Remove the old /etc/rover file
+  tags:
+    - roverd
+  become: true
+  ignore_errors: true
+  file:
+    state: absent
+    path: /etc/rover
+
+# -------------------------------
+# --- Add roverd as a Service ---
+# -------------------------------
+
+- name: Install roverd via update script
+  tags:
+    - roverd
+  become: true
+  ignore_errors: true
+  shell: /home/debix/ase/bin/update-roverd 0.4.0
+
+- name: Install the roverd service
+  tags:
+    - roverd
+  become: true
+  copy:
+    dest: /etc/systemd/system/roverd.service
+    content: |
+      [Unit]
+      Description=Daemon that manages rover
+      After=network.target
+
+      [Service]
+      ExecStart=/usr/local/bin/roverd
+      Restart=always
+      RestartSec=1
+      RemainAfterExit=no
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Restart the roverd service
+  tags:
+    - roverd
+  become: true
+  ansible.builtin.systemd_service:
+    name: roverd
+    state: restarted
+    enabled: true
+    daemon_reload: true
+
+- name: Restart the roverd service
+  tags:
+    - roverd
+  become: true
+  shell: "/home/debix/ase/bin/update-roverd latest"
