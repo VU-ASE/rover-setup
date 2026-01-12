@@ -15,7 +15,7 @@ all: deps
 # 	@if [ ! -d "./kernel/linux-kernel-6.1.22" ]; then echo "Error: please run sudo ./kernel/cross-compile-kernel.sh to build the kernel, then re-run the command"; exit 1; fi
 
 deps:
-	@ansible-galaxy install fubarhouse.golang
+	@ansible-galaxy install gantsign.golang
 
 ping:
 	ansible fleet -m ping --ask-pass
