@@ -16,12 +16,12 @@
   tags: go
   become: true
   roles:
-    - role: fubarhouse.golang
+    - role: gantsign.golang
       vars:
-        go_version: 1.22.0
+        golang_version: 1.22.0
         GOOS: linux
         GOARCH: arm64
-        go_custom_mirror: https://go.dev/dl/
+        golang_mirror: https://go.dev/dl/
 
 # Custom definitions
 - hosts: fleet
