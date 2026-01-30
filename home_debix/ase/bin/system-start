@@ -52,6 +52,8 @@ function io_init {
 
 io_init
 
+# Synchronize the system clock
+/home/debix/ase/bin/synchronize-clock
 
 # Reset all motor/servo values to a safe state
 /home/debix/ase/bin/beep startup

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "Synchronizing clock..."
+sudo htpdate -s -t 0 http://google.com
